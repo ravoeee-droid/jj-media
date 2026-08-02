@@ -2,11 +2,69 @@ const nav=document.querySelector('.nav');
 window.addEventListener('scroll',()=>nav?.classList.toggle('scrolled',scrollY>20));
 const menuBtn=document.querySelector('.menu-btn');
 const navLinks=document.querySelector('.nav-links');
-menuBtn?.addEventListener('click',()=>navLinks.classList.toggle('open'));
+menuBtn?.addEventListener('click',()=>{
+ const open=navLinks.classList.toggle('open');
+ menuBtn.setAttribute('aria-expanded',String(open));
+});
 document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>navLinks.classList.remove('open')));
 
-const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+document.querySelectorAll('[data-youtube-id]').forEach(frame=>{
+ const button=frame.querySelector('.video-poster');
+ button?.addEventListener('click',()=>{
+  const iframe=document.createElement('iframe');
+  iframe.src=`https://www.youtube-nocookie.com/embed/${encodeURIComponent(frame.dataset.youtubeId)}?autoplay=1&rel=0&modestbranding=1`;
+  iframe.title='JJ-Media Showreel mit Jessica';
+  iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+  iframe.referrerPolicy='strict-origin-when-cross-origin';
+  iframe.allowFullscreen=true;
+  frame.replaceChildren(iframe);
+ });
+});
+
+const reduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{
+ if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}
+}),{threshold:.1,rootMargin:'0px 0px -5%'});
+document.querySelectorAll('.reveal').forEach((el,index)=>{
+ el.style.setProperty('--reveal-delay',`${Math.min(index%4,3)*70}ms`);
+ revealObserver.observe(el);
+});
+
+if(!reduceMotion&&window.matchMedia('(pointer:fine)').matches){
+ document.querySelectorAll('[data-tilt]').forEach(card=>{
+  const strength=Number(card.dataset.tiltStrength||2.3);
+  const move=event=>{
+   const box=card.getBoundingClientRect();
+   const x=(event.clientX-box.left)/box.width-.5;
+   const y=(event.clientY-box.top)/box.height-.5;
+   card.style.transform=`perspective(1100px) rotateX(${-y*strength}deg) rotateY(${x*strength}deg) translateY(-2px)`;
+   card.style.setProperty('--spot-x',`${(x+.5)*100}%`);
+   card.style.setProperty('--spot-y',`${(y+.5)*100}%`);
+  };
+  card.addEventListener('pointermove',move);
+  card.addEventListener('pointerleave',()=>{card.style.transform='';card.style.removeProperty('--spot-x');card.style.removeProperty('--spot-y')});
+ });
+}
+
+if(!reduceMotion){
+ const parallaxItems=[...document.querySelectorAll('[data-parallax]')];
+ let parallaxTicking=false;
+ const paintParallax=()=>{
+  const viewport=innerHeight;
+  parallaxItems.forEach(item=>{
+   const box=item.getBoundingClientRect();
+   if(box.bottom<0||box.top>viewport)return;
+   const speed=Number(item.dataset.parallax||0);
+   const offset=(box.top+box.height/2-viewport/2)*speed;
+   item.style.translate=`0 ${offset.toFixed(2)}px`;
+  });
+  parallaxTicking=false;
+ };
+ const queueParallax=()=>{if(!parallaxTicking){requestAnimationFrame(paintParallax);parallaxTicking=true}};
+ addEventListener('scroll',queueParallax,{passive:true});
+ addEventListener('resize',queueParallax);
+ queueParallax();
+}
 
 const serviceContent=[
  {title:'Strategy & Analytics',text:'Wir entwickeln eine klare Social-Media-Strategie, analysieren Zielgruppen und Wettbewerber und optimieren laufend anhand echter Performance-Daten.'},
