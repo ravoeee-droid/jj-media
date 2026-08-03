@@ -2,101 +2,50 @@
   if (!document.body.classList.contains('travel-body') || document.querySelector('.travel-gallery-showcase')) return;
 
   const items = [
-    {
-      src: 'assets/travel-gallery/06-whale-boat.svg',
-      alt: 'Wal springt neben einem Expeditionsboot aus dem Meer',
-      kicker: 'Expedition',
-      title: 'Momente, die größer sind als jeder Bildschirm.'
-    },
-    {
-      src: 'assets/travel-gallery/02-orangutan-baby.svg',
-      alt: 'Orang-Utan-Mutter mit Baby im Regenwald',
-      kicker: 'Wildlife',
-      title: 'Nähe, die keine Inszenierung braucht.'
-    },
-    {
-      src: 'assets/travel-gallery/07-tiger-eyes.svg',
-      alt: 'Tiger blickt aus hohem Gras über das Wasser',
-      kicker: 'Abenteuer',
-      title: 'Ein Blick, der eine ganze Geschichte erzählt.'
-    },
-    {
-      src: 'assets/travel-gallery/12-bioluminescent-sea.svg',
-      alt: 'Paar steht nachts in blau leuchtendem Meer',
-      kicker: 'Naturwunder',
-      title: 'Content, der sich wie Magie anfühlt.'
-    },
-    {
-      src: 'assets/cases/reisen-erleben-feed.jpg',
-      alt: 'Instagram-Feed von Reisen und Erleben',
-      kicker: 'Content-System',
-      title: 'Aus Reiserouten wird echte Vorfreude.'
-    },
-    {
-      src: 'assets/jessica/jessica-travel-premium.webp',
-      alt: 'Jessica Just auf einer mediterranen Hotelterrasse',
-      kicker: 'Hospitality',
-      title: 'Strategie, Ästhetik und Persönlichkeit.'
-    },
-    {
-      src: 'assets/cases/village-after.jpg',
-      alt: 'Village Adventures Instagram-Profil nach vier Monaten Wachstum',
-      kicker: 'Social Growth',
-      title: 'Sichtbarkeit, die messbar wächst.'
-    },
-    {
-      src: 'assets/cases/village-before.jpg',
-      alt: 'Village Adventures Instagram-Profil vor der Zusammenarbeit',
-      kicker: 'Transformation',
-      title: 'Jede starke Entwicklung beginnt mit einem klaren Startpunkt.'
-    }
+    { src: 'assets/travel-gallery-final/01-schildkroeten.png', alt: 'Travel Creative: 57 Sekunden bis zum Meer', width: 400, height: 500 },
+    { src: 'assets/travel-gallery-final/02-orangutan.png', alt: 'Travel Creative: Orang-Utan-Mutter mit Baby', width: 400, height: 500 },
+    { src: 'assets/travel-gallery-final/03-elefanten.png', alt: 'Travel Creative: Elefanten bei Sonnenuntergang', width: 400, height: 500 },
+    { src: 'assets/travel-gallery-final/04-flamingos.png', alt: 'Travel Creative: Flamingos an einem außergewöhnlichen Ort', width: 357, height: 558 },
+    { src: 'assets/travel-gallery-final/05-meer-leuchtete.png', alt: 'Travel Creative: Das Meer leuchtete', width: 400, height: 500 },
+    { src: 'assets/travel-gallery-final/06-kein-filter.png', alt: 'Travel Creative: Heißluftballons – das war kein Filter', width: 400, height: 500 },
+    { src: 'assets/travel-gallery-final/07-reisefehler.png', alt: 'Travel Creative: Drei teure Reisefehler', width: 357, height: 558 },
+    { src: 'assets/travel-gallery-final/08-wal-bootsstour.png', alt: 'Travel Creative: Wal neben einem Ausflugsboot', width: 400, height: 500 },
+    { src: 'assets/travel-gallery-final/09-tiger-augen.png', alt: 'Travel Creative: Tigeraugen im hohen Gras', width: 357, height: 558 },
+    { src: 'assets/travel-gallery-final/10-manta-dunkel.png', alt: 'Travel Creative: Mantarochen unter der Wasseroberfläche', width: 400, height: 500 },
+    { src: 'assets/travel-gallery-final/11-sieben-tage.png', alt: 'Travel Creative: Reisegruppe nach sieben gemeinsamen Tagen', width: 335, height: 595 },
+    { src: 'assets/travel-gallery-final/12-zug-rueckkehr.png', alt: 'Travel Creative: Rückreise im Zug bei Sonnenuntergang', width: 357, height: 558 }
   ];
 
   const style = document.createElement('style');
   style.textContent = `
-    .travel-gallery-showcase{position:relative;overflow:hidden;padding:120px 0 130px;background:#100d13;color:#fff}
-    .travel-gallery-showcase:before{content:'';position:absolute;width:680px;height:680px;border-radius:50%;right:-260px;top:4%;background:rgba(228,81,103,.14);filter:blur(150px);pointer-events:none}
-    .travel-gallery-showcase:after{content:'TRAVEL STORIES';position:absolute;left:-1vw;bottom:-.12em;font-size:clamp(5rem,13vw,13rem);font-weight:800;line-height:1;letter-spacing:-.075em;color:rgba(255,255,255,.025);white-space:nowrap;pointer-events:none}
-    .travel-gallery-head{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:60px;align-items:end;margin-bottom:54px}
-    .travel-gallery-head h2{font-size:clamp(3.5rem,7vw,7.2rem);line-height:.88;letter-spacing:-.065em;margin:14px 0 0;max-width:850px}
-    .travel-gallery-head h2 span{font-family:'Playfair Display',serif;color:#ff9dac}
-    .travel-gallery-head p{margin:0 0 9px;color:#aaa4ad;font-size:1.08rem;line-height:1.75;max-width:500px}
-    .travel-gallery-note{display:inline-flex;align-items:center;gap:10px;margin-top:18px;color:#d8d1da;font-size:.7rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
-    .travel-gallery-note i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.16);font-style:normal}
-
-    .travel-gallery-grid{position:relative;z-index:2;columns:3 300px;column-gap:18px}
-    .travel-gallery-item{position:relative;display:block;width:100%;margin:0 0 18px;padding:0;overflow:hidden;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:#19151d;box-shadow:0 26px 70px rgba(0,0,0,.28);cursor:zoom-in;break-inside:avoid;text-align:left;color:#fff;transition:transform .38s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s}
-    .travel-gallery-item:hover{transform:translateY(-5px);border-color:rgba(255,157,172,.34);box-shadow:0 34px 90px rgba(0,0,0,.38)}
-    .travel-gallery-item:focus-visible{outline:3px solid #ff9dac;outline-offset:4px}
-    .travel-gallery-item img{display:block;width:100%;height:auto;transition:transform .75s cubic-bezier(.2,.8,.2,1),filter .45s;will-change:transform}
-    .travel-gallery-item:hover img{transform:scale(1.025);filter:saturate(1.04) contrast(1.02)}
-    .travel-gallery-overlay{position:absolute;inset:auto 0 0;padding:72px 20px 20px;background:linear-gradient(transparent,rgba(10,8,12,.88));display:grid;gap:5px;transform:translateY(6px);transition:transform .35s}
-    .travel-gallery-item:hover .travel-gallery-overlay{transform:none}
-    .travel-gallery-overlay span{font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#ff9dac}
-    .travel-gallery-overlay strong{font-size:1rem;line-height:1.35;max-width:320px}
-    .travel-gallery-index{position:absolute;top:14px;right:14px;min-width:38px;height:38px;padding:0 10px;border-radius:999px;display:grid;place-items:center;background:rgba(12,10,14,.7);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);font-size:.68rem;font-weight:800;letter-spacing:.08em}
-
-    .travel-lightbox{position:fixed;z-index:10000;inset:0;display:grid;place-items:center;padding:28px;background:rgba(7,6,9,.94);backdrop-filter:blur(18px);opacity:0;visibility:hidden;transition:opacity .28s,visibility .28s}
-    .travel-lightbox.open{opacity:1;visibility:visible}
-    .travel-lightbox-inner{position:relative;width:min(1120px,100%);height:min(88vh,920px);display:grid;grid-template-rows:minmax(0,1fr) auto;gap:16px;transform:scale(.97);transition:transform .32s cubic-bezier(.2,.8,.2,1)}
-    .travel-lightbox.open .travel-lightbox-inner{transform:none}
-    .travel-lightbox-media{min-height:0;display:grid;place-items:center;overflow:hidden;border-radius:24px;background:#0c0a0e;border:1px solid rgba(255,255,255,.1);box-shadow:0 40px 120px rgba(0,0,0,.55)}
-    .travel-lightbox-media img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
-    .travel-lightbox-meta{display:flex;align-items:center;justify-content:space-between;gap:20px;color:#fff}
-    .travel-lightbox-copy{display:grid;gap:4px}
-    .travel-lightbox-copy span{font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#ff9dac}
-    .travel-lightbox-copy strong{font-size:1rem;line-height:1.4}
-    .travel-lightbox-count{color:#aaa4ad;font-size:.72rem;font-weight:800;letter-spacing:.1em}
-    .travel-lightbox-btn{position:absolute;z-index:2;width:50px;height:50px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(20,17,23,.78);color:#fff;backdrop-filter:blur(14px);cursor:pointer;font-size:1.2rem;transition:.25s}
-    .travel-lightbox-btn:hover{background:#fff;color:#111;transform:scale(1.06)}
-    .travel-lightbox-close{top:14px;right:14px}
-    .travel-lightbox-prev{left:14px;top:50%;translate:0 -50%}
-    .travel-lightbox-next{right:14px;top:50%;translate:0 -50%}
-    body.travel-gallery-open{overflow:hidden}
-
-    @media(max-width:980px){.travel-gallery-head{grid-template-columns:1fr;gap:24px}.travel-gallery-head p{max-width:680px}.travel-gallery-grid{columns:2 260px}}
-    @media(max-width:640px){.travel-gallery-showcase{padding:84px 0 96px}.travel-gallery-head{margin-bottom:32px}.travel-gallery-head h2{font-size:clamp(3rem,14vw,4.25rem)}.travel-gallery-head p{font-size:1rem}.travel-gallery-grid{columns:1}.travel-gallery-item{border-radius:20px;margin-bottom:14px}.travel-gallery-overlay{padding:64px 17px 17px}.travel-lightbox{padding:14px}.travel-lightbox-inner{height:92vh;gap:12px}.travel-lightbox-media{border-radius:18px}.travel-lightbox-btn{width:44px;height:44px}.travel-lightbox-prev{left:7px}.travel-lightbox-next{right:7px}.travel-lightbox-close{top:8px;right:8px}.travel-lightbox-meta{align-items:flex-start}.travel-lightbox-copy strong{font-size:.9rem}}
-    @media(prefers-reduced-motion:reduce){.travel-gallery-item,.travel-gallery-item img,.travel-gallery-overlay,.travel-lightbox,.travel-lightbox-inner,.travel-lightbox-btn{transition:none!important}}
+    .travel-gallery-showcase{position:relative;overflow:hidden;padding:118px 0 112px;background:#0e0b11;color:#fff;isolation:isolate}
+    .travel-gallery-showcase:before{content:'';position:absolute;inset:-25% -15%;z-index:-1;background:radial-gradient(circle at 22% 36%,rgba(228,81,103,.18),transparent 28%),radial-gradient(circle at 82% 62%,rgba(255,157,172,.1),transparent 25%);filter:blur(18px);pointer-events:none}
+    .travel-gallery-showcase:after{content:'CREATIVE GALLERY';position:absolute;z-index:-1;right:-.04em;bottom:-.17em;color:rgba(255,255,255,.025);font-size:clamp(5rem,12vw,12rem);font-weight:800;line-height:1;letter-spacing:-.075em;white-space:nowrap;pointer-events:none}
+    .travel-gallery-header{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,440px);gap:50px;align-items:end;margin-bottom:48px}
+    .travel-gallery-header h2{max-width:820px;margin:14px 0 0;font-size:clamp(3.4rem,6.8vw,7rem);line-height:.89;letter-spacing:-.065em}
+    .travel-gallery-header h2 span{color:#ff9dac;font-family:'Playfair Display',serif;font-weight:500}
+    .travel-gallery-header p{margin:0;color:#b8b0ba;font-size:1.05rem;line-height:1.72}
+    .travel-gallery-stage{position:relative}
+    .travel-gallery-viewport{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-padding-inline:calc(50vw - 200px);scrollbar-width:none;overscroll-behavior-x:contain;touch-action:pan-x;padding:18px calc(50vw - 200px) 38px;cursor:grab}
+    .travel-gallery-viewport::-webkit-scrollbar{display:none}
+    .travel-gallery-viewport.is-dragging{cursor:grabbing;scroll-snap-type:none;user-select:none}
+    .travel-gallery-track{display:flex;align-items:center;gap:clamp(18px,2.2vw,32px);width:max-content}
+    .travel-gallery-slide{position:relative;flex:0 0 auto;display:grid;place-items:center;scroll-snap-align:center;scroll-snap-stop:always;transform:scale(.86);opacity:.46;transition:transform .65s cubic-bezier(.16,1,.3,1),opacity .5s ease,filter .5s ease;filter:saturate(.82);will-change:transform,opacity}
+    .travel-gallery-slide.is-active{transform:scale(1);opacity:1;filter:none}
+    .travel-gallery-slide img{display:block;width:auto;height:auto;max-width:min(var(--source-w),86vw);max-height:min(var(--source-h),68vh);border-radius:26px;border:1px solid rgba(255,255,255,.12);background:#141017;box-shadow:0 34px 95px rgba(0,0,0,.42);object-fit:contain;pointer-events:none}
+    .travel-gallery-slide.is-active img{box-shadow:0 42px 120px rgba(0,0,0,.58),0 0 0 1px rgba(255,157,172,.12)}
+    .travel-gallery-slide-number{position:absolute;right:14px;bottom:14px;display:grid;place-items:center;min-width:42px;height:34px;padding:0 11px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(12,9,14,.74);color:#fff;font-size:.65rem;font-weight:800;letter-spacing:.1em;backdrop-filter:blur(12px)}
+    .travel-gallery-controls{display:flex;align-items:center;justify-content:center;gap:15px;margin-top:2px}
+    .travel-gallery-button{width:52px;height:52px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.15);border-radius:50%;background:rgba(255,255,255,.055);color:#fff;font-size:1.05rem;cursor:pointer;transition:transform .25s ease,background .25s ease,border-color .25s ease}
+    .travel-gallery-button:hover{transform:scale(1.07);background:#fff;color:#111;border-color:#fff}
+    .travel-gallery-button:focus-visible{outline:3px solid #ff9dac;outline-offset:4px}
+    .travel-gallery-progress{width:min(330px,40vw);height:2px;overflow:hidden;border-radius:999px;background:rgba(255,255,255,.13)}
+    .travel-gallery-progress span{display:block;width:100%;height:100%;background:linear-gradient(90deg,#ff9dac,#e45167);transform:scaleX(var(--gallery-progress,.0833));transform-origin:left;transition:transform .55s cubic-bezier(.16,1,.3,1)}
+    .travel-gallery-counter{min-width:68px;color:#beb7c1;font-size:.7rem;font-weight:800;letter-spacing:.11em;text-align:center}
+    .travel-gallery-mobile-hint{display:none;margin:18px auto 0;color:#aaa3ad;font-size:.66rem;font-weight:800;letter-spacing:.13em;text-align:center;text-transform:uppercase}
+    @media(max-width:900px){.travel-gallery-header{grid-template-columns:1fr;gap:20px}.travel-gallery-header p{max-width:670px}.travel-gallery-viewport{scroll-padding-inline:calc(50vw - 180px);padding-inline:calc(50vw - 180px)}}
+    @media(max-width:600px){.travel-gallery-showcase{padding:82px 0 84px}.travel-gallery-header{margin-bottom:24px}.travel-gallery-header h2{font-size:clamp(3rem,14vw,4.25rem)}.travel-gallery-header p{font-size:.98rem}.travel-gallery-viewport{scroll-padding-inline:7vw;padding:12px 7vw 28px}.travel-gallery-track{gap:14px}.travel-gallery-slide{scroll-snap-align:start;transform:scale(.94);opacity:.58}.travel-gallery-slide.is-active{transform:none}.travel-gallery-slide img{max-width:86vw;max-height:72vh;border-radius:22px}.travel-gallery-controls{gap:11px}.travel-gallery-button{width:46px;height:46px}.travel-gallery-progress{width:35vw}.travel-gallery-mobile-hint{display:block}}
+    @media(prefers-reduced-motion:reduce){.travel-gallery-slide,.travel-gallery-progress span,.travel-gallery-button{transition:none!important}}
   `;
   document.head.appendChild(style);
 
@@ -105,110 +54,118 @@
   section.setAttribute('aria-labelledby', 'travel-gallery-title');
   section.innerHTML = `
     <div class="container">
-      <div class="travel-gallery-head reveal">
+      <div class="travel-gallery-header reveal">
         <div>
-          <div class="eyebrow">Travel Content Gallery</div>
-          <h2 id="travel-gallery-title">Content, der <span>Fernweh auslöst.</span></h2>
+          <div class="eyebrow">Travel Creative Gallery</div>
+          <h2 id="travel-gallery-title">Ideen, die <span>Fernweh auslösen.</span></h2>
         </div>
-        <div>
-          <p>Von mutigen Hooks bis zu emotionalem Storytelling: eine Auswahl an Travel-Creatives, die im Feed stoppen und im Kopf bleiben.</p>
-          <div class="travel-gallery-note"><i aria-hidden="true">↗</i><span>Bild öffnen und Details entdecken</span></div>
-        </div>
+        <p>Eine Auswahl unserer Travel-Creatives – ohne Mockups, ohne Ablenkung. Einfach die Motive in voller Wirkung.</p>
       </div>
-      <div class="travel-gallery-grid" role="list"></div>
+    </div>
+    <div class="travel-gallery-stage reveal">
+      <div class="travel-gallery-viewport" tabindex="0" aria-label="Travel Creative Galerie – horizontal wischen oder mit den Pfeiltasten steuern">
+        <div class="travel-gallery-track"></div>
+      </div>
+      <div class="travel-gallery-controls" aria-label="Galerie steuern">
+        <button class="travel-gallery-button" type="button" data-gallery-prev aria-label="Vorheriges Bild">←</button>
+        <div class="travel-gallery-progress" aria-hidden="true"><span></span></div>
+        <div class="travel-gallery-counter" aria-live="polite"><span data-gallery-current>01</span> / ${String(items.length).padStart(2,'0')}</div>
+        <button class="travel-gallery-button" type="button" data-gallery-next aria-label="Nächstes Bild">→</button>
+      </div>
+      <div class="travel-gallery-mobile-hint">Wischen, um weitere Motive zu entdecken</div>
     </div>`;
 
   const anchor = document.querySelector('#travel-cases');
   anchor?.parentNode.insertBefore(section, anchor);
 
-  const grid = section.querySelector('.travel-gallery-grid');
-  items.forEach((item, index) => {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'travel-gallery-item reveal';
-    button.dataset.galleryIndex = String(index);
-    button.setAttribute('role', 'listitem');
-    button.setAttribute('aria-label', `${item.title} – vergrößern`);
-    button.innerHTML = `
-      <img src="${item.src}" alt="${item.alt}" loading="lazy" decoding="async">
-      <span class="travel-gallery-index">${String(index + 1).padStart(2, '0')}</span>
-      <span class="travel-gallery-overlay"><span>${item.kicker}</span><strong>${item.title}</strong></span>`;
-    grid.appendChild(button);
+  const viewport = section.querySelector('.travel-gallery-viewport');
+  const track = section.querySelector('.travel-gallery-track');
+  const progress = section.querySelector('.travel-gallery-progress');
+  const current = section.querySelector('[data-gallery-current]');
+  const prev = section.querySelector('[data-gallery-prev]');
+  const next = section.querySelector('[data-gallery-next]');
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  items.forEach((item,index) => {
+    const figure = document.createElement('figure');
+    figure.className = 'travel-gallery-slide';
+    figure.dataset.index = String(index);
+    figure.style.setProperty('--source-w', `${item.width}px`);
+    figure.style.setProperty('--source-h', `${item.height}px`);
+    figure.innerHTML = `<img src="${item.src}" width="${item.width}" height="${item.height}" alt="${item.alt}" loading="${index < 2 ? 'eager' : 'lazy'}" decoding="async"><span class="travel-gallery-slide-number">${String(index + 1).padStart(2,'0')}</span>`;
+    track.appendChild(figure);
   });
 
-  const lightbox = document.createElement('div');
-  lightbox.className = 'travel-lightbox';
-  lightbox.setAttribute('role', 'dialog');
-  lightbox.setAttribute('aria-modal', 'true');
-  lightbox.setAttribute('aria-label', 'Travel Content Galerie');
-  lightbox.innerHTML = `
-    <div class="travel-lightbox-inner">
-      <div class="travel-lightbox-media"><img alt=""></div>
-      <div class="travel-lightbox-meta">
-        <div class="travel-lightbox-copy"><span></span><strong></strong></div>
-        <div class="travel-lightbox-count" aria-live="polite"></div>
-      </div>
-      <button type="button" class="travel-lightbox-btn travel-lightbox-close" aria-label="Galerie schließen">×</button>
-      <button type="button" class="travel-lightbox-btn travel-lightbox-prev" aria-label="Vorheriges Bild">←</button>
-      <button type="button" class="travel-lightbox-btn travel-lightbox-next" aria-label="Nächstes Bild">→</button>
-    </div>`;
-  document.body.appendChild(lightbox);
+  const slides = [...track.children];
+  let active = 0;
+  let scrollTimer = 0;
+  let dragging = false;
+  let dragStartX = 0;
+  let dragScrollLeft = 0;
 
-  const image = lightbox.querySelector('.travel-lightbox-media img');
-  const kicker = lightbox.querySelector('.travel-lightbox-copy span');
-  const title = lightbox.querySelector('.travel-lightbox-copy strong');
-  const count = lightbox.querySelector('.travel-lightbox-count');
-  const closeButton = lightbox.querySelector('.travel-lightbox-close');
-  let activeIndex = 0;
-  let previousFocus = null;
-  let touchStartX = 0;
-
-  const render = () => {
-    const item = items[activeIndex];
-    image.src = item.src;
-    image.alt = item.alt;
-    kicker.textContent = item.kicker;
-    title.textContent = item.title;
-    count.textContent = `${String(activeIndex + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
+  const update = index => {
+    active = Math.max(0,Math.min(items.length - 1,index));
+    slides.forEach((slide,i) => slide.classList.toggle('is-active',i === active));
+    current.textContent = String(active + 1).padStart(2,'0');
+    progress.style.setProperty('--gallery-progress', String((active + 1) / items.length));
+    prev.disabled = active === 0;
+    next.disabled = active === items.length - 1;
   };
 
-  const open = index => {
-    activeIndex = index;
-    previousFocus = document.activeElement;
-    render();
-    lightbox.classList.add('open');
-    document.body.classList.add('travel-gallery-open');
-    closeButton.focus();
+  const nearestIndex = () => {
+    const center = viewport.scrollLeft + viewport.clientWidth / 2;
+    let best = 0;
+    let distance = Infinity;
+    slides.forEach((slide,i) => {
+      const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+      const nextDistance = Math.abs(slideCenter - center);
+      if (nextDistance < distance) { distance = nextDistance; best = i; }
+    });
+    return best;
   };
 
-  const close = () => {
-    lightbox.classList.remove('open');
-    document.body.classList.remove('travel-gallery-open');
-    previousFocus?.focus?.();
+  const goTo = index => {
+    const target = slides[Math.max(0,Math.min(slides.length - 1,index))];
+    if (!target) return;
+    const left = target.offsetLeft - (viewport.clientWidth - target.offsetWidth) / 2;
+    viewport.scrollTo({ left, behavior: reduceMotion ? 'auto' : 'smooth' });
+    update(Number(target.dataset.index));
   };
 
-  const move = direction => {
-    activeIndex = (activeIndex + direction + items.length) % items.length;
-    render();
-  };
-
-  grid.addEventListener('click', event => {
-    const item = event.target.closest('[data-gallery-index]');
-    if (item) open(Number(item.dataset.galleryIndex));
+  viewport.addEventListener('scroll',() => {
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => update(nearestIndex()),70);
+  },{passive:true});
+  prev.addEventListener('click',() => goTo(active - 1));
+  next.addEventListener('click',() => goTo(active + 1));
+  viewport.addEventListener('keydown',event => {
+    if (event.key === 'ArrowLeft') { event.preventDefault(); goTo(active - 1); }
+    if (event.key === 'ArrowRight') { event.preventDefault(); goTo(active + 1); }
+    if (event.key === 'Home') { event.preventDefault(); goTo(0); }
+    if (event.key === 'End') { event.preventDefault(); goTo(items.length - 1); }
   });
-  closeButton.addEventListener('click', close);
-  lightbox.querySelector('.travel-lightbox-prev').addEventListener('click', () => move(-1));
-  lightbox.querySelector('.travel-lightbox-next').addEventListener('click', () => move(1));
-  lightbox.addEventListener('click', event => { if (event.target === lightbox) close(); });
-  lightbox.addEventListener('touchstart', event => { touchStartX = event.changedTouches[0].clientX; }, { passive: true });
-  lightbox.addEventListener('touchend', event => {
-    const delta = event.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(delta) > 55) move(delta > 0 ? -1 : 1);
-  }, { passive: true });
-  document.addEventListener('keydown', event => {
-    if (!lightbox.classList.contains('open')) return;
-    if (event.key === 'Escape') close();
-    if (event.key === 'ArrowLeft') move(-1);
-    if (event.key === 'ArrowRight') move(1);
+  viewport.addEventListener('pointerdown',event => {
+    if (event.pointerType !== 'mouse') return;
+    dragging = true;
+    dragStartX = event.clientX;
+    dragScrollLeft = viewport.scrollLeft;
+    viewport.classList.add('is-dragging');
+    viewport.setPointerCapture(event.pointerId);
   });
+  viewport.addEventListener('pointermove',event => {
+    if (dragging) viewport.scrollLeft = dragScrollLeft - (event.clientX - dragStartX);
+  });
+  const endDrag = event => {
+    if (!dragging) return;
+    dragging = false;
+    viewport.classList.remove('is-dragging');
+    try { viewport.releasePointerCapture(event.pointerId); } catch {}
+    goTo(nearestIndex());
+  };
+  viewport.addEventListener('pointerup',endDrag);
+  viewport.addEventListener('pointercancel',endDrag);
+  window.addEventListener('resize',() => goTo(active));
+
+  update(0);
+  requestAnimationFrame(() => goTo(0));
 })();
