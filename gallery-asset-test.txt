@@ -1,1 +1,1 @@
-Trigger the high-resolution gallery capture workflow.
+Trigger the exact travel gallery asset import.
