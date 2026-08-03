@@ -1,0 +1,62 @@
+/* Premium motion and interaction polish for JJ-Media */
+
+/* Cinematic hero headline reveal */
+.hero-title-motion{overflow:visible}
+.hero-title-motion .hero-word{display:inline-block;overflow:hidden;vertical-align:bottom;padding:.08em .015em .1em;margin:-.08em -.015em -.1em}
+.hero-title-motion .hero-word>span{display:inline-block;opacity:0;filter:blur(7px);transform:translate3d(0,115%,0) rotate(2.5deg);transform-origin:left bottom;transition:transform .9s cubic-bezier(.16,1,.3,1),opacity .65s ease,filter .8s ease;transition-delay:var(--word-delay,0ms);will-change:transform,opacity,filter}
+.hero-title-motion.is-active .hero-word>span{opacity:1;filter:blur(0);transform:translate3d(0,0,0) rotate(0)}
+.hero-title-motion .hero-word-accent>span{color:var(--coral)}
+
+/* Layered hero depth without covering Jessica's face */
+.hero-visual{overflow:visible;transform:translate3d(var(--hero-depth-x,0),var(--hero-depth-y,0),0);transition:transform .22s cubic-bezier(.2,.8,.2,1)}
+.portrait-frame{transform:translate3d(var(--portrait-depth-x,0),var(--portrait-depth-y,0),0)}
+.floating-card{will-change:transform;transition:transform .24s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease}
+.floating-card-top{right:-58px;top:5%;transform:translate3d(var(--float-top-x,0),var(--float-top-y,0),0);z-index:6}
+.floating-card-bottom{transform:translate3d(var(--float-bottom-x,0),var(--float-bottom-y,0),0);z-index:6}
+.hero-visual:hover .floating-card{box-shadow:0 25px 70px rgba(28,19,23,.2)}
+
+/* Magnetic CTA with restrained shimmer */
+.magnetic-btn{position:relative;isolation:isolate;overflow:hidden;will-change:transform;transition:transform .24s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease!important}
+.magnetic-btn:before{content:'';position:absolute;z-index:0;inset:-45% auto -45% -65%;width:42%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-18deg);animation:jjShimmer 4.6s cubic-bezier(.2,.8,.2,1) infinite;pointer-events:none}
+.magnetic-btn:after{content:'';position:absolute;z-index:-1;inset:-1px;border-radius:inherit;background:radial-gradient(circle at var(--magnet-x,50%) var(--magnet-y,50%),rgba(255,255,255,.28),transparent 46%);opacity:0;transition:opacity .25s ease;pointer-events:none}
+.magnetic-btn:hover:after{opacity:1}
+@keyframes jjShimmer{0%,58%{left:-65%;opacity:0}64%{opacity:1}82%{left:125%;opacity:.75}100%{left:125%;opacity:0}}
+
+/* Cursor-following spotlight for proof, portfolio and service cards */
+.spotlight-card{position:relative;isolation:isolate}
+.spotlight-card:before{content:'';position:absolute;z-index:8;inset:-1px;border-radius:inherit;background:radial-gradient(420px circle at var(--spotlight-x,50%) var(--spotlight-y,50%),rgba(255,157,172,.2),rgba(228,81,103,.075) 28%,transparent 62%);opacity:0;transition:opacity .28s ease;pointer-events:none}
+.spotlight-card:hover:before{opacity:1}
+.credential-card.spotlight-card:before,.audience-card.spotlight-card:before,.system-card.spotlight-card:before,.travel-offer.spotlight-card:before,.process-card.spotlight-card:before{background:radial-gradient(380px circle at var(--spotlight-x,50%) var(--spotlight-y,50%),rgba(228,81,103,.16),transparent 62%)}
+
+/* Animated proof numbers */
+.count-up{font-variant-numeric:tabular-nums lining-nums;white-space:nowrap;will-change:contents}
+.count-up.is-counting{animation:countPulse .85s ease both}
+@keyframes countPulse{0%{transform:translateY(8px);opacity:.45}100%{transform:none;opacity:1}}
+
+/* Scroll-based media unveiling */
+.motion-media{clip-path:inset(0 0 100% 0 round 24px);transform:translate3d(0,22px,0) scale(.985);opacity:.25;transition:clip-path 1.05s cubic-bezier(.16,1,.3,1),transform 1.05s cubic-bezier(.16,1,.3,1),opacity .7s ease;will-change:clip-path,transform,opacity}
+.motion-media.media-visible{clip-path:inset(0 0 0 0 round 24px);transform:none;opacity:1}
+
+@media(max-width:1180px){
+ .floating-card-top{right:-26px;top:2%}
+}
+@media(max-width:900px){
+ .floating-card-top{top:-18px;right:10px;max-width:205px}
+ .hero-visual{transform:none}
+}
+@media(max-width:560px){
+ .floating-card-top{top:-14px;right:6px;max-width:185px}
+ .floating-card-bottom{left:-4px;bottom:5%}
+ .magnetic-btn:before{animation-duration:5.6s}
+}
+@media(pointer:coarse){
+ .spotlight-card:before{display:none}
+ .hero-visual,.floating-card,.magnetic-btn{transform:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero-title-motion .hero-word>span{opacity:1;filter:none;transform:none;transition:none}
+ .floating-card,.hero-visual,.portrait-frame,.magnetic-btn{transform:none!important;transition:none!important}
+ .magnetic-btn:before{display:none}
+ .motion-media{clip-path:none;transform:none;opacity:1;transition:none}
+ .count-up.is-counting{animation:none}
+}
