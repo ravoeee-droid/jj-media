@@ -1,1 +1,1 @@
-This branch is not intended for merge.
+Inactive test branch. Do not merge.
