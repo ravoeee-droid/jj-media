@@ -1,0 +1,27 @@
+name: Resolve Tree SHA
+on:
+  push:
+    branches:
+      - original-gallery-images
+    paths:
+      - '.github/workflows/resolve-tree.yml'
+      - 'tree-trigger.txt'
+permissions:
+  contents: write
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: original-gallery-images
+      - name: Record base tree SHA
+        run: |
+          git rev-parse HEAD^{tree} > resolved-tree-sha.txt
+      - name: Commit tree SHA
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add resolved-tree-sha.txt
+          git commit -m 'chore: resolve base tree sha' || exit 0
+          git push origin HEAD:original-gallery-images
