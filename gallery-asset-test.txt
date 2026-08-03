@@ -1,1 +1,1 @@
-Trigger the gallery asset workflow again.
+Trigger the high-resolution gallery capture workflow.
