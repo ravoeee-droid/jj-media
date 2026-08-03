@@ -337,3 +337,245 @@
     border-top: 0;
   }
 }
+
+/* Premium travel proof strip */
+.travel-proof-band-premium {
+  position: relative;
+  overflow: hidden;
+  padding: 30px 0;
+  background:
+    radial-gradient(circle at 18% 45%, rgba(228, 81, 103, .18), transparent 30%),
+    radial-gradient(circle at 86% 10%, rgba(255, 157, 172, .11), transparent 26%),
+    linear-gradient(180deg, #151119 0%, #0d0a11 100%);
+}
+
+.travel-proof-band-premium::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 15%, rgba(255, 255, 255, .055) 47%, transparent 76%);
+  transform: translateX(-110%);
+  animation: travelProofSweep 7.5s cubic-bezier(.16, 1, .3, 1) infinite;
+}
+
+.travel-proof-band .travel-proof-strip-premium {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.travel-proof-strip-premium .travel-proof-card {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: 7px;
+  min-height: 132px;
+  padding: 22px 24px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, .1);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, .065), rgba(255, 255, 255, .025));
+  box-shadow: 0 18px 55px rgba(0, 0, 0, .24);
+  opacity: 0;
+  transform: translateY(20px) scale(.985);
+  transition:
+    opacity .8s cubic-bezier(.16, 1, .3, 1),
+    transform .8s cubic-bezier(.16, 1, .3, 1),
+    border-color .3s ease,
+    box-shadow .3s ease;
+}
+
+.travel-proof-strip-premium.visible .travel-proof-card {
+  opacity: 1;
+  transform: none;
+}
+
+.travel-proof-strip-premium .travel-proof-card:nth-child(1) { transition-delay: .03s; }
+.travel-proof-strip-premium .travel-proof-card:nth-child(2) { transition-delay: .14s; }
+.travel-proof-strip-premium .travel-proof-card:nth-child(3) { transition-delay: .25s; }
+
+.travel-proof-strip-premium .travel-proof-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(280px circle at 18% 0%, rgba(255, 157, 172, .14), transparent 65%);
+}
+
+.travel-proof-strip-premium .travel-proof-card::after {
+  content: '';
+  position: absolute;
+  right: 24px;
+  bottom: 0;
+  left: 24px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff9dac, rgba(228, 81, 103, .48), transparent);
+  opacity: .9;
+}
+
+.travel-proof-strip-premium .travel-proof-card:hover {
+  border-color: rgba(255, 157, 172, .3);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .3);
+  transform: translateY(-3px);
+}
+
+.travel-proof-strip-premium .travel-proof-card-featured {
+  border-color: rgba(255, 157, 172, .24);
+  background: linear-gradient(145deg, rgba(228, 81, 103, .19), rgba(255, 255, 255, .035));
+}
+
+.travel-proof-strip-premium .travel-proof-kicker {
+  position: relative;
+  z-index: 1;
+  color: #bcb4bf;
+  font-size: .66rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.travel-proof-band .travel-proof-strip-premium .travel-proof-value {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  font-size: clamp(2.15rem, 3.2vw, 3.15rem);
+  font-weight: 800;
+  line-height: .95;
+  letter-spacing: -.055em;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.travel-proof-band .travel-proof-strip-premium .travel-proof-value-text {
+  font-size: clamp(1.85rem, 2.7vw, 2.7rem);
+}
+
+.travel-proof-strip-premium .travel-proof-label {
+  position: relative;
+  z-index: 1;
+  color: #f2ebf0;
+  font-size: .72rem;
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+@keyframes travelProofSweep {
+  0%, 68% { transform: translateX(-110%); opacity: 0; }
+  75% { opacity: 1; }
+  100% { transform: translateX(110%); opacity: 0; }
+}
+
+/* Show the lower, high-performing part of the Reisen & Erleben feed. */
+.travel-reel-proof-media {
+  position: relative;
+  height: 560px;
+  overflow: hidden;
+  background: #17141a;
+}
+
+.travel-reel-proof-media .reisen-erleben-proof {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.travel-reel-proof-media::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 35%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgba(14, 11, 17, .45));
+}
+
+.travel-reel-proof-badge {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  bottom: 18px;
+  display: grid;
+  gap: 2px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 16px;
+  color: #fff;
+  background: rgba(16, 13, 19, .74);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, .32);
+  backdrop-filter: blur(14px);
+}
+
+.travel-reel-proof-badge strong {
+  font-size: 1.08rem;
+  line-height: 1;
+}
+
+.travel-reel-proof-badge small {
+  color: #d5cfd7;
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .travel-proof-band .travel-proof-strip-premium {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .travel-proof-strip-premium .travel-proof-card {
+    min-height: 112px;
+  }
+}
+
+@media (max-width: 560px) {
+  .travel-proof-band-premium {
+    padding: 20px 0;
+  }
+
+  .travel-proof-band .travel-proof-strip-premium {
+    grid-template-columns: 1fr;
+    row-gap: 9px;
+  }
+
+  .travel-proof-strip-premium .travel-proof-card,
+  .travel-proof-strip-premium .travel-proof-card:nth-child(3) {
+    min-height: 102px;
+    padding: 18px 19px;
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 18px;
+  }
+
+  .travel-proof-band .travel-proof-strip-premium .travel-proof-value {
+    font-size: 2.15rem;
+  }
+
+  .travel-proof-band .travel-proof-strip-premium .travel-proof-value-text {
+    font-size: 1.95rem;
+  }
+
+  .travel-reel-proof-media {
+    height: 430px;
+  }
+
+  .travel-reel-proof-badge {
+    right: 12px;
+    bottom: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .travel-proof-band-premium::before { animation: none; }
+  .travel-proof-strip-premium .travel-proof-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
