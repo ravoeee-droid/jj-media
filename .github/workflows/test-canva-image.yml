@@ -14,7 +14,7 @@ jobs:
       - name: Download requested full-size asset
         run: |
           mkdir -p assets/travel-gallery-final
-          curl -fL 'https://media.canva.com/v2/image-resize/format:PNG/height:1402/quality:100/uri:ifs%3A%2F%2FM%2F759c5566-f20f-489d-8535-6064208945d3/watermark:F/width:1122?csig=AAAAAAAAAAAAAAAAAAAAAOwEgoj2EcD9TM7DrqZMWlgG9RWX5kOhCNuDOIEwcVGP&exp=1785756988&osig=AAAAAAAAAAAAAAAAAAAAAMpQ8NUnyTIww3pPJBwsmI_6-Jko5g0dvd3Vt6kkkwDl&signer=media-rpc&x-canva-quality=thumbnail' -o assets/travel-gallery-final/test-full.png
+          curl -fL 'https://s3.amazonaws.com/document-export.canva.com/uURC8/DAHRN1uURC8/1/thumbnail/0001.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHYGFFNMW3%2F20260803%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260803T010718Z&X-Amz-Expires=25602&X-Amz-Signature=5fdd748d60c1e8e7fc13f1628a2c9456bd1e7bf8f87f9fa556010e0409257e82&X-Amz-SignedHeaders=host&response-expires=Mon%2C%2003%20Aug%202026%2008%3A14%3A00%20GMT' -o assets/travel-gallery-final/test-full.png
           file assets/travel-gallery-final/test-full.png
           identify assets/travel-gallery-final/test-full.png || true
       - name: Commit test asset to PR branch
