@@ -1,10 +1,7 @@
 name: Test Original Image Download
 on:
-  push:
-    branches:
-      - original-gallery-images
-    paths:
-      - '.github/workflows/test-original-download.yml'
+  pull_request:
+    types: [opened, synchronize, reopened]
 permissions:
   contents: write
 jobs:
@@ -13,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: original-gallery-images
+          ref: ${{ github.head_ref }}
       - name: Download full-size original
         run: |
           mkdir -p assets/original-test
@@ -25,4 +22,4 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add assets/original-test/01.png
           git commit -m 'test: add full-size original image' || exit 0
-          git push origin HEAD:original-gallery-images
+          git push origin HEAD:${{ github.head_ref }}
