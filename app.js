@@ -8,8 +8,8 @@
   };
 
   if (document.querySelector('.hero-premium')) {
-    load('home-proof.js?v=20260804-2', () => load('app-core.js?v=20260804-2'));
+    load('home-proof.js?v=20260804-3', () => load('app-core.js?v=20260804-3'));
   } else {
-    load('app-core.js?v=20260804-2');
+    load('app-core.js?v=20260804-3');
   }
 })();
