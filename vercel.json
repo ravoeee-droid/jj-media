@@ -2,6 +2,38 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/login",
+      "destination": "/admin/login",
+      "permanent": false
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/admin/dashboard",
+      "permanent": false
+    },
+    {
+      "source": "/dashboard/:path*",
+      "destination": "/admin/dashboard/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/system",
+      "destination": "/admin/system",
+      "permanent": false
+    },
+    {
+      "source": "/telegram",
+      "destination": "/admin/telegram",
+      "permanent": false
+    },
+    {
+      "source": "/renderer-status",
+      "destination": "/admin/renderer-status",
+      "permanent": false
+    }
+  ],
   "rewrites": [
     {
       "source": "/admin",
@@ -26,6 +58,10 @@
     {
       "source": "/api/events",
       "destination": "https://jj-media-social-outbound.vercel.app/admin/api/events"
+    },
+    {
+      "source": "/api/bookings",
+      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/bookings"
     },
     {
       "source": "/api/preview/:path*",
