@@ -10,6 +10,22 @@
     {
       "source": "/admin/:path*",
       "destination": "https://jj-media-social-outbound.vercel.app/admin/:path*"
+    },
+    {
+      "source": "/v/:path*",
+      "destination": "https://jj-media-social-outbound.vercel.app/admin/v/:path*"
+    },
+    {
+      "source": "/video/:path*",
+      "destination": "https://jj-media-social-outbound.vercel.app/admin/v/:path*"
+    },
+    {
+      "source": "/api/preview/:path*",
+      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/preview/:path*"
+    },
+    {
+      "source": "/api/media/:path*",
+      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/media/:path*"
     }
   ],
   "headers": [
@@ -24,6 +40,24 @@
     },
     {
       "source": "/admin/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/v/:path*",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/video/:path*",
       "headers": [
         {
           "key": "X-Robots-Tag",
