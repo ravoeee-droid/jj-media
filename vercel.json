@@ -20,6 +20,14 @@
       "destination": "https://jj-media-social-outbound.vercel.app/admin/v/:path*"
     },
     {
+      "source": "/api/landing/:path*",
+      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/landing/:path*"
+    },
+    {
+      "source": "/api/events",
+      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/events"
+    },
+    {
       "source": "/api/preview/:path*",
       "destination": "https://jj-media-social-outbound.vercel.app/admin/api/preview/:path*"
     },
