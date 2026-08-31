@@ -13,13 +13,17 @@
     load('growth-layer.js?v=20260831-2', () => load('privacy-controls.js?v=20260831-1', () => load('social-audit-bridge.js?v=20260831-1')));
   };
 
-  if (document.querySelector('.viral-page')) {
-    load('instagram-embeds.js?v=20260831-7');
-  }
+  const bootPage = () => {
+    if (document.querySelector('.viral-page')) {
+      load('instagram-embeds.js?v=20260831-7');
+    }
 
-  if (document.querySelector('.hero-premium')) {
-    load('home-proof.js?v=20260804-3', () => load('app-core.js?v=20260804-3', bootGrowth));
-  } else {
-    load('app-core.js?v=20260804-3', bootGrowth);
-  }
+    if (document.querySelector('.hero-premium')) {
+      load('home-proof.js?v=20260804-3', () => load('app-core.js?v=20260804-3', bootGrowth));
+    } else {
+      load('app-core.js?v=20260804-3', bootGrowth);
+    }
+  };
+
+  load('viral-nav.js?v=20260831-2', bootPage);
 })();
