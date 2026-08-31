@@ -38,7 +38,7 @@
         </div>
         <div class="jj-reel-live-frame">
           <div class="jj-reel-live-loading"><span></span><small>Reel wird geladen</small></div>
-          <iframe src="${embedUrl('reel', post.code)}" title="${post.label} von JJ-Media" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          <iframe data-instagram-src="${embedUrl('reel', post.code)}" title="${post.label} von JJ-Media" loading="lazy" scrolling="no" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         <div class="jj-reel-live-footer">
           <span>${post.label}</span>
@@ -52,7 +52,7 @@
       <div class="jj-feed-live-top"><span>${post.label}</span><strong>Instagram</strong></div>
       <div class="jj-feed-live-frame">
         <div class="jj-feed-live-loading"><span></span><small>Post wird geladen</small></div>
-        <iframe src="${embedUrl('p', post.code)}" title="${post.label} von JJ-Media" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <iframe data-instagram-src="${embedUrl('p', post.code)}" title="${post.label} von JJ-Media" loading="lazy" scrolling="no" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       <a class="jj-feed-live-link" href="${cleanUrl('p', post.code)}" target="_blank" rel="noopener noreferrer">Original auf Instagram ansehen <span>↗</span></a>
     </article>`;
@@ -60,10 +60,33 @@
   rail.className = 'jj-reel-live-grid';
   rail.innerHTML = reels.map(reelCard).join('');
 
-  const markFrames = root => root.querySelectorAll('iframe').forEach(frame => {
-    frame.addEventListener('load', () => frame.parentElement?.classList.add('is-loaded'));
-  });
-  markFrames(rail);
+  let hydrateSequence = 0;
+  const hydrate = frame => {
+    if (frame.src || !frame.dataset.instagramSrc) return;
+    const delay = Math.min(hydrateSequence++, 6) * 100;
+    setTimeout(() => {
+      if (!frame.isConnected || frame.src) return;
+      frame.src = frame.dataset.instagramSrc;
+    }, delay);
+  };
+
+  const observeFrames = root => {
+    const frames = [...root.querySelectorAll('iframe[data-instagram-src]')];
+    frames.forEach(frame => frame.addEventListener('load', () => frame.parentElement?.classList.add('is-loaded'), { once: true }));
+    if (!('IntersectionObserver' in window)) {
+      frames.forEach(hydrate);
+      return;
+    }
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        hydrate(entry.target);
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: '220px 0px', threshold: 0.01 });
+    frames.forEach(frame => observer.observe(frame));
+  };
+  observeFrames(rail);
 
   const note = document.querySelector('.viral-live-note');
   if (note) {
@@ -86,13 +109,13 @@
       </div>
       <div class="jj-feed-live-grid">${feedPosts.map(feedCard).join('')}</div>`;
     note.insertAdjacentElement('afterend', section);
-    markFrames(section);
+    observeFrames(section);
   }
 
   if (!document.querySelector('link[data-instagram-embeds-css]')) {
     const css = document.createElement('link');
     css.rel = 'stylesheet';
-    css.href = 'instagram-embeds.css?v=20260831-7';
+    css.href = 'instagram-embeds.css?v=20260831-8';
     css.dataset.instagramEmbedsCss = 'true';
     document.head.appendChild(css);
   }
