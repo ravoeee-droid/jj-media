@@ -15,7 +15,7 @@
 
   const bootPage = () => {
     if (document.querySelector('.viral-page')) {
-      load('instagram-embeds.js?v=20260831-7');
+      load('instagram-embeds.js?v=20260831-8');
     }
 
     if (document.querySelector('.hero-premium')) {
