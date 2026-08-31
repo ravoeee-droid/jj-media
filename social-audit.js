@@ -92,7 +92,7 @@
   const render=result=>{
     lastProfile=result.profileUrl||input.value.trim();
     document.querySelector('[data-platform]').textContent=result.platform||'Social Media';
-    document.querySelector('[data-profile-title]').textContent=result.title||result.handle?`@${result.handle}`:'Profil';
+    document.querySelector('[data-profile-title]').textContent=result.title||(result.handle?`@${result.handle}`:'Profil');
     const profileLink=document.querySelector('[data-profile-link]');
     profileLink.href=result.profileUrl||'#';
     const imageWrap=document.querySelector('[data-profile-image]');
