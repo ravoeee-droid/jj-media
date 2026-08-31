@@ -85,7 +85,9 @@ test('quick audit reaches a transparent result and hands context to funnel', asy
   await page.goto('/index.html',{waitUntil:'networkidle'});
   const audit = page.locator('.jj-audit-card');
   await audit.locator('[data-value]').nth(1).click();
+  await expect(audit.locator('[data-jj-step]')).toHaveText('2 / 3');
   await audit.locator('[data-value]').nth(0).click();
+  await expect(audit.locator('[data-jj-step]')).toHaveText('3 / 3');
   await audit.locator('[data-value]').nth(2).click();
   await expect(audit.locator('[data-jj-result]')).toHaveClass(/active/);
   await expect(audit.locator('[data-jj-score]')).toContainText('/100');
