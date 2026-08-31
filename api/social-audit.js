@@ -124,7 +124,7 @@ function generatedMetricDescription(text=''){
   return /followers?|following|posts?|likes?/i.test(text)&&text.length<260;
 }
 
-function scoreProfile({title,description,image,handle,metrics,platform,verified}){
+function scoreProfile({title,description,image,handle,metrics,verified}){
   const categories=[];
   const bioUsable=description&&!generatedMetricDescription(description);
   let clarity=25;
@@ -178,13 +178,13 @@ function buildInsights(data){
   const {platform,meta,metrics,scoring,verified}=data;
   const findings=[];
   const recommendations=[];
-  if(meta.title) findings.push(`Profil und Name sind öffentlich klar erkennbar.`);
-  else findings.push(`Der Profilname war öffentlich nicht zuverlässig auslesbar.`);
-  if(scoring.bioUsable) findings.push(`Eine öffentlich lesbare Profilbeschreibung konnte in die Analyse einbezogen werden.`);
+  if(meta.title) findings.push('Profil und Name sind öffentlich klar erkennbar.');
+  else findings.push('Der Profilname war öffentlich nicht zuverlässig auslesbar.');
+  if(scoring.bioUsable) findings.push('Eine öffentlich lesbare Profilbeschreibung konnte in die Analyse einbezogen werden.');
   else findings.push(`${platform} liefert die Bio aktuell nicht verlässlich ohne Login aus – wir bewerten sie deshalb nicht künstlich.`);
   if(metrics.followers!=null) findings.push(`Öffentlich sichtbares Follower-Signal: ${metrics.followers.toLocaleString('de-DE')}.`);
   if(metrics.posts!=null) findings.push(`Öffentlich sichtbare Content-Basis: ${metrics.posts.toLocaleString('de-DE')} Beiträge/Inhalte.`);
-  if(verified) findings.push(`Ein öffentliches Verifizierungs-Signal wurde erkannt.`);
+  if(verified) findings.push('Ein öffentliches Verifizierungs-Signal wurde erkannt.');
 
   if(!scoring.bioUsable) recommendations.push({title:'Positionierung in der Bio schärfen',text:'In einem Satz muss klar werden, für wen der Account ist, welches Ergebnis er liefert und warum man bleiben sollte.'});
   else if(!/kontakt|contact|book|buchen|termin|dm|message|anfrage|shop|link|website|call|email|mail/i.test(meta.description)) recommendations.push({title:'Nächsten Schritt sichtbar machen',text:'Die öffentlich lesbare Beschreibung zeigt kein starkes Conversion-Signal. Ein klarer CTA reduziert Reibung.'});
@@ -224,7 +224,7 @@ async function fetchPublic(url){
   throw new Error('Zu viele Weiterleitungen.');
 }
 
-export default async function handler(req,res){
+module.exports = async function handler(req,res){
   if(req.method!=='POST'){
     res.setHeader('Allow','POST');
     return send(res,405,{error:'Method not allowed'});
@@ -252,7 +252,7 @@ export default async function handler(req,res){
     const metrics=extractMetrics(html,meta.description,platform);
     const handle=handleFromUrl(current,platform)||handleFromUrl(url,platform);
     const verified=/"is_verified"\s*:\s*true|verified badge|aria-label="verified"/i.test(html);
-    const scoring=scoreProfile({title:meta.title,description:meta.description,image:meta.image,handle,metrics,platform,verified});
+    const scoring=scoreProfile({title:meta.title,description:meta.description,image:meta.image,handle,metrics,verified});
     const insights=buildInsights({platform,meta,metrics,scoring,verified});
     const meaningful=Boolean(meta.title||meta.description||meta.image||metrics.followers!=null||metrics.posts!=null);
     return send(res,200,{
@@ -277,4 +277,4 @@ export default async function handler(req,res){
   }catch(error){
     return send(res,400,{error:error?.message||'Der Link konnte nicht geprüft werden.'});
   }
-}
+};
