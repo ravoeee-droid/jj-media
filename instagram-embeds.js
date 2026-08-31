@@ -10,12 +10,12 @@
   };
 
   const reels = [
-    { code: 'DbNajc2Rdo4', label: 'Reel 01', thumb: 'assets/insta-1.webp' },
-    { code: 'Dbf1jZOMaQt', label: 'Reel 02', thumb: 'assets/insta-2.webp' },
-    { code: 'DcF9GhGxls2', label: 'Reel 03', thumb: 'assets/insta-3.webp' },
-    { code: 'DbsVHalgz3N', label: 'Reel 04', thumb: 'assets/insta-4.webp' },
-    { code: 'DZ44gXtvAob', label: 'Reel 05', thumb: 'assets/insta-5.webp' },
-    { code: 'DareM3sxe6n', label: 'Reel 06', thumb: 'assets/insta-6.webp' }
+    { code: 'DbNajc2Rdo4', label: 'Reel 01' },
+    { code: 'Dbf1jZOMaQt', label: 'Reel 02' },
+    { code: 'DcF9GhGxls2', label: 'Reel 03' },
+    { code: 'DbsVHalgz3N', label: 'Reel 04' },
+    { code: 'DZ44gXtvAob', label: 'Reel 05' },
+    { code: 'DareM3sxe6n', label: 'Reel 06' }
   ];
 
   const feedPosts = [
@@ -30,21 +30,21 @@
 
   const reelCard = post => {
     const views = formatViews(reelViews[post.code]);
-    const proof = views ? `<div class="jj-reel-proof"><small>VIEWS</small><strong>${views}</strong></div>` : '';
     return `
-      <button class="jj-reel-card reveal visible" type="button" data-instagram-open data-type="reel" data-code="${post.code}" aria-label="${post.label} ansehen">
-        <div class="jj-reel-visual">
-          <img src="${post.thumb}" alt="${post.label} von JJ-Media" loading="lazy">
-          <div class="jj-reel-shade"></div>
-          <div class="jj-reel-topline"><span>INSTAGRAM REEL</span><span>↗</span></div>
-          ${proof}
-          <span class="jj-reel-play">▶</span>
+      <article class="jj-reel-live-card reveal visible">
+        <div class="jj-reel-live-kpi ${views ? 'has-value' : 'is-missing'}">
+          <div><span>AUFRUFE</span><strong>${views || '—'}</strong></div>
+          <small>${views ? 'echte Reel-Views' : 'Wert fehlt noch'}</small>
         </div>
-        <div class="jj-reel-meta">
+        <div class="jj-reel-live-frame">
+          <div class="jj-reel-live-loading">Instagram Reel lädt …</div>
+          <iframe src="${embedUrl('reel', post.code)}" title="${post.label} von JJ-Media" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        <div class="jj-reel-live-footer">
           <span>${post.label}</span>
-          <strong>Original ansehen</strong>
+          <a href="${cleanUrl('reel', post.code)}" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
         </div>
-      </button>`;
+      </article>`;
   };
 
   const feedCard = post => `
@@ -53,8 +53,12 @@
       <div class="jj-feed-meta"><small>${post.label}</small><strong>Post ansehen ↗</strong></div>
     </button>`;
 
-  rail.className = 'jj-reel-grid';
+  rail.className = 'jj-reel-live-grid';
   rail.innerHTML = reels.map(reelCard).join('');
+
+  rail.querySelectorAll('iframe').forEach(frame => {
+    frame.addEventListener('load', () => frame.closest('.jj-reel-live-frame')?.classList.add('is-loaded'));
+  });
 
   const note = document.querySelector('.viral-live-note');
   if (note) {
@@ -65,14 +69,14 @@
         <strong>29,5K</strong>
         <em>VIEWS</em>
       </div>
-      <p>Ein einzelnes Reel aus einem belegten Kunden-Case. Die View-Zahl steht bewusst im Vordergrund — nicht versteckt im Instagram-Interface.</p>`;
+      <p>Die sechs Reels oben sind wieder direkt sichtbar und abspielbar. Die jeweilige Aufrufzahl sitzt bewusst als eigene KPI direkt über jedem Video.</p>`;
 
     const section = document.createElement('section');
     section.className = 'jj-feed-section reveal visible';
     section.innerHTML = `
       <div class="jj-feed-heading">
         <div><div class="eyebrow">Posts & Carousels</div><h2>Feed Content,<br><span class="serif">der hängen bleibt.</span></h2></div>
-        <p>Die Beiträge bleiben Teil des Portfolios, aber deutlich kompakter. Das echte Instagram-Original öffnet sich erst beim Klick.</p>
+        <p>Die Feed-Posts bleiben kompakt. Beim Klick öffnet sich der echte Instagram-Beitrag.</p>
       </div>
       <div class="jj-feed-grid">${feedPosts.map(feedCard).join('')}</div>`;
     note.insertAdjacentElement('afterend', section);
@@ -117,7 +121,7 @@
   if (!document.querySelector('link[data-instagram-embeds-css]')) {
     const css = document.createElement('link');
     css.rel = 'stylesheet';
-    css.href = 'instagram-embeds.css?v=20260831-4';
+    css.href = 'instagram-embeds.css?v=20260831-5';
     css.dataset.instagramEmbedsCss = 'true';
     document.head.appendChild(css);
   }
