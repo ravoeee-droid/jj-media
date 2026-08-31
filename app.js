@@ -14,7 +14,7 @@
   };
 
   if (document.querySelector('.viral-page')) {
-    load('instagram-embeds.js?v=20260831-6');
+    load('instagram-embeds.js?v=20260831-7');
   }
 
   if (document.querySelector('.hero-premium')) {
