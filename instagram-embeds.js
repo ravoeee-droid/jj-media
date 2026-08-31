@@ -92,7 +92,7 @@
   if (!document.querySelector('link[data-instagram-embeds-css]')) {
     const css = document.createElement('link');
     css.rel = 'stylesheet';
-    css.href = 'instagram-embeds.css?v=20260831-6';
+    css.href = 'instagram-embeds.css?v=20260831-7';
     css.dataset.instagramEmbedsCss = 'true';
     document.head.appendChild(css);
   }
