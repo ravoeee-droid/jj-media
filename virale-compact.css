@@ -1,0 +1,51 @@
+.viral-page .container{width:min(1120px,calc(100% - 42px))}
+.viral-hero{padding:132px 0 34px!important;min-height:auto!important}
+.viral-hero-inner{gap:46px!important;padding-bottom:46px!important}
+.viral-hero-copy{max-width:760px!important}
+.viral-hero h1{font-size:clamp(3rem,5.4vw,5.8rem)!important;line-height:.94!important;letter-spacing:-.058em!important;margin:20px 0 18px!important}
+.viral-hero-copy>p{font-size:clamp(.98rem,1.2vw,1.12rem)!important;line-height:1.62!important;max-width:680px!important}
+.viral-actions{margin-top:24px!important;gap:12px!important}
+.viral-side-card{width:min(100%,290px)!important;padding:21px!important;border-radius:21px!important}
+.viral-side-icon{width:46px!important;height:46px!important;margin-bottom:24px!important}
+.viral-side-card strong{font-size:1.12rem!important}
+.viral-proof-strip{border-radius:20px!important}
+.viral-proof-strip>div{padding:21px 24px!important;min-height:108px!important}
+.viral-proof-strip strong{font-size:clamp(1.85rem,2.6vw,3rem)!important}
+.viral-showcase{padding:78px 0 82px!important}
+.viral-heading{gap:44px!important;margin-bottom:32px!important}
+.viral-heading h2,.viral-performance h2,.viral-cta h2{font-size:clamp(2.45rem,4.4vw,4.9rem)!important;line-height:.96!important}
+.viral-heading p{font-size:.98rem!important;line-height:1.58!important}
+.jj-reel-live-grid{gap:16px!important}
+.jj-reel-live-card{border-radius:20px!important}
+.jj-reel-live-kpi{padding:14px 15px 13px!important}
+.jj-reel-live-kpi strong{font-size:clamp(1.8rem,2.6vw,2.75rem)!important;line-height:.86!important}
+.jj-reel-live-frame{height:430px!important;contain:layout paint style;content-visibility:auto;contain-intrinsic-size:430px}
+.jj-reel-live-footer{padding:10px 14px 12px!important}
+.jj-view-hero{margin-top:26px!important;padding:28px 32px!important;border-radius:22px!important;gap:28px!important}
+.jj-view-hero-copy strong{font-size:clamp(3.7rem,6vw,6rem)!important}
+.jj-view-hero p{font-size:.94rem!important;line-height:1.58!important}
+.jj-feed-section{margin-top:56px!important;padding-top:50px!important}
+.jj-feed-heading{gap:40px!important;margin-bottom:24px!important}
+.jj-feed-heading h2{font-size:clamp(2.35rem,3.8vw,4rem)!important}
+.jj-feed-live-grid{gap:13px!important}
+.jj-feed-live-card{border-radius:17px!important;contain:layout paint style;content-visibility:auto;contain-intrinsic-size:340px}
+.jj-feed-live-frame{height:335px!important}
+.viral-performance,.viral-cases{padding:84px 0!important}
+.viral-performance-head{margin-bottom:30px!important;max-width:760px!important}
+.viral-feature-card{border-radius:24px!important}
+.viral-feature-copy{padding:40px!important}
+.viral-feature-copy h3{font-size:clamp(1.9rem,3.4vw,3.55rem)!important}
+.viral-feature-metrics{margin-top:26px!important}
+.viral-feature-metrics>div{padding:16px!important;border-radius:15px!important}
+.viral-proof-image{min-height:490px!important}
+.viral-case-grid{gap:14px!important}
+.viral-case-card{border-radius:24px!important}
+.viral-case-media{height:350px!important}
+.viral-case-copy{padding:23px!important}
+.viral-case-copy>strong{font-size:clamp(1.35rem,2.1vw,2.1rem)!important}
+.viral-principles{padding:20px 0 58px!important}
+.viral-principle-grid>div{padding:20px 16px!important}
+.viral-cta{padding:88px 0 96px!important}
+@media(max-width:1040px){.jj-reel-live-frame{height:450px!important}.jj-feed-live-frame{height:390px!important}}
+@media(max-width:760px){.viral-hero{padding-top:112px!important}.viral-hero h1{font-size:clamp(2.8rem,11vw,4.6rem)!important}.viral-showcase,.viral-performance,.viral-cases{padding:64px 0!important}.jj-reel-live-frame{height:410px!important}.jj-view-hero{padding:23px!important}.viral-feature-copy{padding:30px!important}.viral-proof-image{min-height:400px!important}.viral-case-media{height:300px!important}}
+@media(max-width:600px){.viral-page .container{width:min(100% - 28px,1120px)}.jj-reel-live-card{width:min(100%,330px)!important}.jj-reel-live-frame{height:455px!important}.jj-feed-live-card{width:min(100%,330px)!important}.jj-feed-live-frame{height:420px!important}.jj-reel-live-kpi strong{font-size:2.25rem!important}.jj-view-hero-copy strong{font-size:4rem!important}}
