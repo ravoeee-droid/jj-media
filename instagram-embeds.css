@@ -1,0 +1,25 @@
+.viral-card-rail-live{grid-template-columns:repeat(7,minmax(310px,360px));gap:18px;align-items:start;padding-bottom:28px}
+.viral-post-card-live{min-height:0;background:linear-gradient(180deg,#151218 0%,#0d0c10 100%);border-color:rgba(255,255,255,.14);overflow:hidden}
+.viral-post-card-live:hover{transform:translateY(-5px);border-color:rgba(168,125,255,.5)}
+.viral-post-media-live{aspect-ratio:auto;min-height:590px;background:#fff;overflow:hidden}
+.viral-post-media-live:after{display:none}
+.ig-embed-shell{position:relative;width:100%;height:590px;background:#fff;overflow:hidden}
+.ig-live-embed{position:relative;z-index:2;width:100%;height:100%;border:0;background:#fff;display:block;opacity:0;transition:opacity .35s ease}
+.ig-embed-shell.is-loaded .ig-live-embed{opacity:1}
+.ig-loading{position:absolute;z-index:1;inset:0;display:grid;place-content:center;justify-items:center;gap:12px;color:#5f5962;background:linear-gradient(145deg,#fff,#f5f1ed)}
+.ig-loading span{width:30px;height:30px;border:3px solid rgba(17,16,20,.12);border-top-color:#7d55ff;border-radius:50%;animation:igSpin .8s linear infinite}
+.ig-loading small{text-transform:uppercase;letter-spacing:.12em;font-weight:700;font-size:.65rem}
+.ig-embed-shell.is-loaded .ig-loading{opacity:0;pointer-events:none}
+.viral-platform-live{background:rgba(17,16,20,.84);box-shadow:0 8px 24px rgba(0,0,0,.22)}
+.viral-post-body-live{min-height:190px}
+.viral-post-body-live p{margin:0 0 18px}
+.ig-original-link{margin-top:auto;display:inline-flex;align-items:center;justify-content:space-between;gap:12px;padding-top:16px;border-top:1px solid rgba(255,255,255,.1);font-size:.84rem;font-weight:700;color:#fff}
+.ig-original-link span{color:#b49cff;transition:transform .2s ease}
+.ig-original-link:hover span{transform:translate(2px,-2px)}
+@keyframes igSpin{to{transform:rotate(360deg)}}
+@media(max-width:760px){
+ .viral-card-rail-live{grid-template-columns:repeat(7,minmax(286px,86vw));gap:14px}
+ .viral-post-media-live,.ig-embed-shell{min-height:545px;height:545px}
+ .viral-post-body-live{min-height:180px}
+}
+@media(prefers-reduced-motion:reduce){.ig-loading span{animation:none}.ig-live-embed{transition:none}}
