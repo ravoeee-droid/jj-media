@@ -10,7 +10,7 @@
   const isLegal = /\/(datenschutz|impressum)(\.html)?\/?$/i.test(location.pathname);
   const bootGrowth = () => {
     if (isLegal) return;
-    load('growth-layer.js?v=20260831-1', () => load('privacy-controls.js?v=20260831-1'));
+    load('growth-layer.js?v=20260831-2', () => load('privacy-controls.js?v=20260831-1', () => load('social-audit-bridge.js?v=20260831-1')));
   };
 
   if (document.querySelector('.viral-page')) {
