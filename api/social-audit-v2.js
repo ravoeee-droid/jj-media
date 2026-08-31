@@ -166,7 +166,7 @@ function instagramPost(node={}){
 
 async function fetchInstagramDeep(url){
   const username=platformHandle(url,'Instagram');
-  if(!username||!^[a-z0-9._]{2,80}$/i.test(username)) return null;
+  if(!username||!/^[a-z0-9._]{2,80}$/i.test(username)) return null;
   const endpoint=`https://www.instagram.com/api/v1/users/web_profile_info/?username=${encodeURIComponent(username)}`;
   const response=await timedFetch(endpoint,{headers:{
     'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140 Safari/537.36',
