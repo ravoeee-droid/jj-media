@@ -1,553 +1,60 @@
-const SOCIAL_HOSTS = ['instagram.com','tiktok.com','linkedin.com','facebook.com','threads.net'];
-const IG_WEB_APP_ID = '936619743392459';
+const HOSTS=['instagram.com','tiktok.com','linkedin.com','facebook.com','threads.net'];
+const IG_APP_ID='936619743392459';
 
-function send(res,status,body){
-  res.statusCode=status;
-  res.setHeader('Content-Type','application/json; charset=utf-8');
-  res.setHeader('Cache-Control','no-store');
-  res.setHeader('X-Content-Type-Options','nosniff');
-  res.end(JSON.stringify(body));
-}
+const clean=(v='',max=1200)=>String(v??'').replace(/\r/g,'').replace(/[\t ]+/g,' ').replace(/\n{3,}/g,'\n\n').trim().slice(0,max);
+const finite=v=>Number.isFinite(Number(v))?Number(v):null;
 
-function allowedHost(hostname=''){
-  const host=String(hostname).toLowerCase().replace(/^www\./,'');
-  return SOCIAL_HOSTS.some(root=>host===root||host.endsWith(`.${root}`));
-}
+function send(res,status,body){res.statusCode=status;res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.end(JSON.stringify(body));}
+function hostOk(host=''){const h=String(host).toLowerCase().replace(/^www\./,'');return HOSTS.some(root=>h===root||h.endsWith(`.${root}`));}
+function platform(host=''){const h=String(host).toLowerCase();if(h.includes('instagram.'))return'Instagram';if(h.includes('tiktok.'))return'TikTok';if(h.includes('linkedin.'))return'LinkedIn';if(h.includes('facebook.'))return'Facebook';if(h.includes('threads.'))return'Threads';return'Social Media';}
+function normalise(raw=''){let v=String(raw).trim().slice(0,500);if(!v)throw new Error('Bitte gib einen Social-Media-Link ein.');if(/^@[a-z0-9._-]{2,80}$/i.test(v))v=`https://www.instagram.com/${v.slice(1)}/`;if(!/^https?:\/\//i.test(v))v=`https://${v}`;const u=new URL(v);if(!hostOk(u.hostname))throw new Error('Aktuell unterstützen wir Instagram, TikTok, LinkedIn, Facebook und Threads.');u.hash='';return u;}
+function handle(u,p){const parts=u.pathname.split('/').filter(Boolean);if(p==='LinkedIn'&&['in','company','school'].includes(parts[0]))return parts[1]||'';if(p==='Facebook'&&parts[0]==='profile.php')return u.searchParams.get('id')||'';return(parts[0]||'').replace(/^@/,'');}
 
-function platformFromHost(hostname=''){
-  const host=String(hostname).toLowerCase();
-  if(host.includes('instagram.')) return 'Instagram';
-  if(host.includes('tiktok.')) return 'TikTok';
-  if(host.includes('linkedin.')) return 'LinkedIn';
-  if(host.includes('facebook.')) return 'Facebook';
-  if(host.includes('threads.')) return 'Threads';
-  return 'Social Media';
-}
-
-function normaliseInput(raw=''){
-  let value=String(raw).trim().slice(0,500);
-  if(!value) throw new Error('Bitte gib einen Social-Media-Link ein.');
-  if(/^@[a-z0-9._-]{2,80}$/i.test(value)) value=`https://www.instagram.com/${value.slice(1)}/`;
-  if(!/^https?:\/\//i.test(value)) value=`https://${value}`;
-  const url=new URL(value);
-  if(!allowedHost(url.hostname)) throw new Error('Aktuell unterstützen wir Instagram, TikTok, LinkedIn, Facebook und Threads.');
-  url.hash='';
-  return url;
-}
-
-function platformHandle(url,platform){
-  const parts=url.pathname.split('/').filter(Boolean);
-  if(platform==='LinkedIn'&&['in','company','school'].includes(parts[0])) return parts[1]||'';
-  if(platform==='Facebook'&&parts[0]==='profile.php') return url.searchParams.get('id')||'';
-  return (parts[0]||'').replace(/^@/,'');
-}
-
-function cleanText(value='',max=600){
-  return String(value??'').replace(/\r/g,'').replace(/[\t ]+/g,' ').replace(/\n{3,}/g,'\n\n').trim().slice(0,max);
-}
-
-function decodeHtml(value=''){
-  return cleanText(String(value)
-    .replace(/&amp;/gi,'&').replace(/&quot;/gi,'"').replace(/&#39;|&apos;/gi,"'")
-    .replace(/&lt;/gi,'<').replace(/&gt;/gi,'>')
-    .replace(/&#(\d+);/g,(_,n)=>String.fromCharCode(Number(n)))
-    .replace(/&#x([0-9a-f]+);/gi,(_,n)=>String.fromCharCode(parseInt(n,16))),1200);
-}
-
-function attrs(tag=''){
-  const result={};
-  const re=/([:\w-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/g;
-  let match;
-  while((match=re.exec(tag))) result[match[1].toLowerCase()]=decodeHtml(match[2]??match[3]??match[4]??'');
-  return result;
-}
-
-function parseMeta(html=''){
-  const meta={};
-  for(const tag of html.match(/<meta\b[^>]*>/gi)||[]){
-    const a=attrs(tag);
-    const key=(a.property||a.name||a.itemprop||'').toLowerCase();
-    if(key&&a.content&&!meta[key]) meta[key]=a.content;
-  }
-  const titleMatch=html.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
-  return {
-    title:decodeHtml(meta['og:title']||meta['twitter:title']||(titleMatch?.[1]||'')),
-    description:decodeHtml(meta['og:description']||meta.description||meta['twitter:description']||''),
-    image:meta['og:image']||meta['twitter:image']||''
-  };
-}
-
-function numberFrom(value=''){
-  if(value==null||value==='') return null;
-  const normalized=String(value).trim().replace(/\s/g,'').replace(/(?<=\d),(?=\d{3}\b)/g,'').replace(',','.');
-  const match=normalized.match(/([\d.]+)\s*([KMB])?/i);
-  if(!match) return null;
-  let num=Number(match[1]);
-  if(!Number.isFinite(num)) return null;
-  const unit=(match[2]||'').toUpperCase();
-  if(unit==='K') num*=1e3;
-  if(unit==='M') num*=1e6;
-  if(unit==='B') num*=1e9;
-  return Math.round(num);
-}
-
-function firstMetric(text,patterns){
-  for(const re of patterns){
-    const match=String(text).match(re);
-    const num=numberFrom(match?.[1]);
-    if(num!=null) return num;
-  }
-  return null;
-}
-
-function metricsFromMeta(html,description,platform){
-  const corpus=`${description} ${html.slice(0,1000000)}`;
-  return {
-    followers:firstMetric(corpus,[/([\d.,]+\s*[KMB]?)\s+Followers?/i,/"follower_count"\s*:\s*(\d+)/i,/"edge_followed_by"\s*:\s*\{\s*"count"\s*:\s*(\d+)/i]),
-    following:firstMetric(corpus,[/([\d.,]+\s*[KMB]?)\s+Following/i,/"following_count"\s*:\s*(\d+)/i,/"edge_follow"\s*:\s*\{\s*"count"\s*:\s*(\d+)/i]),
-    posts:firstMetric(corpus,[/([\d.,]+\s*[KMB]?)\s+Posts?/i,/"media_count"\s*:\s*(\d+)/i,/"edge_owner_to_timeline_media"\s*:\s*\{\s*"count"\s*:\s*(\d+)/i,/"videoCount"\s*:\s*(\d+)/i]),
-    likes:platform==='TikTok'?firstMetric(corpus,[/([\d.,]+\s*[KMB]?)\s+Likes?/i,/"heartCount"\s*:\s*(\d+)/i]):null
-  };
-}
-
-function generatedMetaDescription(text=''){
-  const value=String(text);
-  return /followers?|following|posts?|likes?/i.test(value)&&/instagram|tiktok|photos|videos|profil/i.test(value);
-}
-
-async function timedFetch(url,options={},timeout=7500){
-  const controller=new AbortController();
-  const timer=setTimeout(()=>controller.abort(),timeout);
-  try{return await fetch(url,{...options,signal:controller.signal});}
-  finally{clearTimeout(timer);}
-}
-
-async function fetchHtml(url){
-  let current=new URL(url.toString());
-  for(let hop=0;hop<4;hop+=1){
-    if(!allowedHost(current.hostname)) throw new Error('Nicht erlaubte Weiterleitung.');
-    const response=await timedFetch(current,{redirect:'manual',headers:{
-      'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140 Safari/537.36',
-      'accept':'text/html,application/xhtml+xml',
-      'accept-language':'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
-      'cache-control':'no-cache'
-    }});
-    if([301,302,303,307,308].includes(response.status)){
-      const location=response.headers.get('location');
-      if(!location) return {response,current};
-      current=new URL(location,current);
-      continue;
-    }
-    return {response,current};
-  }
-  throw new Error('Zu viele Weiterleitungen.');
-}
-
-function captionFromNode(node={}){
-  return cleanText(node?.edge_media_to_caption?.edges?.[0]?.node?.text||node?.caption?.text||node?.desc||'',1200);
-}
-
-function instagramPost(node={}){
-  const caption=captionFromNode(node);
-  const likes=node?.edge_liked_by?.count??node?.edge_media_preview_like?.count??null;
-  const comments=node?.edge_media_to_comment?.count??node?.edge_media_to_parent_comment?.count??null;
-  const views=node?.video_view_count??node?.video_play_count??null;
-  const timestamp=node?.taken_at_timestamp??node?.taken_at??null;
-  return {
-    id:String(node?.shortcode||node?.code||node?.id||''),
-    type:(node?.is_video||node?.product_type==='clips')?'Reel/Video':'Post',
-    caption,
-    likes:Number.isFinite(Number(likes))?Number(likes):null,
-    comments:Number.isFinite(Number(comments))?Number(comments):null,
-    views:Number.isFinite(Number(views))?Number(views):null,
-    timestamp:Number.isFinite(Number(timestamp))?Number(timestamp):null
-  };
-}
-
-async function fetchInstagramDeep(url){
-  const username=platformHandle(url,'Instagram');
-  if(!username||!/^[a-z0-9._]{2,80}$/i.test(username)) return null;
-  const endpoint=`https://www.instagram.com/api/v1/users/web_profile_info/?username=${encodeURIComponent(username)}`;
-  const response=await timedFetch(endpoint,{headers:{
-    'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140 Safari/537.36',
-    'accept':'*/*',
-    'accept-language':'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
-    'x-ig-app-id':IG_WEB_APP_ID,
-    'referer':`https://www.instagram.com/${username}/`
-  }},7000);
-  if(!response.ok) return null;
-  const json=await response.json().catch(()=>null);
-  const user=json?.data?.user||json?.user||null;
-  if(!user) return null;
-  const edges=user?.edge_owner_to_timeline_media?.edges||user?.edge_felix_video_timeline?.edges||[];
-  const recentContent=edges.slice(0,9).map(edge=>instagramPost(edge?.node||edge)).filter(item=>item.id||item.caption);
-  return {
-    source:'instagram-profile-api',
-    fullName:cleanText(user.full_name||username,180),
-    handle:cleanText(user.username||username,100),
-    bio:cleanText(user.biography||'',700),
-    image:user.profile_pic_url_hd||user.profile_pic_url||'',
-    externalUrl:user.external_url||'',
-    category:cleanText(user.category_name||user.business_category_name||'',120),
-    verified:Boolean(user.is_verified),
-    business:Boolean(user.is_business_account||user.is_professional_account),
-    metrics:{
-      followers:Number.isFinite(Number(user?.edge_followed_by?.count))?Number(user.edge_followed_by.count):null,
-      following:Number.isFinite(Number(user?.edge_follow?.count))?Number(user.edge_follow.count):null,
-      posts:Number.isFinite(Number(user?.edge_owner_to_timeline_media?.count))?Number(user.edge_owner_to_timeline_media.count):null,
-      likes:null
-    },
-    recentContent
-  };
-}
-
-function collectJsonScripts(html=''){
-  const scripts=[];
-  const regex=/<script[^>]*(?:id=["'](?:__UNIVERSAL_DATA_FOR_REHYDRATION__|SIGI_STATE)["'])?[^>]*type=["']application\/json["'][^>]*>([\s\S]*?)<\/script>/gi;
-  let match;
-  while((match=regex.exec(html))){
-    const raw=match[1].trim();
-    if(!raw||raw.length>2500000) continue;
-    try{scripts.push(JSON.parse(raw));}catch(_){}
-  }
-  return scripts;
-}
-
-function walkForTikTok(root){
-  const seen=new Set();
-  const queue=[root];
-  let user=null,stats=null,items=[];
-  while(queue.length&&seen.size<9000){
-    const value=queue.shift();
-    if(!value||typeof value!=='object'||seen.has(value)) continue;
-    seen.add(value);
-    if(!user&&value.uniqueId&&('nickname' in value||'signature' in value)) user=value;
-    if(!stats&&('followerCount' in value)&&('followingCount' in value)) stats=value;
-    if(Array.isArray(value.itemList)&&value.itemList.length) items=value.itemList;
-    for(const child of Object.values(value)) if(child&&typeof child==='object') queue.push(child);
-  }
-  return {user,stats,items};
-}
-
-function tiktokPost(item={}){
-  const stats=item.stats||item.statsV2||{};
-  return {
-    id:String(item.id||''),
-    type:'Video',
-    caption:cleanText(item.desc||'',1200),
-    likes:Number.isFinite(Number(stats.diggCount))?Number(stats.diggCount):null,
-    comments:Number.isFinite(Number(stats.commentCount))?Number(stats.commentCount):null,
-    views:Number.isFinite(Number(stats.playCount))?Number(stats.playCount):null,
-    timestamp:Number.isFinite(Number(item.createTime))?Number(item.createTime):null
-  };
-}
-
-function extractTikTokDeep(html,url){
-  for(const json of collectJsonScripts(html)){
-    const found=walkForTikTok(json);
-    if(!found.user&&!found.stats) continue;
-    const user=found.user||{};
-    const stats=found.stats||{};
-    return {
-      source:'tiktok-page-json',
-      fullName:cleanText(user.nickname||platformHandle(url,'TikTok'),180),
-      handle:cleanText(user.uniqueId||platformHandle(url,'TikTok'),100),
-      bio:cleanText(user.signature||'',700),
-      image:user.avatarLarger||user.avatarMedium||user.avatarThumb||'',
-      externalUrl:user.bioLink?.link||'',
-      category:'',
-      verified:Boolean(user.verified),
-      business:Boolean(user.commerceUserInfo?.commerceUser||false),
-      metrics:{
-        followers:Number.isFinite(Number(stats.followerCount))?Number(stats.followerCount):null,
-        following:Number.isFinite(Number(stats.followingCount))?Number(stats.followingCount):null,
-        posts:Number.isFinite(Number(stats.videoCount))?Number(stats.videoCount):null,
-        likes:Number.isFinite(Number(stats.heartCount))?Number(stats.heartCount):null
-      },
-      recentContent:(found.items||[]).slice(0,9).map(tiktokPost).filter(item=>item.id||item.caption)
-    };
-  }
-  return null;
-}
-
-function firstLine(text=''){
-  return cleanText(String(text).split(/\n|[.!?]\s/)[0]||'',180);
-}
-
-function analyzeCaption(text=''){
-  const caption=cleanText(text,1500);
-  if(!caption) return {available:false,hookScore:null,cta:false,specific:false,hook:''};
-  const hook=firstLine(caption);
-  let hookScore=36;
-  if(hook.length>=18&&hook.length<=110) hookScore+=15;
-  if(/[?!]/.test(hook)) hookScore+=8;
-  if(/^\d|\b\d+\b/.test(hook)) hookScore+=7;
-  if(/\b(du|dein|deine|warum|wie|fehler|stop|achtung|niemand|dieser|diese|das|wenn|so|3|5|7|you|your|why|how|mistake|stop)\b/i.test(hook)) hookScore+=14;
-  if(hook.length>150) hookScore-=12;
-  const cta=/\b(folg|follow|komment|comment|schreib|dm|speicher|save|teil|share|link|bio|buch|termin|kontakt|mehr erfahren|mehr infos|jetzt)\b/i.test(caption);
-  const specific=/\b\d+[.,]?\d*\s*(%|€|eur|tage|wochen|monate|kunden|leads|views|aufrufe|follower)?\b/i.test(caption);
-  return {available:true,hookScore:Math.max(20,Math.min(95,hookScore)),cta,specific,hook};
-}
-
-function daysSince(timestamp){
-  if(!timestamp) return null;
-  const ms=Date.now()-(Number(timestamp)*1000);
-  if(!Number.isFinite(ms)) return null;
-  return Math.max(0,Math.round(ms/86400000));
-}
-
-function median(values=[]){
-  const nums=values.filter(Number.isFinite).sort((a,b)=>a-b);
-  if(!nums.length) return null;
-  const mid=Math.floor(nums.length/2);
-  return nums.length%2?nums[mid]:(nums[mid-1]+nums[mid])/2;
-}
-
-function contentSignals(items=[]){
-  const analyzed=items.map(item=>({...item,analysis:analyzeCaption(item.caption)}));
-  const usable=analyzed.filter(item=>item.analysis.available);
-  const hookScores=usable.map(item=>item.analysis.hookScore).filter(Number.isFinite);
-  const ctaRate=usable.length?usable.filter(item=>item.analysis.cta).length/usable.length:null;
-  const specificRate=usable.length?usable.filter(item=>item.analysis.specific).length/usable.length:null;
-  const timestamps=analyzed.map(item=>item.timestamp).filter(Number.isFinite).sort((a,b)=>b-a);
-  const gaps=[];
-  for(let i=0;i<timestamps.length-1;i+=1) gaps.push((timestamps[i]-timestamps[i+1])/86400);
-  return {
-    analyzed,
-    usableCount:usable.length,
-    avgHook:hookScores.length?Math.round(hookScores.reduce((a,b)=>a+b,0)/hookScores.length):null,
-    ctaRate:ctaRate==null?null:Math.round(ctaRate*100),
-    specificRate:specificRate==null?null:Math.round(specificRate*100),
-    daysSinceLatest:timestamps[0]?daysSince(timestamps[0]):null,
-    medianGap:gaps.length?Math.round(median(gaps)):null
-  };
-}
-
-function bioSignals(bio='',externalUrl=''){
-  const value=cleanText(bio,900);
-  const hasAudience=/\b(für|for|helps?|helping|wir helfen|ich helfe|unternehmen|brands?|marken|hotels?|reisen|kunden|teams?|familien|frauen|männer|b2b|b2c)\b/i.test(value);
-  const hasOutcome=/\b(mehr|steig|wachstum|growth|reichweite|sichtbar|anfragen|leads|umsatz|verkauf|sales|buchungen|bewerber|bekanntheit|vertrauen|ergebnis|results?)\b/i.test(value);
-  const hasOffer=/\b(agentur|agency|beratung|consult|service|studio|coach|training|marketing|social media|content|design|shop|hotel|reisen|immobilien|software|saas)\b/i.test(value);
-  const hasCta=/\b(kontakt|contact|book|buchen|termin|dm|message|anfrage|shop|link|website|call|email|mail|jetzt|hier)\b/i.test(value);
-  const hasProof=/\b(\d+\+?|%|kunden|clients?|cases?|award|auszeichnung|seit\s+\d{4}|bewertungen|reviews?|million|mio\.?|tausend|k\b)\b/i.test(value);
-  return {hasAudience,hasOutcome,hasOffer,hasCta,hasProof,hasExternal:Boolean(externalUrl),length:value.length};
-}
-
-function buildEvaluation(profile){
-  const content=contentSignals(profile.recentContent||[]);
-  const bio=bioSignals(profile.bio||'',profile.externalUrl||'');
-  const categories=[];
-
-  let clarity=30;
-  if(profile.fullName) clarity+=16;
-  if(profile.handle) clarity+=10;
-  if(profile.image) clarity+=10;
-  if(profile.bio) clarity+=22;
-  if(profile.category) clarity+=8;
-  categories.push({key:'clarity',label:'Profil-Klarheit',score:Math.min(96,clarity),available:Boolean(profile.fullName||profile.handle),evidence:profile.bio?'Name, Profilbild und Bio wurden erkannt.':'Profilidentität erkannt, Bio jedoch nicht belastbar auslesbar.'});
-
-  if(profile.bio){
-    let positioning=28 + (bio.hasAudience?22:0) + (bio.hasOutcome?22:0) + (bio.hasOffer?18:0) + (bio.length>=40&&bio.length<=260?10:0);
-    categories.push({key:'positioning',label:'Positionierung',score:Math.min(96,positioning),available:true,evidence:[bio.hasAudience?'Zielgruppe erkennbar':'Zielgruppe nicht klar benannt',bio.hasOutcome?'Nutzen/Ergebnis erkennbar':'konkretes Ergebnis fehlt'].join(' · ')});
-
-    let conversion=25 + (bio.hasCta?28:0) + (bio.hasExternal?28:0) + (bio.hasOutcome?10:0);
-    categories.push({key:'conversion',label:'Conversion',score:Math.min(95,conversion),available:true,evidence:[bio.hasCta?'CTA erkannt':'kein klarer CTA erkannt',bio.hasExternal?'externer Link erkannt':'kein externer Link erkannt'].join(' · ')});
-
-    let trust=30 + (profile.verified?20:0) + (profile.business?10:0) + (profile.category?8:0) + (bio.hasProof?22:0);
-    if(content.specificRate!=null) trust+=Math.round(content.specificRate*.12);
-    categories.push({key:'trust',label:'Proof & Vertrauen',score:Math.min(95,trust),available:true,evidence:bio.hasProof?'Konkrete Proof-Signale im sichtbaren Text erkannt.':'Wenig konkrete Proof-Signale in der Bio erkannt.'});
-  }else{
-    categories.push({key:'positioning',label:'Positionierung',score:null,available:false,evidence:'Bio nicht belastbar öffentlich verfügbar.'});
-    categories.push({key:'conversion',label:'Conversion',score:null,available:false,evidence:'Bio/Link nicht vollständig öffentlich verfügbar.'});
-    categories.push({key:'trust',label:'Proof & Vertrauen',score:null,available:false,evidence:'Zu wenig belastbare Textsignale.'});
-  }
-
-  if(content.usableCount>=3){
-    let contentScore=content.avgHook??50;
-    if(content.ctaRate!=null) contentScore=Math.round(contentScore*.72 + Math.min(95,35+content.ctaRate*.6)*.28);
-    categories.push({key:'content',label:'Content & Hooks',score:Math.max(25,Math.min(95,contentScore)),available:true,evidence:`${content.usableCount} aktuelle Captions analysiert · Ø Hook ${content.avgHook??'—'}/100 · CTA in ${content.ctaRate??'—'}%.`});
-  }else{
-    categories.push({key:'content',label:'Content & Hooks',score:null,available:false,evidence:'Mindestens 3 aktuelle, öffentlich lesbare Captions nötig.'});
-  }
-
-  if(content.analyzed.filter(item=>item.timestamp).length>=3){
-    let activity=78;
-    if(content.daysSinceLatest!=null&&content.daysSinceLatest>14) activity-=18;
-    if(content.daysSinceLatest!=null&&content.daysSinceLatest>45) activity-=18;
-    if(content.medianGap!=null&&content.medianGap>14) activity-=15;
-    if(content.medianGap!=null&&content.medianGap<=7) activity+=8;
-    categories.push({key:'activity',label:'Aktivität',score:Math.max(25,Math.min(95,activity)),available:true,evidence:`Letzter sichtbarer Content vor ${content.daysSinceLatest??'—'} Tagen · Median-Abstand ${content.medianGap??'—'} Tage.`});
-  }else{
-    categories.push({key:'activity',label:'Aktivität',score:null,available:false,evidence:'Zeitstempel aktueller Inhalte nicht ausreichend verfügbar.'});
-  }
-
-  let completeness=0;
-  if(profile.fullName||profile.handle) completeness+=12;
-  if(profile.image) completeness+=6;
-  if(profile.bio) completeness+=18;
-  if(profile.externalUrl) completeness+=8;
-  if(profile.category) completeness+=5;
-  if(profile.metrics?.followers!=null) completeness+=6;
-  if(profile.metrics?.posts!=null) completeness+=5;
-  if(content.usableCount>=3) completeness+=25;
-  if(content.analyzed.filter(item=>item.timestamp).length>=3) completeness+=8;
-  if(content.analyzed.some(item=>item.likes!=null||item.comments!=null||item.views!=null)) completeness+=7;
-  completeness=Math.min(100,completeness);
-
-  const available=categories.filter(item=>item.available&&Number.isFinite(item.score));
-  const substantive=available.filter(item=>item.key!=='clarity');
-  const confidence=completeness>=75&&substantive.length>=4?'hoch':completeness>=55&&substantive.length>=2?'mittel':'begrenzt';
-  const score=confidence==='begrenzt'?null:Math.round(available.reduce((sum,item)=>sum+item.score,0)/available.length);
-  return {categories,content,bio,completeness,confidence,score};
-}
-
-function priorityFromScore(score){
-  if(score==null) return 'Daten fehlen';
-  if(score<50) return 'Hohe Priorität';
-  if(score<68) return 'Mittlere Priorität';
-  return 'Optimierung';
-}
-
-function buildEvidence(profile,evaluation,platform){
-  const findings=[];
-  const metrics=profile.metrics||{};
-  if(profile.bio) findings.push({title:'Bio ausgelesen',text:`${profile.bio.length} Zeichen öffentlich analysierbar.`,tone:'positive'});
-  if(metrics.followers!=null) findings.push({title:'Audience-Signal',text:`${metrics.followers.toLocaleString('de-DE')} Follower öffentlich sichtbar.`,tone:'neutral'});
-  if(evaluation.content.usableCount) findings.push({title:'Content-Daten',text:`${evaluation.content.usableCount} aktuelle Captions konnten konkret auf Hook- und CTA-Signale geprüft werden.`,tone:'positive'});
-  if(evaluation.content.avgHook!=null) findings.push({title:'Hook-Stärke',text:`Ø ${evaluation.content.avgHook}/100 über die analysierbaren aktuellen Inhalte.`,tone:evaluation.content.avgHook>=68?'positive':'warning'});
-  if(evaluation.content.ctaRate!=null) findings.push({title:'CTA-Abdeckung',text:`In ${evaluation.content.ctaRate}% der analysierten Captions wurde ein klarer Handlungsimpuls erkannt.`,tone:evaluation.content.ctaRate>=50?'positive':'warning'});
-  if(evaluation.content.daysSinceLatest!=null) findings.push({title:'Aktualität',text:`Letzter öffentlich erkannter Inhalt vor ${evaluation.content.daysSinceLatest} Tagen.`,tone:evaluation.content.daysSinceLatest<=14?'positive':'warning'});
-  if(!findings.length) findings.push({title:'Öffentliche Datengrenze',text:`${platform} liefert für dieses Profil aktuell nur eine minimale öffentliche Datenbasis.`,tone:'warning'});
-  return findings.slice(0,6);
-}
-
-function buildRecommendations(profile,evaluation){
-  const map=Object.fromEntries(evaluation.categories.map(item=>[item.key,item]));
-  const recs=[];
-  if(map.positioning?.available&&map.positioning.score<70){
-    recs.push({priority:priorityFromScore(map.positioning.score),impact:'Klarheit',title:'Positionierung in 3 Sekunden verständlich machen',because:map.positioning.evidence,action:evaluation.bio.hasAudience?'Nutzen und konkretes Ergebnis in die erste Bio-Zeile ziehen.':'Zielgruppe + konkretes Ergebnis direkt in der ersten Bio-Zeile benennen.'});
-  }
-  if(map.conversion?.available&&map.conversion.score<72){
-    recs.push({priority:priorityFromScore(map.conversion.score),impact:'Conversion',title:'Einen einzigen nächsten Schritt definieren',because:map.conversion.evidence,action:profile.externalUrl?'Bio-CTA exakt auf den vorhandenen Link ausrichten.':'Einen klaren CTA plus passenden Ziel-Link ergänzen: Termin, Anfrage, Shop oder Lead-Magnet.'});
-  }
-  if(map.content?.available&&map.content.score<70){
-    recs.push({priority:priorityFromScore(map.content.score),impact:'Aufmerksamkeit',title:'Hooks als eigenes Produktionssystem behandeln',because:map.content.evidence,action:'Für jedes Thema 3 Einstiege schreiben: Problem, Kontrast und konkrete Zahl/These. Gewinner anschließend wiederverwenden.'});
-  }
-  if(map.trust?.available&&map.trust.score<70){
-    recs.push({priority:priorityFromScore(map.trust.score),impact:'Vertrauen',title:'Proof aus Behauptungen machen',because:map.trust.evidence,action:'Konkrete Resultate, Kundennamen/-situationen, Zahlen oder Vorher/Nachher-Belege näher an Profil und Top-Content holen.'});
-  }
-  if(map.activity?.available&&map.activity.score<68){
-    recs.push({priority:priorityFromScore(map.activity.score),impact:'Konsistenz',title:'Content-Rhythmus stabilisieren',because:map.activity.evidence,action:'Weniger Formate, dafür 2–3 wiederkehrende Serien mit festem Wochenrhythmus planen.'});
-  }
-  if(evaluation.content.ctaRate!=null&&evaluation.content.ctaRate<45){
-    recs.push({priority:'Mittlere Priorität',impact:'Conversion',title:'Mehr Posts mit bewusstem Ziel veröffentlichen',because:`Nur ${evaluation.content.ctaRate}% der analysierten Captions enthalten einen klaren Handlungsimpuls.`,action:'Vor Produktion festlegen: Soll dieser Post Reichweite, Vertrauen, Kommentar, DM oder Anfrage erzeugen? CTA passend dazu formulieren.'});
-  }
-  if(recs.length<3) recs.push({priority:'Optimierung',impact:'System',title:'Gewinner-Content systematisch vervielfachen',because:'Starke Einzelposts erzeugen mehr Wert, wenn ihr Muster erkannt und wiederverwendet wird.',action:'Top-Themen nach Hook, Format, Proof und CTA clustern und als wiederkehrende Serien ausbauen.'});
-  if(recs.length<3) recs.push({priority:'Optimierung',impact:'Journey',title:'Profil → Content → Anfrage als eine Journey bauen',because:'Ein gutes Profil allein konvertiert nicht, wenn Content und nächster Schritt unterschiedliche Botschaften senden.',action:'Top-3 Content-Themen, Bio-Versprechen und Zielseite auf dieselbe Kernbotschaft ausrichten.'});
-  return recs.slice(0,5);
-}
-
-function fallbackProfile({platform,url,html='',meta=null}){
-  const parsed=meta||parseMeta(html);
-  const metrics=metricsFromMeta(html,parsed.description,platform);
-  const handle=platformHandle(url,platform);
-  return {
-    source:'page-metadata',
-    fullName:cleanText(parsed.title||handle||platform,180),
-    handle,
-    bio:generatedMetaDescription(parsed.description)?'':cleanText(parsed.description,700),
-    image:parsed.image||'',
-    externalUrl:'',
-    category:'',
-    verified:/"is_verified"\s*:\s*true|verified badge|aria-label=["']verified["']/i.test(html),
-    business:false,
-    metrics,
-    recentContent:[]
-  };
-}
-
-function resultPayload({platform,url,profile}){
-  const evaluation=buildEvaluation(profile);
-  const evidence=buildEvidence(profile,evaluation,platform);
-  const recommendations=buildRecommendations(profile,evaluation);
-  const recentContent=evaluation.content.analyzed.slice(0,6).map(item=>({
-    id:item.id,
-    type:item.type,
-    hook:item.analysis?.hook||'',
-    hookScore:item.analysis?.hookScore??null,
-    hasCta:Boolean(item.analysis?.cta),
-    specific:Boolean(item.analysis?.specific),
-    likes:item.likes,
-    comments:item.comments,
-    views:item.views,
-    daysAgo:daysSince(item.timestamp)
-  }));
-  const mode=evaluation.confidence==='begrenzt'?'limited':profile.recentContent?.length?'deep-public':'profile-public';
-  return {
-    ok:true,
-    version:2,
-    mode,
-    source:profile.source,
-    platform,
-    handle:profile.handle||platformHandle(url,platform),
-    profileUrl:url.toString(),
-    title:profile.fullName||profile.handle||platform,
-    description:profile.bio||'',
-    image:profile.image||'',
-    externalUrl:profile.externalUrl||'',
-    category:profile.category||'',
-    verified:Boolean(profile.verified),
-    metrics:profile.metrics||{followers:null,following:null,posts:null,likes:null},
-    dataCompleteness:evaluation.completeness,
-    analyzedPosts:evaluation.content.usableCount,
-    score:evaluation.score,
-    confidence:evaluation.confidence,
-    categories:evaluation.categories,
-    evidence,
-    recommendations,
-    recentContent,
-    note:evaluation.score==null
-      ?'Kein künstlicher Gesamt-Score: Für eine belastbare Bewertung fehlen aktuell ausreichend öffentlich lesbare Signale. Die sichtbaren Einzelbefunde stammen nur aus tatsächlich gefundenen Daten.'
-      :'Der JJ Social Score bewertet öffentlich lesbare Profil-, Positionierungs-, Conversion-, Proof- und Content-Signale. Er nutzt keine privaten Insights und ist keine Reichweiten- oder Umsatzprognose.'
-  };
-}
-
-module.exports = async function handler(req,res){
-  if(req.method!=='POST'){
-    res.setHeader('Allow','POST');
-    return send(res,405,{error:'Method not allowed'});
-  }
-  try{
-    const raw=typeof req.body==='string'?JSON.parse(req.body||'{}'):(req.body||{});
-    const url=normaliseInput(raw.url||raw.profile||'');
-    const platform=platformFromHost(url.hostname);
-    let html='',resolved=url,meta={title:'',description:'',image:''};
-    let profile=null;
-
-    if(platform==='Instagram'){
-      try{profile=await fetchInstagramDeep(url);}catch(_){}
-    }
-
-    if(!profile||platform==='TikTok'){
-      try{
-        const fetched=await fetchHtml(url);
-        resolved=fetched.current;
-        const contentType=fetched.response.headers.get('content-type')||'';
-        if(fetched.response.ok&&contentType.includes('text/html')){
-          html=await fetched.response.text();
-          if(html.length>1800000) html=html.slice(0,1800000);
-          meta=parseMeta(html);
-          if(platform==='TikTok') profile=extractTikTokDeep(html,url)||profile;
-        }
-      }catch(_){}
-    }
-
-    if(!profile) profile=fallbackProfile({platform,url:resolved,html,meta});
-    const result=resultPayload({platform,url,profile});
-    console.log('jj_social_audit_v2',JSON.stringify({platform,source:result.source,mode:result.mode,completeness:result.dataCompleteness,analyzedPosts:result.analyzedPosts,score:result.score,confidence:result.confidence}));
-    return send(res,200,result);
-  }catch(error){
-    console.error('jj_social_audit_v2_error',error?.message||error);
-    return send(res,400,{error:error?.message||'Der Link konnte gerade nicht geprüft werden.'});
-  }
+async function request(url,options={},timeout=7500){const c=new AbortController();const t=setTimeout(()=>c.abort(),timeout);try{return await fetch(url,{...options,signal:c.signal});}finally{clearTimeout(t);}}
+const browserHeaders={
+  'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140 Safari/537.36',
+  'accept-language':'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
+  'cache-control':'no-cache'
 };
+const igHeaders=username=>({...browserHeaders,accept:'*/*','x-ig-app-id':IG_APP_ID,referer:`https://www.instagram.com/${username}/`});
+
+function decode(v=''){return clean(String(v).replace(/&amp;/gi,'&').replace(/&quot;/gi,'"').replace(/&#39;|&apos;/gi,"'").replace(/&lt;/gi,'<').replace(/&gt;/gi,'>').replace(/&#(\d+);/g,(_,n)=>String.fromCharCode(Number(n))).replace(/&#x([0-9a-f]+);/gi,(_,n)=>String.fromCharCode(parseInt(n,16))),1600);}
+function parseMeta(html=''){const meta={};for(const tag of html.match(/<meta\b[^>]*>/gi)||[]){const attrs={};const re=/([:\w-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/g;let m;while((m=re.exec(tag)))attrs[m[1].toLowerCase()]=decode(m[2]??m[3]??m[4]??'');const k=(attrs.property||attrs.name||attrs.itemprop||'').toLowerCase();if(k&&attrs.content&&!meta[k])meta[k]=attrs.content;}const title=html.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1]||'';return{title:decode(meta['og:title']||meta['twitter:title']||title),description:decode(meta['og:description']||meta.description||meta['twitter:description']||''),image:meta['og:image']||meta['twitter:image']||''};}
+function num(v=''){if(v==null||v==='')return null;let s=String(v).trim().replace(/\s/g,'');if(/^\d{1,3}(,\d{3})+$/.test(s))s=s.replace(/,/g,'');else s=s.replace(',','.');const m=s.match(/([\d.]+)([KMB])?/i);if(!m)return null;let n=Number(m[1]);if(!Number.isFinite(n))return null;const unit=(m[2]||'').toUpperCase();if(unit==='K')n*=1e3;if(unit==='M')n*=1e6;if(unit==='B')n*=1e9;return Math.round(n);}
+function first(text,regexes){for(const re of regexes){const n=num(String(text).match(re)?.[1]);if(n!=null)return n;}return null;}
+function metaMetrics(html,description,p){const corpus=`${description} ${html.slice(0,1000000)}`;return{followers:first(corpus,[/([\d.,]+\s*[KMB]?)\s+Followers?/i,/"follower_count"\s*:\s*(\d+)/i]),following:first(corpus,[/([\d.,]+\s*[KMB]?)\s+Following/i,/"following_count"\s*:\s*(\d+)/i]),posts:first(corpus,[/([\d.,]+\s*[KMB]?)\s+Posts?/i,/"media_count"\s*:\s*(\d+)/i,/"videoCount"\s*:\s*(\d+)/i]),likes:p==='TikTok'?first(corpus,[/([\d.,]+\s*[KMB]?)\s+Likes?/i,/"heartCount"\s*:\s*(\d+)/i]):null};}
+
+function igItem(item={}){const caption=clean(item?.caption?.text||item?.edge_media_to_caption?.edges?.[0]?.node?.text||item?.desc||'',1400);return{id:String(item.code||item.shortcode||item.pk||item.id||''),type:(item.media_type===2||item.product_type==='clips'||item.is_video)?'Reel/Video':'Post',caption,likes:finite(item.like_count??item?.edge_liked_by?.count??item?.edge_media_preview_like?.count),comments:finite(item.comment_count??item?.edge_media_to_comment?.count),views:finite(item.play_count??item.view_count??item.video_view_count),timestamp:finite(item.taken_at??item.taken_at_timestamp)};}
+function igProfile(user={},items=[],source='instagram-public'){return{source,fullName:clean(user.full_name||user.username||'',180),handle:clean(user.username||'',100),bio:clean(user.biography||'',700),image:user.profile_pic_url_hd||user.profile_pic_url||'',externalUrl:user.external_url||'',category:clean(user.category_name||user.business_category_name||user.category||'',120),verified:Boolean(user.is_verified),business:Boolean(user.is_business_account||user.is_professional_account||user.is_business),metrics:{followers:finite(user?.edge_followed_by?.count??user.follower_count),following:finite(user?.edge_follow?.count??user.following_count),posts:finite(user?.edge_owner_to_timeline_media?.count??user.media_count),likes:null},recentContent:(items||[]).slice(0,9).map(x=>igItem(x?.node||x)).filter(x=>x.id||x.caption)};}
+
+async function instagramDeep(url){const username=handle(url,'Instagram');if(!username||!/^[a-z0-9._]{2,80}$/i.test(username))return null;let base=null;
+  try{const r=await request(`https://www.instagram.com/api/v1/users/web_profile_info/?username=${encodeURIComponent(username)}`,{headers:igHeaders(username)},7000);if(r.ok){const j=await r.json().catch(()=>null);const user=j?.data?.user||j?.user;if(user){const edges=user?.edge_owner_to_timeline_media?.edges||user?.edge_felix_video_timeline?.edges||[];base=igProfile(user,edges,'instagram-web-profile');}}}catch(_){}
+  try{const r=await request(`https://www.instagram.com/api/v1/feed/user/${encodeURIComponent(username)}/username/?count=9`,{headers:igHeaders(username)},7000);if(r.ok){const j=await r.json().catch(()=>null);const items=j?.items||[];const user=j?.user||items?.[0]?.user||{};const feed=igProfile({...user,username:user.username||username},items,'instagram-feed-by-username');if(base)return{...base,...feed,fullName:feed.fullName||base.fullName,bio:feed.bio||base.bio,image:feed.image||base.image,externalUrl:feed.externalUrl||base.externalUrl,category:feed.category||base.category,metrics:{followers:feed.metrics.followers??base.metrics.followers,following:feed.metrics.following??base.metrics.following,posts:feed.metrics.posts??base.metrics.posts,likes:null},recentContent:feed.recentContent.length?feed.recentContent:base.recentContent};return feed;}}catch(_){}
+  return base;
+}
+
+async function htmlPage(url){let current=new URL(url);for(let i=0;i<4;i++){if(!hostOk(current.hostname))throw new Error('Nicht erlaubte Weiterleitung.');const r=await request(current,{redirect:'manual',headers:{...browserHeaders,accept:'text/html,application/xhtml+xml'}},7500);if([301,302,303,307,308].includes(r.status)){const l=r.headers.get('location');if(!l)return{response:r,current};current=new URL(l,current);continue;}return{response:r,current};}throw new Error('Zu viele Weiterleitungen.');}
+function jsonScripts(html=''){const out=[];const re=/<script[^>]*type=["']application\/json["'][^>]*>([\s\S]*?)<\/script>/gi;let m;while((m=re.exec(html))){if(!m[1]||m[1].length>2500000)continue;try{out.push(JSON.parse(m[1]));}catch(_){}}return out;}
+function findTikTok(root){const q=[root],seen=new Set();let user=null,stats=null,items=[];while(q.length&&seen.size<9000){const v=q.shift();if(!v||typeof v!=='object'||seen.has(v))continue;seen.add(v);if(!user&&v.uniqueId&&('nickname'in v||'signature'in v))user=v;if(!stats&&'followerCount'in v&&'followingCount'in v)stats=v;if(Array.isArray(v.itemList)&&v.itemList.length)items=v.itemList;for(const c of Object.values(v))if(c&&typeof c==='object')q.push(c);}return{user,stats,items};}
+function tiktokDeep(html,url){for(const j of jsonScripts(html)){const f=findTikTok(j);if(!f.user&&!f.stats)continue;const u=f.user||{},s=f.stats||{};return{source:'tiktok-page-json',fullName:clean(u.nickname||handle(url,'TikTok'),180),handle:clean(u.uniqueId||handle(url,'TikTok'),100),bio:clean(u.signature||'',700),image:u.avatarLarger||u.avatarMedium||u.avatarThumb||'',externalUrl:u.bioLink?.link||'',category:'',verified:Boolean(u.verified),business:Boolean(u.commerceUserInfo?.commerceUser),metrics:{followers:finite(s.followerCount),following:finite(s.followingCount),posts:finite(s.videoCount),likes:finite(s.heartCount)},recentContent:(f.items||[]).slice(0,9).map(i=>({id:String(i.id||''),type:'Video',caption:clean(i.desc||'',1400),likes:finite(i?.stats?.diggCount),comments:finite(i?.stats?.commentCount),views:finite(i?.stats?.playCount),timestamp:finite(i.createTime)})).filter(x=>x.id||x.caption)};}return null;}
+
+function metaFallback(p,url,html,meta){const h=handle(url,p);const generated=/followers?|following|posts?|likes?/i.test(meta.description)&&/instagram|tiktok|photos|videos|profil/i.test(meta.description);return{source:'page-metadata',fullName:clean(meta.title||h||p,180),handle:h,bio:generated?'':clean(meta.description,700),image:meta.image||'',externalUrl:'',category:'',verified:/"is_verified"\s*:\s*true|verified badge|aria-label=["']verified["']/i.test(html),business:false,metrics:metaMetrics(html,meta.description,p),recentContent:[]};}
+
+function firstLine(text=''){return clean(String(text).split(/\n|[.!?]\s/)[0]||'',180);}
+function captionSignals(text=''){const c=clean(text,1500);if(!c)return{available:false,hookScore:null,cta:false,specific:false,hook:''};const hook=firstLine(c);let s=36;if(hook.length>=18&&hook.length<=110)s+=15;if(/[?!]/.test(hook))s+=8;if(/\b\d+\b/.test(hook))s+=7;if(/\b(du|dein|deine|warum|wie|fehler|stop|achtung|niemand|wenn|so|you|your|why|how|mistake)\b/i.test(hook))s+=14;if(hook.length>150)s-=12;return{available:true,hookScore:Math.max(20,Math.min(95,s)),cta:/\b(folg|follow|komment|comment|schreib|dm|speicher|save|teil|share|link|bio|buch|termin|kontakt|mehr erfahren|mehr infos|jetzt)\b/i.test(c),specific:/\b\d+[.,]?\d*\s*(%|€|eur|tage|wochen|monate|kunden|leads|views|aufrufe|follower)?\b/i.test(c),hook};}
+function daysAgo(ts){if(!ts)return null;const d=Math.round((Date.now()-Number(ts)*1000)/86400000);return Number.isFinite(d)?Math.max(0,d):null;}
+function contentEval(items=[]){const analyzed=items.map(i=>({...i,analysis:captionSignals(i.caption)}));const usable=analyzed.filter(i=>i.analysis.available);const hooks=usable.map(i=>i.analysis.hookScore).filter(Number.isFinite);const cta=usable.length?Math.round(usable.filter(i=>i.analysis.cta).length/usable.length*100):null;const specific=usable.length?Math.round(usable.filter(i=>i.analysis.specific).length/usable.length*100):null;const times=analyzed.map(i=>i.timestamp).filter(Number.isFinite).sort((a,b)=>b-a);const gaps=[];for(let i=0;i<times.length-1;i++)gaps.push((times[i]-times[i+1])/86400);const median=gaps.length?[...gaps].sort((a,b)=>a-b)[Math.floor(gaps.length/2)]:null;return{analyzed,usableCount:usable.length,avgHook:hooks.length?Math.round(hooks.reduce((a,b)=>a+b,0)/hooks.length):null,ctaRate:cta,specificRate:specific,daysSinceLatest:times[0]?daysAgo(times[0]):null,medianGap:median==null?null:Math.round(median)};}
+function bioEval(bio='',external=''){const v=clean(bio,900);return{audience:/\b(für|for|helps?|helping|wir helfen|ich helfe|unternehmen|brands?|marken|hotels?|reisen|kunden|teams?|b2b|b2c)\b/i.test(v),outcome:/\b(mehr|wachstum|growth|reichweite|sichtbar|anfragen|leads|umsatz|sales|buchungen|bewerber|bekanntheit|vertrauen|ergebnis|results?)\b/i.test(v),offer:/\b(agentur|agency|beratung|consult|service|studio|coach|training|marketing|social media|content|design|shop|hotel|reisen|immobilien|software|saas)\b/i.test(v),cta:/\b(kontakt|contact|book|buchen|termin|dm|message|anfrage|shop|link|website|call|email|mail|jetzt|hier)\b/i.test(v),proof:/\b(\d+\+?|%|kunden|clients?|cases?|award|auszeichnung|seit\s+\d{4}|bewertungen|reviews?|million|mio\.?|tausend)\b/i.test(v),external:Boolean(external),length:v.length};}
+
+function evaluate(profile){const content=contentEval(profile.recentContent||[]),bio=bioEval(profile.bio,profile.externalUrl),cats=[];let clarity=30+(profile.fullName?16:0)+(profile.handle?10:0)+(profile.image?10:0)+(profile.bio?22:0)+(profile.category?8:0);cats.push({key:'clarity',label:'Profil-Klarheit',score:Math.min(96,clarity),available:Boolean(profile.fullName||profile.handle),evidence:profile.bio?'Name, Profilbild und Bio wurden erkannt.':'Profilidentität erkannt, Bio jedoch nicht belastbar auslesbar.'});
+  if(profile.bio){const pos=Math.min(96,28+(bio.audience?22:0)+(bio.outcome?22:0)+(bio.offer?18:0)+(bio.length>=40&&bio.length<=260?10:0));cats.push({key:'positioning',label:'Positionierung',score:pos,available:true,evidence:[bio.audience?'Zielgruppe erkennbar':'Zielgruppe nicht klar benannt',bio.outcome?'Nutzen/Ergebnis erkennbar':'konkretes Ergebnis fehlt'].join(' · ')});const conv=Math.min(95,25+(bio.cta?28:0)+(bio.external?28:0)+(bio.outcome?10:0));cats.push({key:'conversion',label:'Conversion',score:conv,available:true,evidence:[bio.cta?'CTA erkannt':'kein klarer CTA erkannt',bio.external?'externer Link erkannt':'kein externer Link erkannt'].join(' · ')});let trust=30+(profile.verified?20:0)+(profile.business?10:0)+(profile.category?8:0)+(bio.proof?22:0)+(content.specificRate!=null?Math.round(content.specificRate*.12):0);cats.push({key:'trust',label:'Proof & Vertrauen',score:Math.min(95,trust),available:true,evidence:bio.proof?'Konkrete Proof-Signale im sichtbaren Text erkannt.':'Wenig konkrete Proof-Signale in der Bio erkannt.'});}else{for(const [key,label,evidence]of[['positioning','Positionierung','Bio nicht belastbar öffentlich verfügbar.'],['conversion','Conversion','Bio/Link nicht vollständig öffentlich verfügbar.'],['trust','Proof & Vertrauen','Zu wenig belastbare Textsignale.']])cats.push({key,label,score:null,available:false,evidence});}
+  if(content.usableCount>=3){let s=content.avgHook??50;if(content.ctaRate!=null)s=Math.round(s*.72+Math.min(95,35+content.ctaRate*.6)*.28);cats.push({key:'content',label:'Content & Hooks',score:Math.max(25,Math.min(95,s)),available:true,evidence:`${content.usableCount} aktuelle Captions analysiert · Ø Hook ${content.avgHook??'—'}/100 · CTA in ${content.ctaRate??'—'}%.`});}else cats.push({key:'content',label:'Content & Hooks',score:null,available:false,evidence:'Mindestens 3 aktuelle, öffentlich lesbare Captions nötig.'});
+  if(content.analyzed.filter(i=>i.timestamp).length>=3){let s=78;if(content.daysSinceLatest>14)s-=18;if(content.daysSinceLatest>45)s-=18;if(content.medianGap>14)s-=15;if(content.medianGap!=null&&content.medianGap<=7)s+=8;cats.push({key:'activity',label:'Aktivität',score:Math.max(25,Math.min(95,s)),available:true,evidence:`Letzter sichtbarer Content vor ${content.daysSinceLatest??'—'} Tagen · Median-Abstand ${content.medianGap??'—'} Tage.`});}else cats.push({key:'activity',label:'Aktivität',score:null,available:false,evidence:'Zeitstempel aktueller Inhalte nicht ausreichend verfügbar.'});
+  let completeness=0;if(profile.fullName||profile.handle)completeness+=12;if(profile.image)completeness+=6;if(profile.bio)completeness+=18;if(profile.externalUrl)completeness+=8;if(profile.category)completeness+=5;if(profile.metrics?.followers!=null)completeness+=6;if(profile.metrics?.posts!=null)completeness+=5;if(content.usableCount>=3)completeness+=25;if(content.analyzed.filter(i=>i.timestamp).length>=3)completeness+=8;if(content.analyzed.some(i=>i.likes!=null||i.comments!=null||i.views!=null))completeness+=7;completeness=Math.min(100,completeness);const available=cats.filter(i=>i.available&&Number.isFinite(i.score)),sub=available.filter(i=>i.key!=='clarity');const confidence=completeness>=75&&sub.length>=4?'hoch':completeness>=55&&sub.length>=2?'mittel':'begrenzt';const score=confidence==='begrenzt'?null:Math.round(available.reduce((a,b)=>a+b.score,0)/available.length);return{cats,content,bio,completeness,confidence,score};}
+
+function evidence(profile,e,p){const out=[];if(profile.bio)out.push({title:'Bio wirklich ausgelesen',text:`${profile.bio.length} Zeichen konnten inhaltlich geprüft werden.`,tone:'positive'});if(profile.metrics?.followers!=null)out.push({title:'Audience-Signal',text:`${profile.metrics.followers.toLocaleString('de-DE')} Follower öffentlich sichtbar.`,tone:'neutral'});if(e.content.usableCount)out.push({title:'Content-Daten',text:`${e.content.usableCount} aktuelle Captions wurden einzeln auf Hook- und CTA-Signale geprüft.`,tone:'positive'});if(e.content.avgHook!=null)out.push({title:'Hook-Stärke',text:`Ø ${e.content.avgHook}/100 über die analysierbaren aktuellen Inhalte.`,tone:e.content.avgHook>=68?'positive':'warning'});if(e.content.ctaRate!=null)out.push({title:'CTA-Abdeckung',text:`${e.content.ctaRate}% der analysierten Captions enthalten einen klaren Handlungsimpuls.`,tone:e.content.ctaRate>=50?'positive':'warning'});if(e.content.daysSinceLatest!=null)out.push({title:'Aktualität',text:`Letzter öffentlich erkannter Inhalt vor ${e.content.daysSinceLatest} Tagen.`,tone:e.content.daysSinceLatest<=14?'positive':'warning'});if(!out.length)out.push({title:'Öffentliche Datengrenze',text:`${p} liefert für dieses Profil aktuell nur eine minimale öffentliche Datenbasis.`,tone:'warning'});return out.slice(0,6);}
+function recommendations(profile,e){const m=Object.fromEntries(e.cats.map(x=>[x.key,x])),out=[];const pri=s=>s<50?'Hohe Priorität':s<68?'Mittlere Priorität':'Optimierung';if(m.positioning?.available&&m.positioning.score<70)out.push({priority:pri(m.positioning.score),impact:'Klarheit',title:'Positionierung in 3 Sekunden verständlich machen',because:m.positioning.evidence,action:e.bio.audience?'Nutzen und konkretes Ergebnis in die erste Bio-Zeile ziehen.':'Zielgruppe + konkretes Ergebnis direkt in der ersten Bio-Zeile benennen.'});if(m.conversion?.available&&m.conversion.score<72)out.push({priority:pri(m.conversion.score),impact:'Conversion',title:'Einen einzigen nächsten Schritt definieren',because:m.conversion.evidence,action:profile.externalUrl?'Bio-CTA exakt auf den vorhandenen Link ausrichten.':'Einen klaren CTA plus passenden Ziel-Link ergänzen: Termin, Anfrage, Shop oder Lead-Magnet.'});if(m.content?.available&&m.content.score<70)out.push({priority:pri(m.content.score),impact:'Aufmerksamkeit',title:'Hooks als eigenes Produktionssystem behandeln',because:m.content.evidence,action:'Für jedes Thema drei Einstiege schreiben: Problem, Kontrast und konkrete Zahl/These. Gewinner wiederverwenden.'});if(m.trust?.available&&m.trust.score<70)out.push({priority:pri(m.trust.score),impact:'Vertrauen',title:'Proof aus Behauptungen machen',because:m.trust.evidence,action:'Konkrete Resultate, Kundensituationen, Zahlen oder Vorher/Nachher-Belege näher an Profil und Top-Content holen.'});if(m.activity?.available&&m.activity.score<68)out.push({priority:pri(m.activity.score),impact:'Konsistenz',title:'Content-Rhythmus stabilisieren',because:m.activity.evidence,action:'Weniger Formate, dafür 2–3 wiederkehrende Serien mit festem Wochenrhythmus.'});if(e.content.ctaRate!=null&&e.content.ctaRate<45)out.push({priority:'Mittlere Priorität',impact:'Conversion',title:'Mehr Posts mit bewusstem Ziel veröffentlichen',because:`Nur ${e.content.ctaRate}% der analysierten Captions enthalten einen klaren Handlungsimpuls.`,action:'Vor Produktion festlegen: Reichweite, Vertrauen, Kommentar, DM oder Anfrage – und den CTA genau darauf bauen.'});if(out.length<3)out.push({priority:'Optimierung',impact:'System',title:'Gewinner-Content systematisch vervielfachen',because:'Starke Einzelposts erzeugen mehr Wert, wenn ihr Muster erkannt und wiederverwendet wird.',action:'Top-Themen nach Hook, Format, Proof und CTA clustern und als Serien ausbauen.'});if(out.length<3)out.push({priority:'Optimierung',impact:'Journey',title:'Profil → Content → Anfrage als eine Journey bauen',because:'Ein gutes Profil konvertiert nicht, wenn Content und nächster Schritt unterschiedliche Botschaften senden.',action:'Top-3 Content-Themen, Bio-Versprechen und Zielseite auf dieselbe Kernbotschaft ausrichten.'});return out.slice(0,5);}
+
+function payload(p,url,profile){const e=evaluate(profile);return{ok:true,version:2,mode:e.confidence==='begrenzt'?'limited':profile.recentContent?.length?'deep-public':'profile-public',source:profile.source,platform:p,handle:profile.handle||handle(url,p),profileUrl:url.toString(),title:profile.fullName||profile.handle||p,description:profile.bio||'',image:profile.image||'',externalUrl:profile.externalUrl||'',category:profile.category||'',verified:Boolean(profile.verified),metrics:profile.metrics||{},dataCompleteness:e.completeness,analyzedPosts:e.content.usableCount,score:e.score,confidence:e.confidence,categories:e.cats,evidence:evidence(profile,e,p),recommendations:recommendations(profile,e),recentContent:e.content.analyzed.slice(0,6).map(i=>({id:i.id,type:i.type,hook:i.analysis?.hook||'',hookScore:i.analysis?.hookScore??null,hasCta:Boolean(i.analysis?.cta),specific:Boolean(i.analysis?.specific),likes:i.likes,comments:i.comments,views:i.views,daysAgo:daysAgo(i.timestamp)})),note:e.score==null?'Kein künstlicher Gesamt-Score: Für eine belastbare Bewertung fehlen aktuell ausreichend öffentlich lesbare Signale. Die sichtbaren Einzelbefunde stammen nur aus tatsächlich gefundenen Daten.':'Der JJ Social Score bewertet öffentlich lesbare Profil-, Positionierungs-, Conversion-, Proof- und Content-Signale. Er nutzt keine privaten Insights und ist keine Reichweiten- oder Umsatzprognose.'};}
+
+module.exports=async function handler(req,res){if(req.method!=='POST'){res.setHeader('Allow','POST');return send(res,405,{error:'Method not allowed'});}try{const body=typeof req.body==='string'?JSON.parse(req.body||'{}'):(req.body||{}),url=normalise(body.url||body.profile||''),p=platform(url.hostname);let profile=null,html='',meta={title:'',description:'',image:''},resolved=url;if(p==='Instagram')profile=await instagramDeep(url).catch(()=>null);if(!profile||p==='TikTok'){try{const f=await htmlPage(url);resolved=f.current;const type=f.response.headers.get('content-type')||'';if(f.response.ok&&type.includes('text/html')){html=await f.response.text();if(html.length>1800000)html=html.slice(0,1800000);meta=parseMeta(html);if(p==='TikTok')profile=tiktokDeep(html,url)||profile;}}catch(_){}}if(!profile)profile=metaFallback(p,resolved,html,meta);const out=payload(p,url,profile);console.log('jj_social_audit_v2',JSON.stringify({platform:p,source:out.source,mode:out.mode,completeness:out.dataCompleteness,analyzedPosts:out.analyzedPosts,score:out.score,confidence:out.confidence}));return send(res,200,out);}catch(error){console.error('jj_social_audit_v2_error',error?.message||error);return send(res,400,{error:error?.message||'Der Link konnte gerade nicht geprüft werden.'});}};
