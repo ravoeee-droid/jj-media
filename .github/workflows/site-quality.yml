@@ -1,0 +1,38 @@
+name: Website Quality Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install quality tooling
+        run: npm install --no-save @playwright/test@1.55.0 @axe-core/playwright@4.10.2 @lhci/cli@0.15.1 http-server@14.1.1
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Start static site
+        run: npx http-server . -p 4173 -c-1 > /tmp/jj-http.log 2>&1 &
+      - name: Wait for site
+        run: |
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:4173/index.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/jj-http.log
+          exit 1
+      - name: Cross-device UX tests
+        run: npx playwright test
+      - name: Lighthouse budgets
+        run: npx lhci autorun
