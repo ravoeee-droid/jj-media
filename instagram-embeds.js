@@ -30,16 +30,14 @@
 
   const reelCard = post => {
     const views = formatViews(reelViews[post.code]);
+    const proof = views ? `<div class="jj-reel-proof"><small>VIEWS</small><strong>${views}</strong></div>` : '';
     return `
       <button class="jj-reel-card reveal visible" type="button" data-instagram-open data-type="reel" data-code="${post.code}" aria-label="${post.label} ansehen">
         <div class="jj-reel-visual">
           <img src="${post.thumb}" alt="${post.label} von JJ-Media" loading="lazy">
           <div class="jj-reel-shade"></div>
           <div class="jj-reel-topline"><span>INSTAGRAM REEL</span><span>↗</span></div>
-          <div class="jj-reel-proof ${views ? '' : 'is-empty'}">
-            <small>VIEWS</small>
-            <strong>${views || 'VIEW-ZAHL'}</strong>
-          </div>
+          ${proof}
           <span class="jj-reel-play">▶</span>
         </div>
         <div class="jj-reel-meta">
