@@ -36,3 +36,18 @@ jobs:
         run: npx playwright test
       - name: Lighthouse budgets
         run: npx lhci autorun
+      - name: Production social audit API smoke
+        if: github.event_name == 'push'
+        run: |
+          for i in {1..10}; do
+            if curl -fsS --max-time 25 \
+              -X POST 'https://jj-clone-theta.vercel.app/api/social-audit-v2' \
+              -H 'content-type: application/json' \
+              --data '{"url":"https://www.instagram.com/instagram/"}' \
+              | node -e "let s='';process.stdin.on('data',d=>s+=d);process.stdin.on('end',()=>{const j=JSON.parse(s);if(j.ok!==true||j.version!==2||j.platform!=='Instagram')process.exit(1);console.log('social-audit-v2 smoke:',j.mode,j.confidence,j.dataCompleteness+'%')})"; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo 'Production Social Audit API did not pass smoke test.' >&2
+          exit 1
