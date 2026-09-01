@@ -3,130 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="JJ Social Audit: öffentliche Social-Media-Profile und aktuelle Content-Signale sofort analysieren – transparent, datenbasiert und ohne Fantasiezahlen.">
-<title>JJ Social Audit – Profil & Content sofort analysieren</title>
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="social-audit.css">
-<link rel="stylesheet" href="social-audit-v2.css?v=20260831-3">
+<meta name="robots" content="noindex,follow">
+<meta name="description" content="JJ-Media Social-Media-Analyse für Instagram, Facebook, YouTube und LinkedIn – persönlich geprüft statt generischem Sofort-Score.">
+<link rel="canonical" href="analyse.html">
+<title>Social-Media-Analyse – JJ-Media</title>
+<style>html,body{height:100%;margin:0;font-family:Arial,sans-serif;background:#151218;color:#fff}body{display:grid;place-items:center}.wrap{max-width:720px;padding:40px;text-align:center}.mark{width:56px;height:56px;margin:0 auto 18px;border-radius:18px;display:grid;place-items:center;background:#e45167;font-weight:900}.wrap h1{font-size:clamp(2rem,6vw,4rem);line-height:1;margin:0 0 16px}.wrap p{color:#b8b1bb;line-height:1.6}.wrap a{display:inline-block;margin-top:18px;padding:14px 20px;border-radius:14px;background:#e45167;color:#fff;text-decoration:none;font-weight:800}</style>
 </head>
-<body class="audit-body">
-<a class="audit-skip" href="#audit-main">Zum Audit springen</a>
-<header class="audit-nav">
-  <div class="container audit-nav-inner">
-    <a class="logo" href="index.html" aria-label="Zur JJ-Media Startseite"><span class="logo-mark">JJ</span><span>JJ—MEDIA</span></a>
-    <div class="audit-nav-note"><span></span>Live Profile Audit · kein Login nötig</div>
-    <a class="audit-nav-link" href="analyse.html">Persönliche Analyse ↗</a>
-  </div>
-</header>
-<main id="audit-main">
-  <section class="audit-hero">
-    <div class="audit-glow audit-glow-a"></div><div class="audit-glow audit-glow-b"></div>
-    <div class="container audit-hero-grid">
-      <div class="audit-copy">
-        <div class="audit-eyebrow"><i></i>JJ SOCIAL AUDIT™ · LIVE</div>
-        <h1>Dein Social Media.<br><span>In Sekunden auseinandergenommen.</span></h1>
-        <p>Profil-Link rein. Wir prüfen öffentlich verfügbare Profil-, Positionierungs-, Conversion- und – wenn zugänglich – aktuelle Content-/Hook-Signale. Kein Login. Keine erfundenen Kennzahlen.</p>
-        <form class="audit-form" id="social-audit-form" novalidate>
-          <label for="audit-url">Social-Media-Profil</label>
-          <div class="audit-input-wrap">
-            <span class="audit-platform-icon" data-platform-icon>↗</span>
-            <input id="audit-url" name="url" type="text" inputmode="url" autocomplete="url" placeholder="instagram.com/deinprofil oder @deinprofil" required>
-            <button type="submit">Profil analysieren <span>↗</span></button>
-          </div>
-          <div class="audit-supported"><span>Instagram</span><span>TikTok</span><span>LinkedIn</span><span>Facebook</span><span>Threads</span></div>
-          <p class="audit-error" id="audit-error" aria-live="polite"></p>
-        </form>
-        <div class="audit-trustline"><span>✓ Ergebnis sofort</span><span>✓ keine E-Mail vor dem Ergebnis</span><span>✓ Datenbasis wird offen gezeigt</span></div>
-      </div>
-      <aside class="audit-preview-card" aria-label="So arbeitet der JJ Social Audit">
-        <div class="audit-preview-top"><span>AUDIT ENGINE</span><i></i><small>Evidence first</small></div>
-        <div class="audit-preview-profile"><div class="audit-avatar-placeholder">JJ</div><div><small>1 · Profil</small><strong>Positionierung & CTA</strong></div></div>
-        <div class="audit-preview-score"><div class="audit-ring"><strong>02</strong><span>/03</span></div><div><small>2 · Content</small><strong>Hooks & Signale</strong><p>Wenn aktuelle öffentliche Inhalte auslesbar sind, werden sie einzeln statt pauschal bewertet.</p></div></div>
-        <div class="audit-mini-bars"><span><i style="--w:92%"></i><b>Datenbasis</b></span><span><i style="--w:76%"></i><b>Evidence</b></span><span><i style="--w:64%"></i><b>Prioritäten</b></span></div>
-        <small class="audit-preview-note">3 · Ergebnis: Gesamt-Score nur wenn Profilstrategie und aktuelle Inhalte belastbar analysierbar sind. Sonst transparenter Teil-Audit.</small>
-      </aside>
-    </div>
-  </section>
-
-  <section class="audit-scanner" id="audit-scanner" aria-live="polite" hidden>
-    <div class="container audit-scanner-inner">
-      <div class="audit-scanner-head"><div><span class="audit-eyebrow"><i></i>Audit läuft</span><h2 data-scan-title>Profil wird verifiziert …</h2></div><span class="audit-scan-percent" data-scan-percent>14%</span></div>
-      <div class="audit-scan-track"><span data-scan-track></span></div>
-      <div class="audit-scan-steps">
-        <div class="active" data-scan-step><span>01</span><strong>Profil</strong><small>Plattform, Account und öffentliche Profildaten.</small></div>
-        <div data-scan-step><span>02</span><strong>Positionierung</strong><small>Bio, Angebot, Nutzen und nächster Schritt.</small></div>
-        <div data-scan-step><span>03</span><strong>Content</strong><small>Aktuelle Captions, Hooks, CTAs und Aktivität.</small></div>
-        <div data-scan-step><span>04</span><strong>Prioritäten</strong><small>Evidence-basierte nächste Schritte.</small></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="audit-results" id="audit-results" hidden>
-    <div class="container">
-      <div class="audit-result-head">
-        <div><span class="audit-eyebrow"><i></i>Dein Audit</span><h2>Nicht irgendein Score.<br><span>Ein Ergebnis mit Belegen.</span></h2></div>
-        <div class="audit-confidence" data-confidence>Datenbasis: —</div>
-      </div>
-
-      <div class="audit-result-grid">
-        <article class="audit-profile-card">
-          <div class="audit-profile-top">
-            <div class="audit-profile-image" data-profile-image><span>↗</span></div>
-            <div><small data-platform>Social Media</small><h3 data-profile-title>Profil</h3><div class="audit-profile-meta"><span data-category hidden></span></div><a data-profile-link href="#" target="_blank" rel="noopener noreferrer">Originalprofil öffnen ↗</a></div>
-          </div>
-          <p class="audit-profile-description" data-description hidden></p>
-          <div class="audit-metrics" data-metrics></div>
-          <div class="audit-coverage" data-coverage>
-            <div class="audit-coverage-head"><strong>Analysierbare Datenabdeckung</strong><span data-coverage-value>—</span></div>
-            <div class="audit-coverage-track"><i data-coverage-track></i></div>
-            <p data-coverage-copy>Öffentliche Signale werden geprüft.</p>
-          </div>
-          <div class="audit-data-note" data-note></div>
-        </article>
-
-        <article class="audit-score-card">
-          <div class="audit-score-ring" data-score-ring><div><strong data-score>—</strong><small>JJ Social Score</small></div></div>
-          <div class="audit-score-copy"><span class="audit-score-kicker">Evidence-based</span><h3 data-score-title>Auswertung wird geladen.</h3><p data-score-copy>Ein Gesamt-Score erscheint nur, wenn Profilstrategie und aktueller Content ausreichend belastbar geprüft werden konnten.</p></div>
-        </article>
-      </div>
-
-      <div class="audit-category-card">
-        <div class="audit-section-title"><span>01</span><div><small>Score Breakdown</small><h3>Was wirklich bewertet werden konnte.</h3></div></div>
-        <div class="audit-categories" data-categories></div>
-      </div>
-
-      <section class="audit-content-section" data-content-section hidden>
-        <div class="audit-section-title"><span>02</span><div><small>Content DNA</small><h3>Aktuelle Inhalte – einzeln geprüft.</h3></div></div>
-        <div class="audit-content-grid" data-content-samples></div>
-      </section>
-
-      <div class="audit-insight-grid">
-        <article class="audit-insights-card">
-          <div class="audit-section-title"><span>03</span><div><small>Evidence</small><h3>Was wir konkret gefunden haben.</h3></div></div>
-          <div class="audit-list" data-findings></div>
-        </article>
-        <article class="audit-recommend-card">
-          <div class="audit-section-title"><span>04</span><div><small>Prioritäten</small><h3>Was wir zuerst ändern würden.</h3></div></div>
-          <div class="audit-recommendations" data-recommendations></div>
-        </article>
-      </div>
-
-      <section class="audit-human-cta">
-        <div><span class="audit-eyebrow light"><i></i>Automatik + echtes Expertenauge</span><h2>Jetzt aus dem Audit eine <span>echte Wachstumsstrategie</span> machen.</h2><p>Der Live-Audit nutzt nur öffentliche Signale. Jessica kann zusätzlich visuelle Markenwirkung, Reels, Storytelling, Angebot, Zielgruppe und Conversion-Journey persönlich bewerten.</p></div>
-        <div class="audit-human-actions"><a class="audit-primary-cta" data-personal-analysis href="analyse.html">Persönliche Analyse kostenlos sichern ↗</a><button class="audit-secondary-btn" type="button" data-new-audit>Anderes Profil prüfen</button><small>Persönlich · kostenlos · unverbindlich</small></div>
-      </section>
-    </div>
-  </section>
-
-  <section class="audit-method">
-    <div class="container audit-method-grid">
-      <div><span class="audit-eyebrow"><i></i>Transparente Methodik</span><h2>Wir bewerten nur,<br><span>was wir wirklich sehen.</span></h2></div>
-      <div class="audit-method-points"><p><strong>Profil + Content = Gesamt-Score.</strong> Ein Gesamtwert erscheint nur, wenn Positionierung und mindestens drei aktuelle Inhalte belastbar analysierbar sind.</p><p><strong>Teil-Audit statt Fantasiewert.</strong> Blockiert eine Plattform einzelne Daten, bleiben die tatsächlich verfügbaren Teil-Scores und Befunde sichtbar – ohne künstliche Hochrechnung.</p><p><strong>Keine privaten Insights.</strong> Saves, echte Reichweite, Watchtime oder Conversions sind ohne Account-Zugriff nicht sichtbar und werden nicht erfunden.</p><p><strong>Relative Performance nur im sichtbaren Sample.</strong> Top-Performer werden ausschließlich gegen die öffentlich auslesbaren aktuellen Inhalte desselben Profils verglichen.</p></div>
-    </div>
-  </section>
-</main>
-<footer class="audit-footer"><div class="container"><span>© 2026 JJ-Media · JJ Social Audit™</span><span><a href="datenschutz.html">Datenschutz</a> · <a href="impressum.html">Impressum</a> · <a href="index.html">Zur Website</a></span></div></footer>
-<script src="growth-layer.js?v=20260831-1"></script>
-<script src="social-audit-v2.js?v=20260831-3"></script>
+<body>
+<main class="wrap"><div class="mark">JJ</div><h1>Deine Analyse wird persönlich vorbereitet.</h1><p>Wir prüfen Instagram, Facebook, YouTube und LinkedIn nicht mehr als generischen Sofort-Score. Deine Angaben gehen direkt in den persönlichen JJ-Media Analyseprozess.</p><a id="continue-link" href="analyse.html?entry=legacy-audit">Kostenlose Analyse starten ↗</a></main>
+<script>
+(() => {
+  const source = new URLSearchParams(location.search);
+  const target = new URL('analyse.html', location.href);
+  target.searchParams.set('entry','legacy-audit');
+  const profile = source.get('profile');
+  if (profile) target.searchParams.set('profile',profile);
+  ['utm_source','utm_medium','utm_campaign'].forEach(key => { const value=source.get(key); if(value) target.searchParams.set(key,value); });
+  const href = `${target.pathname.split('/').pop()}${target.search}`;
+  document.getElementById('continue-link').href = href;
+  setTimeout(() => location.replace(href), 250);
+})();
+</script>
 </body>
 </html>
