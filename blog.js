@@ -1,5 +1,13 @@
 (() => {
   const doc = document;
+  if (!doc.querySelector('link[data-blog-final]')) {
+    const style = doc.createElement('link');
+    style.rel = 'stylesheet';
+    style.dataset.blogFinal = 'true';
+    style.href = location.pathname.includes('/blog/') ? '../blog-final.css?v=20260901-1' : 'blog-final.css?v=20260901-1';
+    doc.head.appendChild(style);
+  }
+
   const cards = [...doc.querySelectorAll('[data-blog-card]')];
   const filters = [...doc.querySelectorAll('[data-blog-filter]')];
   const search = doc.querySelector('[data-blog-search]');
@@ -21,6 +29,7 @@
     });
     if (empty) empty.style.display = visible ? 'none' : 'block';
   };
+
   filters.forEach(button => button.addEventListener('click', () => {
     filters.forEach(item => item.classList.toggle('active', item === button));
     active = button.dataset.blogFilter || 'all';

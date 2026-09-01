@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "updated_at": "2026-09-01",
   "site": "https://www.jj-media-design.de",
   "editorial_principles": [
@@ -12,7 +12,9 @@
     "one_primary_next_step",
     "no_fake_urgency_or_numbers",
     "news_requires_primary_source",
-    "publish_only_when_original_value_exists"
+    "publish_only_when_original_value_exists",
+    "every_article_requires_unique_editorial_image",
+    "no_internal_process_copy_on_public_pages"
   ],
   "topic_clusters": [
     {"id":"social-media-strategie","pillar":"blog/social-media-strategie-2026.html","intent":"informational-commercial","priority":100,"status":"active"},
@@ -38,7 +40,9 @@
       "review_by":"2026-12-01",
       "status":"published",
       "conversion_target":"analyse.html",
-      "evidence":"JJ-Media working principles and linked public proof"
+      "evidence":"JJ-Media working principles and linked public proof",
+      "image":"assets/blog/social-media-strategie-2026.webp",
+      "image_alt":"Strategiemeeting für Instagram, Facebook, YouTube und LinkedIn"
     },
     {
       "slug":"youtube-shopping-amazon-2026",
@@ -54,7 +58,9 @@
       "review_by":"2026-10-01",
       "status":"published",
       "conversion_target":"analyse.html",
-      "primary_source":"https://blog.youtube/news-and-events/youtube-shopping-amazon-creator-affiliates/"
+      "primary_source":"https://blog.youtube/news-and-events/youtube-shopping-amazon-creator-affiliates/",
+      "image":"assets/blog/youtube-shopping-amazon-2026.webp",
+      "image_alt":"Marketer analysiert YouTube-Shopping-Content in einem E-Commerce-Setup"
     }
   ],
   "daily_scoring": {
