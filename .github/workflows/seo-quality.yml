@@ -1,0 +1,41 @@
+name: SEO Content Quality
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'blog.html'
+      - 'blog/**'
+      - 'seo/**'
+      - 'scripts/seo-quality.mjs'
+      - 'sitemap.xml'
+      - 'robots.txt'
+      - '.github/workflows/seo-quality.yml'
+  pull_request:
+    paths:
+      - 'blog.html'
+      - 'blog/**'
+      - 'seo/**'
+      - 'scripts/seo-quality.mjs'
+      - 'sitemap.xml'
+      - 'robots.txt'
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  seo-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run SEO quality gate
+        run: node scripts/seo-quality.mjs

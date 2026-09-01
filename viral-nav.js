@@ -1,32 +1,39 @@
 (() => {
   const page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  const target = 'virale-posts.html';
+  const links = [
+    {target:'virale-posts.html', label:'Virale Posts', before:'contact.html'},
+    {target:'blog.html', label:'Insights', before:'contact.html'}
+  ];
 
-  const ensureNavLink = () => {
+  const ensureNavLinks = () => {
     const nav = document.querySelector('.nav-links');
     if (!nav) return;
-    let link = [...nav.querySelectorAll('a')].find(a => (a.getAttribute('href') || '').includes(target));
-    if (!link) {
-      link = document.createElement('a');
-      link.href = target;
-      link.textContent = 'Virale Posts';
-      const contact = [...nav.querySelectorAll('a')].find(a => (a.getAttribute('href') || '').includes('contact.html'));
-      if (contact) nav.insertBefore(link, contact); else nav.appendChild(link);
-    }
-    if (page === target || page === 'virale-posts') link.classList.add('active');
-  };
-
-  const ensureFooterLink = () => {
-    document.querySelectorAll('.footer-links').forEach(footer => {
-      if ([...footer.querySelectorAll('a')].some(a => (a.getAttribute('href') || '').includes(target))) return;
-      const link = document.createElement('a');
-      link.href = target;
-      link.textContent = 'Virale Posts';
-      const projects = [...footer.querySelectorAll('a')].find(a => (a.getAttribute('href') || '').includes('work.html'));
-      if (projects?.nextSibling) footer.insertBefore(link, projects.nextSibling); else footer.appendChild(link);
+    links.forEach(item => {
+      let link = [...nav.querySelectorAll('a')].find(a => (a.getAttribute('href') || '').includes(item.target));
+      if (!link) {
+        link = document.createElement('a');
+        link.href = item.target;
+        link.textContent = item.label;
+        const before = [...nav.querySelectorAll('a')].find(a => (a.getAttribute('href') || '').includes(item.before));
+        if (before) nav.insertBefore(link, before); else nav.appendChild(link);
+      }
+      if (page === item.target || page === item.target.replace('.html','')) link.classList.add('active');
     });
   };
 
-  ensureNavLink();
-  ensureFooterLink();
+  const ensureFooterLinks = () => {
+    document.querySelectorAll('.footer-links').forEach(footer => {
+      links.forEach(item => {
+        if ([...footer.querySelectorAll('a')].some(a => (a.getAttribute('href') || '').includes(item.target))) return;
+        const link = document.createElement('a');
+        link.href = item.target;
+        link.textContent = item.label;
+        const contact = [...footer.querySelectorAll('a')].find(a => (a.getAttribute('href') || '').includes('contact.html'));
+        if (contact) footer.insertBefore(link, contact); else footer.appendChild(link);
+      });
+    });
+  };
+
+  ensureNavLinks();
+  ensureFooterLinks();
 })();

@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "updated_at": "2026-09-01",
+  "site": "https://www.jj-media-design.de",
+  "editorial_principles": [
+    "reader_is_hero_jj_is_guide",
+    "evidence_before_claims",
+    "concrete_scenes_before_abstractions",
+    "clear_problem_stakes_transformation",
+    "proof_inside_story",
+    "low_cognitive_load",
+    "one_primary_next_step",
+    "no_fake_urgency_or_numbers",
+    "news_requires_primary_source",
+    "publish_only_when_original_value_exists"
+  ],
+  "topic_clusters": [
+    {"id":"social-media-strategie","pillar":"blog/social-media-strategie-2026.html","intent":"informational-commercial","priority":100,"status":"active"},
+    {"id":"instagram-marketing","pillar":null,"intent":"informational-commercial","priority":90,"status":"planned"},
+    {"id":"facebook-marketing","pillar":null,"intent":"informational-commercial","priority":75,"status":"planned"},
+    {"id":"youtube-marketing","pillar":null,"intent":"informational-commercial","priority":88,"status":"active"},
+    {"id":"linkedin-marketing","pillar":null,"intent":"informational-commercial","priority":85,"status":"planned"},
+    {"id":"social-media-agentur","pillar":"services.html","intent":"commercial","priority":100,"status":"active"},
+    {"id":"social-media-reisebranche","pillar":"reisebranche.html","intent":"commercial-niche","priority":85,"status":"active"}
+  ],
+  "articles": [
+    {
+      "slug":"social-media-strategie-2026",
+      "path":"blog/social-media-strategie-2026.html",
+      "title":"Social-Media-Strategie 2026: Was Unternehmen wirklich brauchen – und was sie sich sparen können",
+      "type":"evergreen",
+      "cluster":"social-media-strategie",
+      "primary_keyword":"social media strategie 2026",
+      "search_intent":"informational-commercial",
+      "search_volume":null,
+      "volume_source":"pending external keyword source",
+      "published":"2026-09-01",
+      "review_by":"2026-12-01",
+      "status":"published",
+      "conversion_target":"analyse.html",
+      "evidence":"JJ-Media working principles and linked public proof"
+    },
+    {
+      "slug":"youtube-shopping-amazon-2026",
+      "path":"blog/youtube-shopping-amazon-2026.html",
+      "title":"YouTube Shopping + Amazon: Warum Marken diese Entwicklung jetzt beobachten sollten",
+      "type":"trend",
+      "cluster":"youtube-marketing",
+      "primary_keyword":"youtube shopping amazon 2026",
+      "search_intent":"news-informational",
+      "search_volume":null,
+      "volume_source":"pending external keyword source",
+      "published":"2026-09-01",
+      "review_by":"2026-10-01",
+      "status":"published",
+      "conversion_target":"analyse.html",
+      "primary_source":"https://blog.youtube/news-and-events/youtube-shopping-amazon-creator-affiliates/"
+    }
+  ],
+  "daily_scoring": {
+    "business_relevance":20,
+    "search_intent_value":18,
+    "ranking_opportunity":15,
+    "freshness_velocity":12,
+    "original_angle":15,
+    "evidence_strength":12,
+    "internal_link_value":8,
+    "publish_threshold":75
+  }
+}

@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /social-audit
+
+Sitemap: https://www.jj-media-design.de/sitemap.xml
