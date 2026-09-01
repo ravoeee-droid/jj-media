@@ -42,3 +42,6 @@ jobs:
       - name: Production social audit API smoke
         if: github.event_name == 'push'
         run: node tests/social-audit-production-smoke.cjs
+      - name: Production analysis lead route smoke
+        if: github.event_name == 'push'
+        run: node tests/lead-production-smoke.cjs
