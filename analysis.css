@@ -1,5 +1,18 @@
 @import url("analysis-base.css?v=20260804-2");
 
+/* WCAG AA: keep the coral identity while using a contrast-safe production tone. */
+.analysis-intro{background:#b82f49}
+.analysis-intro:before{content:none}
+.analysis-value{background:rgba(0,0,0,.14);border-color:rgba(255,255,255,.58);color:#fff}
+.analysis-intro p,.analysis-benefits span,.analysis-person strong{color:#fff}
+.analysis-person span{color:#fff}
+.analysis-benefits i{color:#b82f49}
+.funnel-next,.funnel-submit,.success-action.primary,.success-check{background:#b82f49;border-color:#b82f49}
+.funnel-next,.funnel-submit{box-shadow:0 12px 35px rgba(184,47,73,.28)}
+.success-check{box-shadow:0 17px 45px rgba(184,47,73,.28)}
+.consent input{accent-color:#b82f49}
+.analysis-footer{color:#8a8290}
+
 /* Keep the primary funnel action visible on short desktop and laptop screens. */
 @media (min-width:921px){
   html,body.analysis-body{height:100%;overflow:hidden}
