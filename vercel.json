@@ -3,187 +3,54 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    {
-      "source": "/login",
-      "destination": "/admin/login",
-      "permanent": false
-    },
-    {
-      "source": "/dashboard",
-      "destination": "/admin/dashboard",
-      "permanent": false
-    },
-    {
-      "source": "/dashboard/:path*",
-      "destination": "/admin/dashboard/:path*",
-      "permanent": false
-    },
-    {
-      "source": "/system",
-      "destination": "/admin/system",
-      "permanent": false
-    },
-    {
-      "source": "/telegram",
-      "destination": "/admin/telegram",
-      "permanent": false
-    },
-    {
-      "source": "/renderer-status",
-      "destination": "/admin/renderer-status",
-      "permanent": false
-    }
+    {"source":"/login","destination":"/admin/login","permanent":false},
+    {"source":"/dashboard","destination":"/admin/dashboard","permanent":false},
+    {"source":"/dashboard/:path*","destination":"/admin/dashboard/:path*","permanent":false},
+    {"source":"/system","destination":"/admin/system","permanent":false},
+    {"source":"/telegram","destination":"/admin/telegram","permanent":false},
+    {"source":"/renderer-status","destination":"/admin/renderer-status","permanent":false}
   ],
   "rewrites": [
-    {
-      "source": "/admin",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin"
-    },
-    {
-      "source": "/admin/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/:path*"
-    },
-    {
-      "source": "/v/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/v/:path*"
-    },
-    {
-      "source": "/video/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/v/:path*"
-    },
-    {
-      "source": "/api/assets/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/assets/:path*"
-    },
-    {
-      "source": "/api/auth/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/auth/:path*"
-    },
-    {
-      "source": "/api/bookings/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/bookings/:path*"
-    },
-    {
-      "source": "/api/campaign-control/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/campaign-control/:path*"
-    },
-    {
-      "source": "/api/campaigns/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/campaigns/:path*"
-    },
-    {
-      "source": "/api/cockpit/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/cockpit/:path*"
-    },
-    {
-      "source": "/api/crm/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/crm/:path*"
-    },
-    {
-      "source": "/api/enrich/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/enrich/:path*"
-    },
-    {
-      "source": "/api/events",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/events"
-    },
-    {
-      "source": "/api/generate",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/generate"
-    },
-    {
-      "source": "/api/gmail/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/gmail/:path*"
-    },
-    {
-      "source": "/api/health",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/health"
-    },
-    {
-      "source": "/api/import",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/import"
-    },
-    {
-      "source": "/api/integrations/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/integrations/:path*"
-    },
-    {
-      "source": "/api/landing/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/landing/:path*"
-    },
-    {
-      "source": "/api/leads/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/leads/:path*"
-    },
-    {
-      "source": "/api/media/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/media/:path*"
-    },
-    {
-      "source": "/api/outreach/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/outreach/:path*"
-    },
-    {
-      "source": "/api/preview/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/preview/:path*"
-    },
-    {
-      "source": "/api/renderer-health",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/renderer-health"
-    },
-    {
-      "source": "/api/settings",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/settings"
-    },
-    {
-      "source": "/api/system-logs/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/system-logs/:path*"
-    },
-    {
-      "source": "/api/tasks/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/tasks/:path*"
-    },
-    {
-      "source": "/api/telegram/:path*",
-      "destination": "https://jj-media-social-outbound.vercel.app/admin/api/telegram/:path*"
-    }
+    {"source":"/admin","destination":"https://jj-media-social-outbound.vercel.app/admin"},
+    {"source":"/admin/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/:path*"},
+    {"source":"/v/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/v/:path*"},
+    {"source":"/video/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/v/:path*"},
+    {"source":"/api/assets/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/assets/:path*"},
+    {"source":"/api/auth/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/auth/:path*"},
+    {"source":"/api/bookings/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/bookings/:path*"},
+    {"source":"/api/campaign-control/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/campaign-control/:path*"},
+    {"source":"/api/campaigns/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/campaigns/:path*"},
+    {"source":"/api/cockpit/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/cockpit/:path*"},
+    {"source":"/api/crm/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/crm/:path*"},
+    {"source":"/api/enrich/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/enrich/:path*"},
+    {"source":"/api/events","destination":"https://jj-media-social-outbound.vercel.app/admin/api/events"},
+    {"source":"/api/generate","destination":"https://jj-media-social-outbound.vercel.app/admin/api/generate"},
+    {"source":"/api/gmail/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/gmail/:path*"},
+    {"source":"/api/health","destination":"https://jj-media-social-outbound.vercel.app/admin/api/health"},
+    {"source":"/api/import","destination":"https://jj-media-social-outbound.vercel.app/admin/api/import"},
+    {"source":"/api/integrations/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/integrations/:path*"},
+    {"source":"/api/landing/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/landing/:path*"},
+    {"source":"/api/leads/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/leads/:path*"},
+    {"source":"/api/media/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/media/:path*"},
+    {"source":"/api/outreach/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/outreach/:path*"},
+    {"source":"/api/preview/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/preview/:path*"},
+    {"source":"/api/renderer-health","destination":"https://jj-media-social-outbound.vercel.app/admin/api/renderer-health"},
+    {"source":"/api/settings","destination":"https://jj-media-social-outbound.vercel.app/admin/api/settings"},
+    {"source":"/api/system-logs/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/system-logs/:path*"},
+    {"source":"/api/tasks/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/tasks/:path*"},
+    {"source":"/api/telegram/:path*","destination":"https://jj-media-social-outbound.vercel.app/admin/api/telegram/:path*"}
   ],
   "headers": [
     {
-      "source": "/admin",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow, noarchive"
-        }
+      "source":"/:path*",
+      "headers":[
+        {"key":"X-Content-Type-Options","value":"nosniff"},
+        {"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"}
       ]
     },
-    {
-      "source": "/admin/:path*",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow, noarchive"
-        }
-      ]
-    },
-    {
-      "source": "/v/:path*",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow, noarchive"
-        }
-      ]
-    },
-    {
-      "source": "/video/:path*",
-      "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow, noarchive"
-        }
-      ]
-    }
+    {"source":"/admin","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow, noarchive"}]},
+    {"source":"/admin/:path*","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow, noarchive"}]},
+    {"source":"/v/:path*","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow, noarchive"}]},
+    {"source":"/video/:path*","headers":[{"key":"X-Robots-Tag","value":"noindex, nofollow, noarchive"}]}
   ]
 }
