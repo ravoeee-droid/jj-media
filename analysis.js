@@ -14,32 +14,40 @@
   const callbackStatus = document.getElementById('callback-status');
   const params = new URLSearchParams(location.search);
   const ANALYTICS_KEY = 'jj-analytics-consent-v1';
-  const SESSION_KEY = 'jj-growth-session-v1';
+  const SESSION_KEY = 'jj-growth-session-v2';
   let current = 0;
   let submittedLead = null;
+  let sessionId = '';
 
   const profileLabel = document.querySelector('label[for="profile"]');
   if (profileLabel) profileLabel.innerHTML = 'Instagram, Facebook, YouTube oder LinkedIn *';
 
-  const getSession = () => {
-    try {
-      let id = sessionStorage.getItem(SESSION_KEY);
-      if (!id) {
-        id = crypto.randomUUID?.() || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2,10)}`;
-        sessionStorage.setItem(SESSION_KEY,id);
-      }
-      return id;
-    } catch (_) { return `ephemeral-${Math.random().toString(36).slice(2,10)}`; }
-  };
-  const sessionId = getSession();
   const analyticsAllowed = () => {
     try { return localStorage.getItem(ANALYTICS_KEY) === 'yes'; } catch (_) { return false; }
   };
+
+  const getSession = () => {
+    if (!analyticsAllowed()) return '';
+    if (sessionId) return sessionId;
+    try {
+      sessionId = sessionStorage.getItem(SESSION_KEY) || '';
+      if (!sessionId) {
+        sessionId = crypto.randomUUID?.() || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2,10)}`;
+        sessionStorage.setItem(SESSION_KEY,sessionId);
+      }
+      return sessionId;
+    } catch (_) {
+      sessionId = `ephemeral-${Math.random().toString(36).slice(2,10)}`;
+      return sessionId;
+    }
+  };
+
   const track = (event,properties = {}) => {
     if (!analyticsAllowed()) return;
+    const session = getSession();
     const payload = {
       event:String(event).slice(0,80),
-      session:sessionId.slice(0,80),
+      session:session.slice(0,80),
       path:location.pathname.slice(0,300),
       referrer_host:(() => { try { return document.referrer ? new URL(document.referrer).hostname.slice(0,120) : ''; } catch (_) { return ''; } })(),
       properties:Object.fromEntries(Object.entries(properties).slice(0,20).map(([key,value]) => [String(key).slice(0,60),String(value ?? '').slice(0,200)]))
@@ -145,7 +153,7 @@
       track('analysis_lead_error',{reason:error?.message || 'delivery_failed'});
       status.textContent = 'Die Anfrage konnte gerade nicht gesendet werden. Bitte versuche es erneut oder schreibe an service@jj-media.info.';
       submit.disabled = false;
-      submit.textContent = 'Kostenlose Analyse sichern ↗';
+      submit.textContent = 'Kostenlose Analyse anfragen ↗';
     }
   });
 
