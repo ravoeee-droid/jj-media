@@ -18,6 +18,9 @@
   let current = 0;
   let submittedLead = null;
 
+  const profileLabel = document.querySelector('label[for="profile"]');
+  if (profileLabel) profileLabel.innerHTML = 'Instagram, Facebook, YouTube oder LinkedIn *';
+
   const getSession = () => {
     try {
       let id = sessionStorage.getItem(SESSION_KEY);
@@ -199,8 +202,8 @@
     Object.entries(draft).forEach(([name,saved]) => setPrefill(name,saved));
   } catch (_) {}
 
-  ['goal','challenge','industry'].forEach(name => setPrefill(name,params.get(name) || ''));
+  ['goal','challenge','industry','profile'].forEach(name => setPrefill(name,params.get(name) || ''));
 
-  track('analysis_funnel_open',{entry:params.get('entry') || '',prefilled:Boolean(params.get('goal') || params.get('challenge') || params.get('industry'))});
+  track('analysis_funnel_open',{entry:params.get('entry') || '',prefilled:Boolean(params.get('goal') || params.get('challenge') || params.get('industry') || params.get('profile'))});
   update();
 })();
