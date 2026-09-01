@@ -75,10 +75,19 @@
     dock.innerHTML=`<div class="jj-sticky-copy"><span class="jj-sticky-dot" aria-hidden="true"></span><div><strong>Social Media persönlich analysieren lassen</strong><span>Persönlich geprüft · kostenlos · unverbindlich</span></div></div><a class="btn" data-track="sticky_audit" href="${buildAnalysisUrl()}">Analyse anfragen <span aria-hidden="true">↗</span></a>`;
     doc.body.appendChild(dock);
     const triggerAt=Math.min(620,Math.max(280,innerHeight*.7));
+    let focusObscured=false;
+    const wouldObscure=target=>{
+      if(!target||!dock.classList.contains('visible'))return false;
+      const targetBox=target.getBoundingClientRect();const dockBox=dock.getBoundingClientRect();
+      return targetBox.bottom>dockBox.top-8&&targetBox.top<dockBox.bottom+8;
+    };
     const toggle=()=>{
       const footer=doc.querySelector('footer');const nearFooter=footer&&footer.getBoundingClientRect().top<innerHeight*.92;
-      dock.classList.toggle('visible',scrollY>triggerAt&&!nearFooter);
+      const shouldShow=scrollY>triggerAt&&!nearFooter&&!focusObscured;
+      dock.classList.toggle('visible',shouldShow);
     };
+    doc.addEventListener('focusin',event=>{focusObscured=wouldObscure(event.target);toggle()});
+    doc.addEventListener('focusout',()=>{focusObscured=false;requestAnimationFrame(toggle)});
     addEventListener('scroll',toggle,{passive:true});addEventListener('resize',toggle);toggle();
   };
 

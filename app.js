@@ -10,7 +10,7 @@
   const isLegal=/\/(datenschutz|impressum|barrierefreiheit)(\.html)?\/?$/i.test(location.pathname);
   const bootGrowth=()=>{
     if(isLegal)return;
-    load('growth-layer-v2.js?v=20260901-1',()=>load('privacy-controls.js?v=20260901-1',()=>load('social-audit-bridge.js?v=20260901-3')));
+    load('growth-layer-v2.js?v=20260901-2',()=>load('privacy-controls.js?v=20260901-1',()=>load('social-audit-bridge.js?v=20260901-3')));
   };
 
   const bootPage=()=>{
@@ -22,5 +22,5 @@
     }
   };
 
-  load('site-quality.js?v=20260901-1',()=>load('viral-nav.js?v=20260901-3',()=>load('insights-bridge.js?v=20260901-1',bootPage)));
+  load('site-quality.js?v=20260901-2',()=>load('viral-nav.js?v=20260901-3',()=>load('insights-bridge.js?v=20260901-1',bootPage)));
 })();

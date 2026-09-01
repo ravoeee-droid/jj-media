@@ -5,7 +5,7 @@
   const path=location.pathname.toLowerCase();
 
   if(!doc.querySelector('link[data-jj-quality-css]')){
-    const css=doc.createElement('link');css.rel='stylesheet';css.href='site-quality.css?v=20260901-1';css.dataset.jjQualityCss='true';doc.head.appendChild(css);
+    const css=doc.createElement('link');css.rel='stylesheet';css.href='site-quality.css?v=20260901-2';css.dataset.jjQualityCss='true';doc.head.appendChild(css);
   }
 
   const normalizePath=value=>(value||'').split('?')[0].split('#')[0].replace(/^\//,'').replace(/\.html$/,'')||'index';
@@ -27,7 +27,7 @@
     doc.querySelectorAll('a[target="_blank"]').forEach(link=>{
       const rel=new Set((link.getAttribute('rel')||'').split(/\s+/).filter(Boolean));rel.add('noopener');rel.add('noreferrer');link.setAttribute('rel',[...rel].join(' '));
     });
-    doc.querySelectorAll('a.logo').forEach(link=>{if(!link.getAttribute('aria-label'))link.setAttribute('aria-label','JJ-Media Startseite')});
+    doc.querySelectorAll('a.logo,.blog-logo').forEach(link=>{if(!link.getAttribute('aria-label'))link.setAttribute('aria-label','JJ-Media Startseite')});
   };
 
   const faqA11y=()=>{
@@ -41,6 +41,11 @@
   };
 
   const forms=()=>{
+    doc.querySelectorAll('.funnel-field').forEach((wrap,index)=>{
+      const field=wrap.querySelector('input,select,textarea');const help=wrap.querySelector('small');if(!field||!help)return;
+      if(!help.id)help.id=`field-help-${field.id||index+1}`;
+      const described=new Set((field.getAttribute('aria-describedby')||'').split(/\s+/).filter(Boolean));described.add(help.id);field.setAttribute('aria-describedby',[...described].join(' '));
+    });
     doc.querySelectorAll('input,select,textarea').forEach(field=>{
       field.addEventListener('invalid',()=>field.setAttribute('aria-invalid','true'));
       field.addEventListener('input',()=>{if(field.checkValidity())field.removeAttribute('aria-invalid')});
@@ -52,7 +57,7 @@
   const images=()=>{
     doc.querySelectorAll('img').forEach((img,index)=>{
       img.decoding='async';
-      if(index>2&&!img.closest('.hero-premium,.analysis-intro,.page-hero'))img.loading||='lazy';
+      if(index>2&&!img.closest('.hero-premium,.analysis-intro,.page-hero,.article-cover'))img.loading||='lazy';
       if(!img.hasAttribute('alt'))img.alt='';
     });
   };
@@ -67,11 +72,9 @@
       doc.querySelectorAll('.faq-a').forEach(answer=>{
         if(answer.textContent.includes('TikTok'))answer.textContent='Das hängt von Zielgruppe, Angebot und Content-Stärke ab. Instagram und Facebook sind stark für Community und visuelle Markenführung, YouTube für nachhaltige Sichtbarkeit und erklärungsstarke Inhalte, LinkedIn vor allem im B2B.';
       });
-      const meta=doc.querySelector('meta[name="description"]');if(meta)meta.content='Kontakt zu JJ-Media: persönliche Beratung für Social-Media-Strategie, Content und Performance auf Instagram, Facebook, YouTube und LinkedIn.';
     }
     if(doc.body.classList.contains('viral-page')){
-      doc.body.classList.add('jj-no-sticky');
-      doc.querySelector('.jj-sticky-convert')?.remove();
+      doc.body.classList.add('jj-no-sticky');doc.querySelector('.jj-sticky-convert')?.remove();
     }
     if(['contact','analyse','datenschutz','impressum','barrierefreiheit'].includes(current))doc.body.classList.add('jj-no-sticky');
   };
