@@ -7,6 +7,14 @@
     document.head.appendChild(script);
   };
 
+  if(!document.querySelector('link[data-jj-ui-hotfix]')){
+    const hotfix=document.createElement('link');
+    hotfix.rel='stylesheet';
+    hotfix.href='ui-hotfix-20260902.css?v=20260902-1';
+    hotfix.dataset.jjUiHotfix='true';
+    document.head.appendChild(hotfix);
+  }
+
   const isLegal=/\/(datenschutz|impressum|barrierefreiheit)(\.html)?\/?$/i.test(location.pathname);
   const bootGrowth=()=>{
     if(isLegal)return;
