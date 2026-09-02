@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-09-01",
+  "updated_at": "2026-09-02",
   "site": "https://www.jj-media-design.de",
   "editorial_principles": [
     "reader_is_hero_jj_is_guide",
@@ -18,8 +18,8 @@
   ],
   "topic_clusters": [
     {"id":"social-media-strategie","pillar":"blog/social-media-strategie-2026.html","intent":"informational-commercial","priority":100,"status":"active"},
-    {"id":"instagram-marketing","pillar":null,"intent":"informational-commercial","priority":90,"status":"planned"},
-    {"id":"facebook-marketing","pillar":null,"intent":"informational-commercial","priority":75,"status":"planned"},
+    {"id":"instagram-marketing","pillar":null,"intent":"informational-commercial","priority":90,"status":"active"},
+    {"id":"facebook-marketing","pillar":null,"intent":"informational-commercial","priority":75,"status":"active"},
     {"id":"youtube-marketing","pillar":null,"intent":"informational-commercial","priority":88,"status":"active"},
     {"id":"linkedin-marketing","pillar":null,"intent":"informational-commercial","priority":85,"status":"planned"},
     {"id":"social-media-agentur","pillar":"services.html","intent":"commercial","priority":100,"status":"active"},
@@ -61,6 +61,26 @@
       "primary_source":"https://blog.youtube/news-and-events/youtube-shopping-amazon-creator-affiliates/",
       "image":"assets/blog/youtube-shopping-amazon-2026.webp",
       "image_alt":"Marketer analysiert YouTube-Shopping-Content in einem E-Commerce-Setup"
+    },
+    {
+      "slug":"instagram-vs-facebook-2026",
+      "path":"blog/instagram-vs-facebook-2026.html",
+      "title":"Instagram vs. Facebook 2026: Was die neuen EU-Zahlen für Unternehmen wirklich bedeuten",
+      "type":"trend",
+      "cluster":"instagram-marketing",
+      "primary_keyword":"instagram vs facebook 2026",
+      "secondary_keywords":["instagram oder facebook 2026","facebook oder instagram für unternehmen","instagram facebook vergleich 2026"],
+      "search_intent":"news-informational-commercial",
+      "search_volume":null,
+      "volume_source":"no connected keyword-volume source; selected from current news velocity, SERP intent and cluster gap",
+      "published":"2026-09-02",
+      "review_by":"2026-10-15",
+      "status":"published",
+      "conversion_target":"analyse.html",
+      "primary_source":"https://transparency.meta.com/reports/regulatory-transparency-reports/",
+      "evidence":"Meta DSA transparency reporting for H1 2026 plus current secondary reporting",
+      "image":"assets/blog/instagram-vs-facebook-eu-2026.webp",
+      "image_alt":"Social-Media-Strategin vergleicht Content-Performance an einem Arbeitsplatz mit Kamera und Laptop"
     }
   ],
   "daily_scoring": {
