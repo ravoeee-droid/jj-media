@@ -1,0 +1,35 @@
+name: JJ Media Intelligence Stack
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '27 4 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  link-health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check broken links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --root-dir "$(pwd)" --cache --max-cache-age 7d --no-progress './**/*.html' './**/*.md'
+          fail: false
+          jobSummary: true
+
+  full-site-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.18.0'
+      - name: Install Chromium dependencies
+        run: npx --yes playwright@1.55.0 install --with-deps chromium
+      - name: Run full-site Unlighthouse audit
+        run: npx --yes unlighthouse-ci@0.18.0 --site https://www.jj-media-design.de --budget 80 --desktop
