@@ -3,13 +3,19 @@
   doc.documentElement.classList.add('js');
   const inArticle=location.pathname.includes('/blog/');
   const prefix=inArticle?'../':'';
-  const assetVersion='20260905-5';
+  const assetVersion='20260905-6';
+
+  const loadScript=(src)=>{
+    if([...doc.scripts].some(script=>(script.getAttribute('src')||'').includes(src.split('?')[0])))return;
+    const script=doc.createElement('script');script.src=`${prefix}${src}`;doc.head.appendChild(script);
+  };
+  loadScript('brand-runtime.js?v=20260905-1');
 
   if(!doc.querySelector('link[data-jj-quality-css]')){
-    const qualityCss=doc.createElement('link');qualityCss.rel='stylesheet';qualityCss.dataset.jjQualityCss='true';qualityCss.href=`${prefix}site-quality.css?v=20260905-5`;doc.head.appendChild(qualityCss);
+    const qualityCss=doc.createElement('link');qualityCss.rel='stylesheet';qualityCss.dataset.jjQualityCss='true';qualityCss.href=`${prefix}site-quality.css?v=20260905-6`;doc.head.appendChild(qualityCss);
   }
   if(!doc.documentElement.dataset.jjQualityLoaded){
-    const qualityScript=doc.createElement('script');qualityScript.src=`${prefix}site-quality.js?v=20260905-5`;doc.head.appendChild(qualityScript);
+    const qualityScript=doc.createElement('script');qualityScript.src=`${prefix}site-quality.js?v=20260905-6`;doc.head.appendChild(qualityScript);
   }
   if(!doc.querySelector('link[data-blog-final]')){
     const style=doc.createElement('link');style.rel='stylesheet';style.dataset.blogFinal='true';style.href=`${prefix}blog-final.css?v=${assetVersion}`;doc.head.appendChild(style);
@@ -18,7 +24,7 @@
     const premium=doc.createElement('link');premium.rel='stylesheet';premium.dataset.blogPremium='true';premium.href=`${prefix}blog-premium.css?v=${assetVersion}`;doc.head.appendChild(premium);
   }
   if(!doc.querySelector('link[data-jj-ui-hotfix]')){
-    const hotfix=doc.createElement('link');hotfix.rel='stylesheet';hotfix.dataset.jjUiHotfix='true';hotfix.href=`${prefix}ui-hotfix-20260902.css?v=20260905-2`;doc.head.appendChild(hotfix);
+    const hotfix=doc.createElement('link');hotfix.rel='stylesheet';hotfix.dataset.jjUiHotfix='true';hotfix.href=`${prefix}ui-hotfix-20260902.css?v=20260905-6`;doc.head.appendChild(hotfix);
   }
 
   const fallbacks={
