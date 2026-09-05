@@ -26,6 +26,19 @@
     try { return localStorage.getItem(ANALYTICS_KEY) === 'yes'; } catch (_) { return false; }
   };
 
+  const loadClarity = callback => {
+    if (!analyticsAllowed()) return;
+    if (window.JJClarity) { callback?.(); return; }
+    const existing = document.querySelector('script[data-jj-clarity]');
+    if (existing) { existing.addEventListener('load',() => callback?.(),{once:true}); return; }
+    const script = document.createElement('script');
+    script.src = 'clarity.js?v=20260905-2';
+    script.dataset.jjClarity = 'true';
+    script.onload = () => callback?.();
+    document.head.appendChild(script);
+  };
+  const startClarity = () => loadClarity(() => window.JJClarity?.init());
+
   const getSession = () => {
     if (!analyticsAllowed()) return '';
     if (sessionId) return sessionId;
@@ -44,15 +57,20 @@
 
   const track = (event,properties = {}) => {
     if (!analyticsAllowed()) return;
+    const safeEvent = String(event).slice(0,80);
     const session = getSession();
     const payload = {
-      event:String(event).slice(0,80),
+      event:safeEvent,
       session:session.slice(0,80),
       path:location.pathname.slice(0,300),
       referrer_host:(() => { try { return document.referrer ? new URL(document.referrer).hostname.slice(0,120) : ''; } catch (_) { return ''; } })(),
       properties:Object.fromEntries(Object.entries(properties).slice(0,20).map(([key,value]) => [String(key).slice(0,60),String(value ?? '').slice(0,200)]))
     };
     fetch('/api/conversion-event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true}).catch(()=>{});
+    try {
+      if (window.JJClarity) window.JJClarity.event(safeEvent);
+      else loadClarity(() => window.JJClarity?.event(safeEvent));
+    } catch (_) {}
   };
 
   const labels = {goal:'Ziel',challenge:'Herausforderung',profile:'Profil',industry:'Branche',name:'Name',company:'Unternehmen',email:'E-Mail'};
@@ -212,6 +230,7 @@
 
   ['goal','challenge','industry','profile'].forEach(name => setPrefill(name,params.get(name) || ''));
 
+  if (analyticsAllowed()) startClarity();
   track('analysis_funnel_open',{entry:params.get('entry') || '',prefilled:Boolean(params.get('goal') || params.get('challenge') || params.get('industry') || params.get('profile'))});
   update();
 })();
