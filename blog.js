@@ -1,5 +1,6 @@
 (() => {
   const doc=document;
+  doc.documentElement.classList.add('js');
   const inArticle=location.pathname.includes('/blog/');
   const prefix=inArticle?'../':'';
 
@@ -10,10 +11,7 @@
     const qualityScript=doc.createElement('script');qualityScript.src=`${prefix}site-quality.js?v=20260901-1`;doc.head.appendChild(qualityScript);
   }
   if(!doc.querySelector('link[data-blog-final]')){
-    const style=doc.createElement('link');style.rel='stylesheet';style.dataset.blogFinal='true';style.href=`${prefix}blog-final.css?v=20260901-2`;doc.head.appendChild(style);
-  }
-  if(!doc.querySelector('link[data-jj-ui-hotfix]')){
-    const hotfix=doc.createElement('link');hotfix.rel='stylesheet';hotfix.dataset.jjUiHotfix='true';hotfix.href=`${prefix}ui-hotfix-20260902.css?v=20260905-2`;doc.head.appendChild(hotfix);
+    const style=doc.createElement('link');style.rel='stylesheet';style.dataset.blogFinal='true';style.href=`${prefix}blog-final.css?v=20260905-4`;doc.head.appendChild(style);
   }
 
   const footerLinks=doc.querySelector('.blog-footer span:last-child');
@@ -39,10 +37,10 @@
   search?.addEventListener('input',apply);
 
   const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const revealTargets=[...doc.querySelectorAll('.blog-card,.blog-principles,.blog-cta,.article-content>section,.article-cover,.article-toc')];
-  revealTargets.forEach((el,index)=>{el.classList.add('reveal');el.style.setProperty('--reveal-delay',`${Math.min(index%4,3)*55}ms`)});
+  const revealTargets=[...doc.querySelectorAll('.blog-hero-grid>*,.blog-section-head>*,.blog-card,.blog-principles,.blog-cta,.article-hero .blog-container>*:not(.article-breadcrumbs),.article-content>section,.article-cover,.article-toc')];
+  revealTargets.forEach((el,index)=>{el.classList.add('reveal');el.style.setProperty('--reveal-delay',`${Math.min(index%4,3)*70}ms`)});
   if('IntersectionObserver' in window&&!reduceMotion){
-    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.08,rootMargin:'0px 0px -4%'});
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.06,rootMargin:'0px 0px -5%'});
     revealTargets.forEach(el=>observer.observe(el));
   }else revealTargets.forEach(el=>el.classList.add('visible'));
 
