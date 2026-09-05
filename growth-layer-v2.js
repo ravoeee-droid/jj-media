@@ -13,6 +13,17 @@
 
   const getConsent=()=>{try{return localStorage.getItem(ANALYTICS_KEY)||''}catch(_){return ''}};
   const setConsent=value=>{try{localStorage.setItem(ANALYTICS_KEY,value)}catch(_){}};
+  const loadClarity=callback=>{
+    if(window.JJClarity){callback?.();return}
+    if(doc.querySelector('script[data-jj-clarity]'))return;
+    const script=doc.createElement('script');
+    script.src='clarity.js?v=20260905-1';
+    script.dataset.jjClarity='true';
+    script.onload=()=>callback?.();
+    doc.head.appendChild(script);
+  };
+  const startClarity=()=>loadClarity(()=>window.JJClarity?.init());
+
   let memorySession='';
   const analyticsSession=()=>{
     if(getConsent()!=='yes') return '';
@@ -26,13 +37,15 @@
 
   const track=(event,properties={})=>{
     if(getConsent()!=='yes') return;
+    const safeEvent=String(event).slice(0,80);
     const session=analyticsSession();
     const payload={
-      event:String(event).slice(0,80),session:session.slice(0,80),path:location.pathname.slice(0,300),
+      event:safeEvent,session:session.slice(0,80),path:location.pathname.slice(0,300),
       referrer_host:(()=>{try{return document.referrer?new URL(document.referrer).hostname.slice(0,120):''}catch(_){return ''}})(),
       properties:Object.fromEntries(Object.entries(properties).slice(0,20).map(([k,v])=>[String(k).slice(0,60),String(v??'').slice(0,200)]))
     };
     try{fetch('/api/conversion-event',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),keepalive:true}).catch(()=>{})}catch(_){}
+    try{window.JJClarity?.event(safeEvent)}catch(_){}
   };
   window.JJTrack=track;
 
@@ -42,14 +55,17 @@
     panel.className='jj-privacy';
     panel.setAttribute('role','dialog');
     panel.setAttribute('aria-label','Datenschutzeinstellungen');
-    panel.innerHTML='<strong>Datenschutz-Einstellungen</strong><p>Notwendige Funktionen laufen ohne Tracking. Optionale Nutzungsstatistiken helfen uns nur nach Ihrer Zustimmung, Inhalte und Nutzerführung zu verbessern.</p><div class="jj-privacy-actions"><button type="button" data-consent="no">Nur notwendig</button><button class="primary" type="button" data-consent="yes">Statistik erlauben</button></div><a href="datenschutz.html">Mehr zum Datenschutz</a>';
+    panel.innerHTML='<strong>Datenschutz-Einstellungen</strong><p>Notwendige Funktionen laufen ohne Tracking. Optionale Nutzungsstatistiken inklusive Microsoft Clarity helfen uns nur nach Ihrer Zustimmung, Inhalte und Nutzerführung zu verbessern.</p><div class="jj-privacy-actions"><button type="button" data-consent="no">Nur notwendig</button><button class="primary" type="button" data-consent="yes">Statistik erlauben</button></div><a href="datenschutz.html">Mehr zum Datenschutz</a>';
     doc.body.appendChild(panel);
     requestAnimationFrame(()=>panel.classList.add('visible'));
     panel.addEventListener('click',event=>{
       const button=event.target.closest('[data-consent]');if(!button)return;
       const choice=button.dataset.consent==='yes'?'yes':'no';setConsent(choice);
+      if(choice==='yes'){
+        startClarity();
+        track('analytics_consent',{source:'privacy_panel'});
+      }
       panel.classList.remove('visible');setTimeout(()=>panel.remove(),300);
-      if(choice==='yes') track('analytics_consent',{source:'privacy_panel'});
     });
   };
 
@@ -96,6 +112,7 @@
     if(target)track(target.dataset.track,{href:target.getAttribute('href')||'',label:(target.textContent||'').trim().slice(0,100)});
   });
 
+  if(getConsent()==='yes')startClarity();
   microTrust();
   stickyConversion();
   privacy();
