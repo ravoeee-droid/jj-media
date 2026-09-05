@@ -30,5 +30,5 @@
     }
   };
 
-  load('site-quality.js?v=20260901-2',()=>load('viral-nav.js?v=20260901-3',()=>load('insights-bridge.js?v=20260901-1',bootPage)));
+  load('site-quality.js?v=20260905-5',()=>load('viral-nav.js?v=20260901-3',()=>load('insights-bridge.js?v=20260901-1',bootPage)));
 })();

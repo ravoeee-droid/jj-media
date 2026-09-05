@@ -5,11 +5,31 @@
   const path=location.pathname.toLowerCase();
 
   if(!doc.querySelector('link[data-jj-quality-css]')){
-    const css=doc.createElement('link');css.rel='stylesheet';css.href='site-quality.css?v=20260901-2';css.dataset.jjQualityCss='true';doc.head.appendChild(css);
+    const css=doc.createElement('link');css.rel='stylesheet';css.href='/site-quality.css?v=20260905-5';css.dataset.jjQualityCss='true';doc.head.appendChild(css);
   }
 
   const normalizePath=value=>(value||'').split('?')[0].split('#')[0].replace(/^\//,'').replace(/\.html$/,'')||'index';
   const current=normalizePath(path);
+
+  const ensureBrand=()=>{
+    if(!doc.getElementById('jj-master-logo-style')){
+      const style=doc.createElement('style');
+      style.id='jj-master-logo-style';
+      style.textContent='.jj-master-logo-link{display:inline-flex!important;align-items:center!important;justify-content:flex-start!important;flex:0 0 auto!important;text-decoration:none!important;line-height:1!important;gap:0!important}.jj-master-logo{display:block!important;width:auto!important;height:40px!important;max-width:58px!important;object-fit:contain!important;object-position:center!important;filter:none!important;transform:translateZ(0);transition:transform .28s ease,filter .28s ease}.jj-master-logo-link:hover .jj-master-logo{transform:translateY(-1px) scale(1.025);filter:saturate(1.04)}.blog-nav .jj-master-logo{height:36px!important;max-width:52px!important}.analysis-topbar .jj-master-logo{height:38px!important;max-width:55px!important}@media(max-width:620px){.jj-master-logo{height:34px!important;max-width:49px!important}.blog-nav .jj-master-logo,.analysis-topbar .jj-master-logo{height:33px!important;max-width:47px!important}}';
+      doc.head.appendChild(style);
+    }
+    doc.querySelectorAll('a.logo,a.blog-logo').forEach(link=>{
+      link.classList.add('jj-master-logo-link');
+      link.setAttribute('aria-label','JJ-Media Startseite');
+      if(link.querySelector('.jj-master-logo'))return;
+      const img=doc.createElement('img');
+      img.className='jj-master-logo';
+      img.src='/assets/brand/jj-media-logo.webp?v=20260905-1';
+      img.alt='JJ-Media';
+      img.width=320;img.height=226;img.decoding='async';
+      link.replaceChildren(img);
+    });
+  };
 
   const ensureSkip=()=>{
     if(doc.querySelector('.jj-skip-link'))return;
@@ -92,10 +112,11 @@
       if(doc.body.classList.contains('jj-no-sticky'))doc.querySelector('.jj-sticky-convert')?.remove();
       const privacy=doc.querySelector('.jj-privacy');
       if(privacy&&!privacy.dataset.qualityReady){privacy.dataset.qualityReady='true';privacy.setAttribute('role','dialog');privacy.setAttribute('aria-label','Datenschutzeinstellungen')}
+      ensureBrand();
     });
     observer.observe(doc.body,{childList:true,subtree:true});
   };
 
-  ensureSkip();navigation();faqA11y();forms();images();patchCopy();footerA11y();watchDynamic();
+  ensureSkip();ensureBrand();navigation();faqA11y();forms();images();patchCopy();footerA11y();watchDynamic();
   doc.body.classList.add('jj-quality-ready');
 })();
