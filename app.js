@@ -41,5 +41,5 @@
     }
   };
 
-  load('brand-runtime.js?v=20260905-2',()=>load('site-quality.js?v=20260905-6',()=>load('viral-nav.js?v=20260901-3',()=>load('insights-bridge.js?v=20260901-1',bootPage))));
+  load('brand-runtime.js?v=20260905-3',()=>load('site-quality.js?v=20260905-6',()=>load('viral-nav.js?v=20260901-3',()=>load('insights-bridge.js?v=20260901-1',bootPage))));
 })();
