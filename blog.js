@@ -3,6 +3,7 @@
   doc.documentElement.classList.add('js');
   const inArticle=location.pathname.includes('/blog/');
   const prefix=inArticle?'../':'';
+  const assetVersion='20260905-4';
 
   if(!doc.querySelector('link[data-jj-quality-css]')){
     const qualityCss=doc.createElement('link');qualityCss.rel='stylesheet';qualityCss.dataset.jjQualityCss='true';qualityCss.href=`${prefix}site-quality.css?v=20260901-1`;doc.head.appendChild(qualityCss);
@@ -11,16 +12,41 @@
     const qualityScript=doc.createElement('script');qualityScript.src=`${prefix}site-quality.js?v=20260901-1`;doc.head.appendChild(qualityScript);
   }
   if(!doc.querySelector('link[data-blog-final]')){
-    const style=doc.createElement('link');style.rel='stylesheet';style.dataset.blogFinal='true';style.href=`${prefix}blog-final.css?v=20260905-3`;doc.head.appendChild(style);
+    const style=doc.createElement('link');style.rel='stylesheet';style.dataset.blogFinal='true';style.href=`${prefix}blog-final.css?v=${assetVersion}`;doc.head.appendChild(style);
+  }
+  if(!doc.querySelector('link[data-blog-premium]')){
+    const premium=doc.createElement('link');premium.rel='stylesheet';premium.dataset.blogPremium='true';premium.href=`${prefix}blog-premium.css?v=${assetVersion}`;doc.head.appendChild(premium);
   }
   if(!doc.querySelector('link[data-jj-ui-hotfix]')){
     const hotfix=doc.createElement('link');hotfix.rel='stylesheet';hotfix.dataset.jjUiHotfix='true';hotfix.href=`${prefix}ui-hotfix-20260902.css?v=20260905-2`;doc.head.appendChild(hotfix);
   }
 
-  // Use a real proof visual for the LinkedIn article/listing instead of repeating portrait photography.
-  doc.querySelectorAll('img[src$="linkedin-authenticity-automation-2026.webp"]').forEach(img=>{
-    img.src=`${prefix}assets/blog/linkedin-performance-proof.jpg`;
-    img.alt='LinkedIn-Performance-Auswertung als realer Social-Media-Proof';
+  const fallbacks={
+    'linkedin-authenticity-automation-2026.webp':'linkedin-performance-proof.jpg',
+    'linkedin-performance-proof.jpg':'social-media-strategie-2026.webp',
+    'instagram-seo-search-console-2026.webp':'social-media-strategie-2026.webp',
+    'instagram-vs-facebook-eu-2026.webp':'social-media-strategie-2026.webp',
+    'youtube-shopping-amazon-2026.webp':'social-media-strategie-2026.webp',
+    'youtube-shorts-vs-reels-2026.jpg':'social-media-strategie-2026.webp'
+  };
+
+  doc.querySelectorAll('img').forEach(img=>{
+    const raw=img.getAttribute('src')||'';
+    if(!raw.includes('assets/blog/'))return;
+    const name=raw.split('?')[0].split('/').pop();
+    if(name==='linkedin-authenticity-automation-2026.webp'){
+      img.src=`${prefix}assets/blog/linkedin-performance-proof.jpg?v=${assetVersion}`;
+      img.alt='LinkedIn-Performance-Auswertung als realer Social-Media-Proof';
+    }else if(!raw.includes('?')){
+      img.src=`${raw}?v=${assetVersion}`;
+    }
+    img.addEventListener('error',()=>{
+      if(img.dataset.jjFallback==='1')return;
+      img.dataset.jjFallback='1';
+      const current=(img.getAttribute('src')||'').split('?')[0].split('/').pop();
+      const fallback=fallbacks[current]||'social-media-strategie-2026.webp';
+      img.src=`${prefix}assets/blog/${fallback}?v=${assetVersion}`;
+    },{once:true});
   });
 
   const footerLinks=doc.querySelector('.blog-footer span:last-child');
@@ -47,7 +73,7 @@
 
   const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const revealTargets=[...doc.querySelectorAll('.blog-hero-grid>* ,.blog-section-head>* ,.blog-card,.blog-principles,.blog-cta,.article-content>section,.article-cover,.article-toc')];
-  revealTargets.forEach((el,index)=>{el.classList.add('reveal');el.style.setProperty('--reveal-delay',`${Math.min(index%4,3)*45}ms`)});
+  revealTargets.forEach((el,index)=>{el.classList.add('reveal');el.style.setProperty('--reveal-delay',`${Math.min(index%4,3)*40}ms`)});
   if('IntersectionObserver' in window&&!reduceMotion){
     const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){requestAnimationFrame(()=>entry.target.classList.add('visible'));observer.unobserve(entry.target)}}),{threshold:.08,rootMargin:'0px 0px -5%'});
     revealTargets.forEach(el=>observer.observe(el));
