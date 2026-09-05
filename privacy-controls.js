@@ -3,13 +3,26 @@
   const footerLinks = document.querySelector('footer .footer-links');
   if (!footerLinks || footerLinks.querySelector('[data-privacy-settings]')) return;
 
+  const clearAnalytics = () => {
+    try {
+      if (typeof window.clarity === 'function') {
+        window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'denied' });
+        window.clarity('consent', false);
+      }
+    } catch (_) {}
+    ['_clck', '_clsk'].forEach(name => {
+      try { document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax`; } catch (_) {}
+    });
+    try { localStorage.removeItem(KEY); } catch (_) {}
+  };
+
   const button = document.createElement('button');
   button.type = 'button';
   button.dataset.privacySettings = 'true';
   button.textContent = 'Datenschutz-Einstellungen';
   button.style.cssText = 'appearance:none;border:0;background:none;color:inherit;font:inherit;padding:0;cursor:pointer;text-align:left;opacity:.86';
   button.addEventListener('click',() => {
-    try { localStorage.removeItem(KEY); } catch (_) {}
+    clearAnalytics();
     location.reload();
   });
   footerLinks.appendChild(button);
