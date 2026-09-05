@@ -1,1 +1,0 @@
-Logo assets are managed by the JJ-Media brand runtime.
