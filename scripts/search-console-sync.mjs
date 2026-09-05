@@ -1,69 +1,110 @@
-import crypto from 'node:crypto';
+const clientId = process.env.GOOGLE_OAUTH_CLIENT_ID || '818290069312-8q2go2g0uokr6bhei8paijha2cbv5129.apps.googleusercontent.com';
+const clientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET || '';
+const refreshToken = process.env.GSC_REFRESH_TOKEN || '';
+const property = process.env.GSC_PROPERTY || 'sc-domain:jj-media-design.de';
 
-const raw = process.env.GSC_SERVICE_ACCOUNT_JSON || '';
-const property = process.env.GSC_PROPERTY || '';
-if (!raw || !property) {
-  console.log('Search Console sync skipped: credentials/property missing.');
+if (!clientId || !clientSecret || !refreshToken) {
+  console.log('Search Console sync skipped: OAuth credentials/refresh token missing.');
   process.exit(0);
 }
 
-const account = JSON.parse(raw);
-const now = Math.floor(Date.now() / 1000);
-const base64url = value => Buffer.from(typeof value === 'string' ? value : JSON.stringify(value)).toString('base64url');
-const header = base64url({alg:'RS256',typ:'JWT'});
-const claim = base64url({
-  iss:account.client_email,
-  scope:'https://www.googleapis.com/auth/webmasters.readonly',
-  aud:'https://oauth2.googleapis.com/token',
-  iat:now,
-  exp:now + 3600
-});
-const unsigned = `${header}.${claim}`;
-const signature = crypto.sign('RSA-SHA256',Buffer.from(unsigned),account.private_key).toString('base64url');
-const assertion = `${unsigned}.${signature}`;
+async function getAccessToken() {
+  const response = await fetch('https://oauth2.googleapis.com/token',{
+    method:'POST',
+    headers:{'Content-Type':'application/x-www-form-urlencoded'},
+    body:new URLSearchParams({
+      client_id:clientId,
+      client_secret:clientSecret,
+      refresh_token:refreshToken,
+      grant_type:'refresh_token'
+    })
+  });
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok || !body.access_token) throw new Error(`OAuth refresh failed: ${response.status}`);
+  return body.access_token;
+}
 
-const tokenResponse = await fetch('https://oauth2.googleapis.com/token',{
-  method:'POST',
-  headers:{'Content-Type':'application/x-www-form-urlencoded'},
-  body:new URLSearchParams({grant_type:'urn:ietf:params:oauth:grant-type:jwt-bearer',assertion})
-});
-if (!tokenResponse.ok) throw new Error(`OAuth failed: ${tokenResponse.status} ${await tokenResponse.text()}`);
-const {access_token: token} = await tokenResponse.json();
-
-const end = new Date();
-end.setUTCDate(end.getUTCDate()-2);
-const start = new Date(end);
-start.setUTCDate(start.getUTCDate()-27);
 const ymd = date => date.toISOString().slice(0,10);
+function range(days,offset=0) {
+  const end = new Date();
+  end.setUTCHours(0,0,0,0);
+  end.setUTCDate(end.getUTCDate()-2-offset);
+  const start = new Date(end);
+  start.setUTCDate(start.getUTCDate()-(days-1));
+  return {startDate:ymd(start),endDate:ymd(end)};
+}
 
-const queryResponse = await fetch(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(property)}/searchAnalytics/query`,{
-  method:'POST',
-  headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
-  body:JSON.stringify({
-    startDate:ymd(start),
-    endDate:ymd(end),
-    dimensions:['query','page'],
-    rowLimit:1000,
-    dataState:'final'
-  })
-});
-if (!queryResponse.ok) throw new Error(`Search Console query failed: ${queryResponse.status} ${await queryResponse.text()}`);
-const data = await queryResponse.json();
-const rows = data.rows || [];
-const totals = rows.reduce((acc,row) => {
-  acc.clicks += row.clicks || 0;
-  acc.impressions += row.impressions || 0;
-  return acc;
-},{clicks:0,impressions:0});
-const ctr = totals.impressions ? totals.clicks / totals.impressions : 0;
-const top = rows.slice().sort((a,b)=>(b.clicks||0)-(a.clicks||0)).slice(0,20);
+async function query(token,body) {
+  const response = await fetch(`https://www.googleapis.com/webmasters/v3/sites/${encodeURIComponent(property)}/searchAnalytics/query`,{
+    method:'POST',
+    headers:{Authorization:`Bearer ${token}`,'Content-Type':'application/json'},
+    body:JSON.stringify({...body,dataState:'final'})
+  });
+  if (!response.ok) throw new Error(`Search Console query failed: ${response.status}`);
+  return response.json();
+}
+
+function total(payload) {
+  const row = payload.rows?.[0] || {};
+  return {
+    clicks:Number(row.clicks || 0),
+    impressions:Number(row.impressions || 0),
+    ctr:Number(row.ctr || 0),
+    position:Number(row.position || 0)
+  };
+}
+
+function pct(current,previous) {
+  if (!previous) return current ? 100 : 0;
+  return ((current-previous)/previous)*100;
+}
+
+const token = await getAccessToken();
+const currentRange = range(28);
+const previousRange = range(28,28);
+const [currentPayload,previousPayload,queryPayload,pagePayload] = await Promise.all([
+  query(token,currentRange),
+  query(token,previousRange),
+  query(token,{...currentRange,dimensions:['query'],rowLimit:250}),
+  query(token,{...currentRange,dimensions:['page'],rowLimit:100})
+]);
+
+const current = total(currentPayload);
+const previous = total(previousPayload);
+const queries = (queryPayload.rows || []).map(row => ({
+  query:row.keys?.[0] || '',
+  clicks:Number(row.clicks || 0),
+  impressions:Number(row.impressions || 0),
+  ctr:Number(row.ctr || 0),
+  position:Number(row.position || 0)
+}));
+const pages = (pagePayload.rows || []).map(row => ({
+  page:row.keys?.[0] || '',
+  clicks:Number(row.clicks || 0),
+  impressions:Number(row.impressions || 0),
+  ctr:Number(row.ctr || 0),
+  position:Number(row.position || 0)
+}));
+
+const opportunities = queries
+  .filter(row => row.impressions >= 20 && row.position >= 4 && row.position <= 20)
+  .map(row => ({...row,score:row.impressions*Math.max(0.05,1-row.ctr)*(21-row.position)}))
+  .sort((a,b)=>b.score-a.score)
+  .slice(0,10);
 
 const report = {
   property,
-  period:{start:ymd(start),end:ymd(end)},
-  totals:{clicks:totals.clicks,impressions:totals.impressions,ctr:Number(ctr.toFixed(4))},
-  top:top.map(row=>({query:row.keys?.[0]||'',page:row.keys?.[1]||'',clicks:row.clicks||0,impressions:row.impressions||0,ctr:row.ctr||0,position:row.position||0}))
+  period:currentRange,
+  totals:current,
+  growth:{
+    clicks:pct(current.clicks,previous.clicks),
+    impressions:pct(current.impressions,previous.impressions),
+    ctr:pct(current.ctr,previous.ctr)
+  },
+  opportunities,
+  topPages:pages.sort((a,b)=>b.clicks-a.clicks).slice(0,10)
 };
+
 console.log(JSON.stringify(report,null,2));
 
 if (process.env.GITHUB_STEP_SUMMARY) {
@@ -71,17 +112,18 @@ if (process.env.GITHUB_STEP_SUMMARY) {
   const lines = [
     '# JJ Media · Search Console Intelligence',
     '',
-    `Zeitraum: **${report.period.start} → ${report.period.end}**`,
+    `Zeitraum: **${currentRange.startDate} → ${currentRange.endDate}**`,
     '',
-    `- Klicks: **${report.totals.clicks.toLocaleString('de-DE')}**`,
-    `- Impressionen: **${report.totals.impressions.toLocaleString('de-DE')}**`,
-    `- CTR: **${(report.totals.ctr*100).toFixed(2)} %**`,
+    `- Klicks: **${current.clicks.toLocaleString('de-DE')}** (${report.growth.clicks >= 0 ? '+' : ''}${report.growth.clicks.toFixed(1)} %)`,
+    `- Impressionen: **${current.impressions.toLocaleString('de-DE')}** (${report.growth.impressions >= 0 ? '+' : ''}${report.growth.impressions.toFixed(1)} %)`,
+    `- CTR: **${(current.ctr*100).toFixed(2)} %**`,
+    `- Ø Position: **${current.position.toFixed(1)}**`,
     '',
-    '## Top Suchanfragen',
+    '## Größte SEO-Chancen',
     '',
-    '| Query | Klicks | Impressionen | Ø Position |',
+    '| Query | Impressionen | CTR | Position |',
     '|---|---:|---:|---:|',
-    ...report.top.slice(0,10).map(row=>`| ${(row.query||'(ohne Query)').replace(/\|/g,'/')} | ${row.clicks} | ${row.impressions} | ${Number(row.position).toFixed(1)} |`),
+    ...opportunities.map(row=>`| ${(row.query || '(ohne Query)').replace(/\|/g,'/')} | ${row.impressions} | ${(row.ctr*100).toFixed(1)} % | ${row.position.toFixed(1)} |`),
     ''
   ];
   await fs.appendFile(process.env.GITHUB_STEP_SUMMARY,lines.join('\n'));

@@ -1,2 +1,10 @@
 # ProjectAtlas local repository intelligence
 .projectatlas/
+
+# Local/runtime secrets
+.env
+.env.*
+!.env.example
+client_secret*.json
+*service-account*.json
+*.pem

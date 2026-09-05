@@ -3,5 +3,6 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 Disallow: /social-audit
+Disallow: /intelligence
 
 Sitemap: https://www.jj-media-design.de/sitemap.xml

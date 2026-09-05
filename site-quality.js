@@ -51,6 +51,9 @@
       field.addEventListener('input',()=>{if(field.checkValidity())field.removeAttribute('aria-invalid')});
       if(!field.getAttribute('autocomplete')&&field.type==='email')field.autocomplete='email';
     });
+    if(current==='analyse'){
+      doc.querySelectorAll('input[type="text"],input[type="url"],input[type="email"],input[type="tel"],textarea').forEach(field=>field.setAttribute('data-clarity-mask','true'));
+    }
     doc.querySelectorAll('[aria-live]').forEach(region=>{if(!region.getAttribute('aria-atomic'))region.setAttribute('aria-atomic','true')});
   };
 
@@ -96,6 +99,18 @@
     observer.observe(doc.body,{childList:true,subtree:true});
   };
 
-  ensureSkip();navigation();faqA11y();forms();images();patchCopy();footerA11y();watchDynamic();
+  const analysisIntelligence=()=>{
+    if(current!=='analyse')return;
+    const load=(src,marker,next)=>{
+      const existing=doc.querySelector(`script[${marker}]`);
+      if(existing){next?.();return}
+      const script=doc.createElement('script');script.src=src;script.setAttribute(marker,'true');script.onload=()=>next?.();doc.head.appendChild(script);
+    };
+    load('growth-layer-v2.js?v=20260905-3','data-jj-analysis-growth',()=>{
+      load('privacy-controls.js?v=20260905-2','data-jj-analysis-privacy');
+    });
+  };
+
+  ensureSkip();navigation();faqA11y();forms();images();patchCopy();footerA11y();watchDynamic();analysisIntelligence();
   doc.body.classList.add('jj-quality-ready');
 })();

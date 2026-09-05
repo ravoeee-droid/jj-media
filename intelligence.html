@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>JJ Media Intelligence</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="intelligence.css">
+</head>
+<body class="intel-body">
+<header class="intel-topbar">
+  <a class="logo" href="index.html"><span class="logo-mark">JJ</span><span>JJ—MEDIA</span></a>
+  <div class="intel-top-actions">
+    <span class="intel-pill" data-overall-status>System wird geprüft …</span>
+    <a class="intel-secondary" href="/api/google/oauth/start" data-google-connect>Google verbinden</a>
+  </div>
+</header>
+<main class="intel-shell">
+  <section class="intel-hero">
+    <div>
+      <span class="eyebrow">JJ Media · Growth Intelligence</span>
+      <h1>Was bringt uns <span class="serif">wirklich Wachstum?</span></h1>
+      <p>Search Console, Conversions, Clarity und technische Qualität in einem operativen Cockpit.</p>
+    </div>
+    <div class="intel-range">
+      <button type="button" data-days="7">7 T</button>
+      <button class="active" type="button" data-days="28">28 T</button>
+      <button type="button" data-days="90">90 T</button>
+    </div>
+  </section>
+
+  <section class="intel-status-grid" aria-label="Integrationen">
+    <article><span>Microsoft Clarity</span><strong data-status-clarity>…</strong><small>Recordings · Heatmaps · Funnel Events</small></article>
+    <article><span>PostHog</span><strong data-status-posthog>…</strong><small>Conversions · Attribution · Funnels</small></article>
+    <article><span>Search Console</span><strong data-status-gsc>…</strong><small>Keywords · Klicks · Positionen</small></article>
+    <article><span>Website Health</span><strong data-status-quality>…</strong><small>Lychee · Unlighthouse · Lighthouse CI</small></article>
+  </section>
+
+  <section class="intel-kpis" aria-live="polite">
+    <article><span>Klicks</span><strong data-kpi-clicks>—</strong><small data-delta-clicks>—</small></article>
+    <article><span>Impressionen</span><strong data-kpi-impressions>—</strong><small data-delta-impressions>—</small></article>
+    <article><span>CTR</span><strong data-kpi-ctr>—</strong><small data-delta-ctr>—</small></article>
+    <article><span>Ø Position</span><strong data-kpi-position>—</strong><small data-delta-position>—</small></article>
+  </section>
+
+  <section class="intel-grid">
+    <article class="intel-panel intel-panel-large">
+      <div class="intel-panel-head"><div><span class="eyebrow">SEO Opportunity Engine</span><h2>Die größten Chancen jetzt</h2></div><span class="intel-note">Position 4–20 · echte Impressionen</span></div>
+      <div class="intel-table-wrap">
+        <table><thead><tr><th>Suchanfrage</th><th>Impr.</th><th>CTR</th><th>Pos.</th><th>Aktion</th></tr></thead><tbody data-opportunity-rows><tr><td colspan="5">Google verbinden, um Chancen zu laden.</td></tr></tbody></table>
+      </div>
+    </article>
+
+    <article class="intel-panel">
+      <div class="intel-panel-head"><div><span class="eyebrow">Top Landingpages</span><h2>Was Google bereits belohnt</h2></div></div>
+      <div class="intel-list" data-page-list><p class="intel-empty">Noch keine Search-Console-Daten geladen.</p></div>
+    </article>
+  </section>
+
+  <section class="intel-panel intel-next">
+    <div><span class="eyebrow">Next Best Actions</span><h2 data-action-title>System verbinden</h2><p data-action-copy>Nach der Google-Verbindung priorisiert dieses Cockpit automatisch Seiten und Keywords mit dem größten Hebel.</p></div>
+    <div class="intel-actions">
+      <a class="intel-primary" href="/api/google/oauth/start" data-google-connect>Search Console verbinden ↗</a>
+      <button class="intel-secondary" type="button" data-google-disconnect>Google trennen</button>
+    </div>
+  </section>
+</main>
+<script src="intelligence.js"></script>
+</body>
+</html>
