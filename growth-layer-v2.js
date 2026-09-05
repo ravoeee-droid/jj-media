@@ -17,7 +17,7 @@
     if(window.JJClarity){callback?.();return}
     if(doc.querySelector('script[data-jj-clarity]'))return;
     const script=doc.createElement('script');
-    script.src='clarity.js?v=20260905-1';
+    script.src='clarity.js?v=20260905-2';
     script.dataset.jjClarity='true';
     script.onload=()=>callback?.();
     doc.head.appendChild(script);

@@ -1,7 +1,7 @@
 (() => {
   if (window.JJClarity) return;
 
-  const PROJECT_ID = '';
+  const PROJECT_ID = 'ydfcroc44j';
   const COOKIE_NAMES = ['_clck', '_clsk'];
 
   const clearCookies = () => {
