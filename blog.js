@@ -11,8 +11,17 @@
     const qualityScript=doc.createElement('script');qualityScript.src=`${prefix}site-quality.js?v=20260901-1`;doc.head.appendChild(qualityScript);
   }
   if(!doc.querySelector('link[data-blog-final]')){
-    const style=doc.createElement('link');style.rel='stylesheet';style.dataset.blogFinal='true';style.href=`${prefix}blog-final.css?v=20260905-4`;doc.head.appendChild(style);
+    const style=doc.createElement('link');style.rel='stylesheet';style.dataset.blogFinal='true';style.href=`${prefix}blog-final.css?v=20260905-3`;doc.head.appendChild(style);
   }
+  if(!doc.querySelector('link[data-jj-ui-hotfix]')){
+    const hotfix=doc.createElement('link');hotfix.rel='stylesheet';hotfix.dataset.jjUiHotfix='true';hotfix.href=`${prefix}ui-hotfix-20260902.css?v=20260905-2`;doc.head.appendChild(hotfix);
+  }
+
+  // Use a real proof visual for the LinkedIn article/listing instead of repeating portrait photography.
+  doc.querySelectorAll('img[src$="linkedin-authenticity-automation-2026.webp"]').forEach(img=>{
+    img.src=`${prefix}assets/blog/linkedin-performance-proof.jpg`;
+    img.alt='LinkedIn-Performance-Auswertung als realer Social-Media-Proof';
+  });
 
   const footerLinks=doc.querySelector('.blog-footer span:last-child');
   if(footerLinks&&![...footerLinks.querySelectorAll('a')].some(a=>(a.getAttribute('href')||'').includes('barrierefreiheit'))){
@@ -37,10 +46,10 @@
   search?.addEventListener('input',apply);
 
   const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const revealTargets=[...doc.querySelectorAll('.blog-hero-grid>*,.blog-section-head>*,.blog-card,.blog-principles,.blog-cta,.article-hero .blog-container>*:not(.article-breadcrumbs),.article-content>section,.article-cover,.article-toc')];
-  revealTargets.forEach((el,index)=>{el.classList.add('reveal');el.style.setProperty('--reveal-delay',`${Math.min(index%4,3)*70}ms`)});
+  const revealTargets=[...doc.querySelectorAll('.blog-hero-grid>* ,.blog-section-head>* ,.blog-card,.blog-principles,.blog-cta,.article-content>section,.article-cover,.article-toc')];
+  revealTargets.forEach((el,index)=>{el.classList.add('reveal');el.style.setProperty('--reveal-delay',`${Math.min(index%4,3)*45}ms`)});
   if('IntersectionObserver' in window&&!reduceMotion){
-    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}}),{threshold:.06,rootMargin:'0px 0px -5%'});
+    const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){requestAnimationFrame(()=>entry.target.classList.add('visible'));observer.unobserve(entry.target)}}),{threshold:.08,rootMargin:'0px 0px -5%'});
     revealTargets.forEach(el=>observer.observe(el));
   }else revealTargets.forEach(el=>el.classList.add('visible'));
 
@@ -51,8 +60,9 @@
 
   const progress=doc.querySelector('[data-reading-progress]');
   if(progress){
-    const update=()=>{const max=Math.max(1,doc.documentElement.scrollHeight-innerHeight);progress.style.width=`${Math.min(100,Math.max(0,scrollY/max*100))}%`};
-    addEventListener('scroll',update,{passive:true});update();
+    let ticking=false;
+    const update=()=>{const max=Math.max(1,doc.documentElement.scrollHeight-innerHeight);progress.style.width=`${Math.min(100,Math.max(0,scrollY/max*100))}%`;ticking=false};
+    addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(update);ticking=true}},{passive:true});update();
   }
 
   doc.querySelectorAll('[data-copy-link]').forEach(button=>button.addEventListener('click',async()=>{
