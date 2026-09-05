@@ -9,7 +9,7 @@
     if([...doc.scripts].some(script=>(script.getAttribute('src')||'').includes(src.split('?')[0])))return;
     const script=doc.createElement('script');script.src=`${prefix}${src}`;doc.head.appendChild(script);
   };
-  loadScript('brand-runtime.js?v=20260905-1');
+  loadScript('brand-runtime.js?v=20260905-2');
 
   if(!doc.querySelector('link[data-jj-quality-css]')){
     const qualityCss=doc.createElement('link');qualityCss.rel='stylesheet';qualityCss.dataset.jjQualityCss='true';qualityCss.href=`${prefix}site-quality.css?v=20260905-6`;doc.head.appendChild(qualityCss);
