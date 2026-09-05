@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-09-02",
+  "updated_at": "2026-09-05",
   "site": "https://www.jj-media-design.de",
   "editorial_principles": [
     "reader_is_hero_jj_is_guide",
@@ -18,79 +18,32 @@
   ],
   "topic_clusters": [
     {"id":"social-media-strategie","pillar":"blog/social-media-strategie-2026.html","intent":"informational-commercial","priority":100,"status":"active"},
-    {"id":"instagram-marketing","pillar":null,"intent":"informational-commercial","priority":90,"status":"active"},
+    {"id":"instagram-marketing","pillar":"blog/instagram-seo-google-search-console-2026.html","intent":"informational-commercial","priority":90,"status":"active"},
     {"id":"facebook-marketing","pillar":null,"intent":"informational-commercial","priority":75,"status":"active"},
-    {"id":"youtube-marketing","pillar":null,"intent":"informational-commercial","priority":88,"status":"active"},
-    {"id":"linkedin-marketing","pillar":null,"intent":"informational-commercial","priority":85,"status":"planned"},
+    {"id":"youtube-marketing","pillar":"blog/youtube-shorts-vs-instagram-reels-2026.html","intent":"informational-commercial","priority":88,"status":"active"},
+    {"id":"linkedin-marketing","pillar":"blog/linkedin-automatisierte-kommentare-2026.html","intent":"informational-commercial","priority":85,"status":"active"},
     {"id":"social-media-agentur","pillar":"services.html","intent":"commercial","priority":100,"status":"active"},
     {"id":"social-media-reisebranche","pillar":"reisebranche.html","intent":"commercial-niche","priority":85,"status":"active"}
   ],
   "articles": [
     {
-      "slug":"social-media-strategie-2026",
-      "path":"blog/social-media-strategie-2026.html",
-      "title":"Social-Media-Strategie 2026: Was Unternehmen wirklich brauchen – und was sie sich sparen können",
-      "type":"evergreen",
-      "cluster":"social-media-strategie",
-      "primary_keyword":"social media strategie 2026",
-      "search_intent":"informational-commercial",
-      "search_volume":null,
-      "volume_source":"pending external keyword source",
-      "published":"2026-09-01",
-      "review_by":"2026-12-01",
-      "status":"published",
-      "conversion_target":"analyse.html",
-      "evidence":"JJ-Media working principles and linked public proof",
-      "image":"assets/blog/social-media-strategie-2026.webp",
-      "image_alt":"Strategiemeeting für Instagram, Facebook, YouTube und LinkedIn"
+      "slug":"social-media-strategie-2026","path":"blog/social-media-strategie-2026.html","title":"Social-Media-Strategie 2026: Was Unternehmen wirklich brauchen – und was sie sich sparen können","type":"evergreen","cluster":"social-media-strategie","primary_keyword":"social media strategie 2026","search_intent":"informational-commercial","search_volume":null,"volume_source":"pending external keyword source","published":"2026-09-01","review_by":"2026-12-01","status":"published","conversion_target":"analyse.html","evidence":"JJ-Media working principles and linked public proof","image":"assets/blog/social-media-strategie-2026.webp","image_alt":"Strategiemeeting für Instagram, Facebook, YouTube und LinkedIn"
     },
     {
-      "slug":"youtube-shopping-amazon-2026",
-      "path":"blog/youtube-shopping-amazon-2026.html",
-      "title":"YouTube Shopping + Amazon: Warum Marken diese Entwicklung jetzt beobachten sollten",
-      "type":"trend",
-      "cluster":"youtube-marketing",
-      "primary_keyword":"youtube shopping amazon 2026",
-      "search_intent":"news-informational",
-      "search_volume":null,
-      "volume_source":"pending external keyword source",
-      "published":"2026-09-01",
-      "review_by":"2026-10-01",
-      "status":"published",
-      "conversion_target":"analyse.html",
-      "primary_source":"https://blog.youtube/news-and-events/youtube-shopping-amazon-creator-affiliates/",
-      "image":"assets/blog/youtube-shopping-amazon-2026.webp",
-      "image_alt":"Marketer analysiert YouTube-Shopping-Content in einem E-Commerce-Setup"
+      "slug":"youtube-shopping-amazon-2026","path":"blog/youtube-shopping-amazon-2026.html","title":"YouTube Shopping + Amazon: Warum Marken diese Entwicklung jetzt beobachten sollten","type":"trend","cluster":"youtube-marketing","primary_keyword":"youtube shopping amazon 2026","search_intent":"news-informational","search_volume":null,"volume_source":"pending external keyword source","published":"2026-09-01","review_by":"2026-10-01","status":"published","conversion_target":"analyse.html","primary_source":"https://blog.youtube/news-and-events/youtube-shopping-amazon-creator-affiliates/","image":"assets/blog/youtube-shopping-amazon-2026.webp","image_alt":"Marketer analysiert YouTube-Shopping-Content in einem E-Commerce-Setup"
     },
     {
-      "slug":"instagram-vs-facebook-2026",
-      "path":"blog/instagram-vs-facebook-2026.html",
-      "title":"Instagram vs. Facebook 2026: Was die neuen EU-Zahlen für Unternehmen wirklich bedeuten",
-      "type":"trend",
-      "cluster":"instagram-marketing",
-      "primary_keyword":"instagram vs facebook 2026",
-      "secondary_keywords":["instagram oder facebook 2026","facebook oder instagram für unternehmen","instagram facebook vergleich 2026"],
-      "search_intent":"news-informational-commercial",
-      "search_volume":null,
-      "volume_source":"no connected keyword-volume source; selected from current news velocity, SERP intent and cluster gap",
-      "published":"2026-09-02",
-      "review_by":"2026-10-15",
-      "status":"published",
-      "conversion_target":"analyse.html",
-      "primary_source":"https://transparency.meta.com/reports/regulatory-transparency-reports/",
-      "evidence":"Meta DSA transparency reporting for H1 2026 plus current secondary reporting",
-      "image":"assets/blog/instagram-vs-facebook-eu-2026.webp",
-      "image_alt":"Social-Media-Strategin vergleicht Content-Performance an einem Arbeitsplatz mit Kamera und Laptop"
+      "slug":"instagram-vs-facebook-2026","path":"blog/instagram-vs-facebook-2026.html","title":"Instagram vs. Facebook 2026: Was die neuen EU-Zahlen für Unternehmen wirklich bedeuten","type":"trend","cluster":"instagram-marketing","primary_keyword":"instagram vs facebook 2026","secondary_keywords":["instagram oder facebook 2026","facebook oder instagram für unternehmen","instagram facebook vergleich 2026"],"search_intent":"news-informational-commercial","search_volume":null,"volume_source":"selected from current news velocity, SERP intent and cluster gap","published":"2026-09-02","review_by":"2026-10-15","status":"published","conversion_target":"analyse.html","primary_source":"https://transparency.meta.com/reports/regulatory-transparency-reports/","evidence":"Meta DSA transparency reporting for H1 2026 plus current secondary reporting","image":"assets/blog/instagram-vs-facebook-eu-2026.webp","image_alt":"Social-Media-Strategin vergleicht Content-Performance an einem Arbeitsplatz mit Kamera und Laptop"
+    },
+    {
+      "slug":"instagram-seo-google-search-console-2026","path":"blog/instagram-seo-google-search-console-2026.html","title":"Instagram SEO 2026: Google Search Console zeigt jetzt, welche Posts über Google gefunden werden","type":"trend","cluster":"instagram-marketing","primary_keyword":"instagram seo 2026","secondary_keywords":["instagram google search console","instagram posts google suche","instagram seo google"],"search_intent":"informational-commercial","search_volume":null,"volume_source":"topic gap plus current Google Search Console rollout","published":"2026-09-03","review_by":"2026-10-15","status":"published","conversion_target":"analyse.html?entry=instagram-seo","primary_source":"https://developers.google.com/search/docs/monitor-debug/analyze-social-video-content","image":"assets/blog/instagram-seo-search-console-2026.webp","image_alt":"Jessica plant Social-Media-Content in ihrem Studio für Instagram und Google-Sichtbarkeit"
+    },
+    {
+      "slug":"linkedin-automatisierte-kommentare-2026","path":"blog/linkedin-automatisierte-kommentare-2026.html","title":"LinkedIn 2026: Warum automatisierte Kommentare Ihrer Reichweite schaden können","type":"trend","cluster":"linkedin-marketing","primary_keyword":"linkedin automatisierte kommentare 2026","secondary_keywords":["linkedin automation 2026","linkedin authentischer content","linkedin engagement pods"],"search_intent":"informational-commercial","search_volume":null,"volume_source":"current platform policy relevance and cluster gap","published":"2026-09-04","review_by":"2026-10-15","status":"published","conversion_target":"analyse.html?entry=linkedin-authenticity","primary_source":"https://news.linkedin.com/2026/authentic-content-and-conversations","image":"assets/blog/linkedin-authenticity-automation-2026.webp","image_alt":"Jessica arbeitet an authentischem LinkedIn-Content für Unternehmen"
+    },
+    {
+      "slug":"youtube-shorts-vs-instagram-reels-2026","path":"blog/youtube-shorts-vs-instagram-reels-2026.html","title":"YouTube Shorts vs. Instagram Reels 2026: Was die neuen Deutschland-Daten für Unternehmen bedeuten","type":"trend","cluster":"youtube-marketing","primary_keyword":"youtube shorts vs instagram reels 2026","secondary_keywords":["youtube shorts oder instagram reels","youtube shorts für unternehmen 2026","instagram reels vs youtube shorts"],"search_intent":"informational-commercial","search_volume":null,"volume_source":"fresh YouTube Germany data plus platform-comparison intent","published":"2026-09-05","review_by":"2026-10-15","status":"published","conversion_target":"analyse.html?entry=youtube-shorts-reels","primary_source":"https://blog.youtube/intl/de-de/news-and-events/youtube-festival-2026/","image":"assets/blog/youtube-shorts-vs-reels-2026.jpg","image_alt":"Social-Media-Feed mit Kurzvideo-Content als Vergleich für YouTube Shorts und Instagram Reels"
     }
   ],
-  "daily_scoring": {
-    "business_relevance":20,
-    "search_intent_value":18,
-    "ranking_opportunity":15,
-    "freshness_velocity":12,
-    "original_angle":15,
-    "evidence_strength":12,
-    "internal_link_value":8,
-    "publish_threshold":75
-  }
+  "daily_scoring": {"business_relevance":20,"search_intent_value":18,"ranking_opportunity":15,"freshness_velocity":12,"original_angle":15,"evidence_strength":12,"internal_link_value":8,"publish_threshold":75}
 }
