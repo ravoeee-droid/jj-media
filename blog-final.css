@@ -10,6 +10,8 @@
 .blog-cta{margin-top:88px;border-radius:26px;padding:46px 50px;background:#171318}.blog-cta h2{max-width:760px;font-size:clamp(2.35rem,4vw,4.05rem)}.blog-cta p{color:#d7ccd1}.blog-cta a{background:#fff}.blog-footer{padding-top:40px}
 /* Article polish */
 .article-hero{padding:78px 0 52px}.article-hero h1{max-width:980px;font-size:clamp(2.8rem,5.3vw,5.2rem);line-height:.95}.article-hero p{max-width:760px;font-size:1.06rem}.article-cover{margin-top:32px;border-radius:22px;box-shadow:0 22px 62px rgba(29,20,27,.09)}.article-cover img{object-position:center 38%}.article-layout{grid-template-columns:210px minmax(0,760px);gap:72px}.article-content{font-size:1rem;line-height:1.82}.article-content h2{font-size:clamp(1.95rem,3.15vw,3rem)}.article-cta{border-radius:22px}
+/* WCAG contrast on light editorial surfaces */
+.blog-main .blog-kicker{color:#625a64}.blog-section-head p{color:#5d565f}
 /* Soft editorial motion */
 .reveal{opacity:1;transform:none;filter:none}.js .reveal{opacity:0;transform:translate3d(0,22px,0);filter:blur(3px);transition:opacity .62s ease,transform .78s cubic-bezier(.16,1,.3,1),filter .68s ease;transition-delay:var(--reveal-delay,0ms);will-change:transform,opacity}.js .reveal.visible{opacity:1;transform:none;filter:none}.js .blog-card-media{transform:translateZ(0)}
 @media(max-width:980px){.blog-hero-grid{grid-template-columns:1fr;gap:38px}.blog-radar{max-width:620px}.blog-card.featured{grid-template-columns:1fr}.blog-card.featured .blog-card-media{min-height:0;aspect-ratio:16/9}.blog-toolbar{top:66px}.article-layout{grid-template-columns:1fr}.article-toc{position:static}}
