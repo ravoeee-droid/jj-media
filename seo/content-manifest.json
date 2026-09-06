@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-09-05",
+  "updated_at": "2026-09-06",
   "site": "https://www.jj-media-design.de",
   "editorial_principles": [
     "reader_is_hero_jj_is_guide",
@@ -43,6 +43,9 @@
     },
     {
       "slug":"youtube-shorts-vs-instagram-reels-2026","path":"blog/youtube-shorts-vs-instagram-reels-2026.html","title":"YouTube Shorts vs. Instagram Reels 2026: Was die neuen Deutschland-Daten für Unternehmen bedeuten","type":"trend","cluster":"youtube-marketing","primary_keyword":"youtube shorts vs instagram reels 2026","secondary_keywords":["youtube shorts oder instagram reels","youtube shorts für unternehmen 2026","instagram reels vs youtube shorts"],"search_intent":"informational-commercial","search_volume":null,"volume_source":"fresh YouTube Germany data plus platform-comparison intent","published":"2026-09-05","review_by":"2026-10-15","status":"published","conversion_target":"analyse.html?entry=youtube-shorts-reels","primary_source":"https://blog.youtube/intl/de-de/news-and-events/youtube-festival-2026/","image":"assets/blog/youtube-shorts-vs-reels-2026.jpg","image_alt":"Social-Media-Feed mit Kurzvideo-Content als Vergleich für YouTube Shorts und Instagram Reels"
+    },
+    {
+      "slug":"instagram-for-tv-2026","path":"blog/instagram-for-tv-2026.html","title":"Instagram for TV 2026: Warum Reels jetzt ins Wohnzimmer wandern – und was Marken daraus lernen sollten","type":"trend","cluster":"instagram-marketing","primary_keyword":"instagram for tv 2026","secondary_keywords":["instagram tv reels","instagram reels fernseher","instagram samsung tv"],"search_intent":"news-informational-commercial","search_volume":null,"volume_source":"current product expansion, emerging search intent and high strategic relevance for social video","published":"2026-09-06","review_by":"2026-10-15","status":"published","conversion_target":"analyse.html?entry=instagram-for-tv-2026","primary_source":"https://about.fb.com/news/2026/06/instagram-for-tv-gets-bigger-with-new-ways-to-watch-together/","evidence":"Meta product announcement: US Samsung TV rollout, casting, stories, horizontal video and planned longer-form, episodic and live formats","image":"assets/blog/instagram-for-tv-2026.webp","image_alt":"Frau schaut Social-Video-Content auf einem großen Fernseher im Wohnzimmer"
     }
   ],
   "daily_scoring": {"business_relevance":20,"search_intent_value":18,"ranking_opportunity":15,"freshness_velocity":12,"original_angle":15,"evidence_strength":12,"internal_link_value":8,"publish_threshold":75}

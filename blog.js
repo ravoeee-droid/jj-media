@@ -3,7 +3,7 @@
   doc.documentElement.classList.add('js');
   const inArticle=location.pathname.includes('/blog/');
   const prefix=inArticle?'../':'';
-  const assetVersion='20260905-6';
+  const assetVersion='20260906-1';
 
   const loadScript=(src)=>{
     if([...doc.scripts].some(script=>(script.getAttribute('src')||'').includes(src.split('?')[0])))return;
@@ -24,10 +24,11 @@
     const premium=doc.createElement('link');premium.rel='stylesheet';premium.dataset.blogPremium='true';premium.href=`${prefix}blog-premium.css?v=${assetVersion}`;doc.head.appendChild(premium);
   }
   if(!doc.querySelector('link[data-jj-ui-hotfix]')){
-    const hotfix=doc.createElement('link');hotfix.rel='stylesheet';hotfix.dataset.jjUiHotfix='true';hotfix.href=`${prefix}ui-hotfix-20260902.css?v=20260905-6`;doc.head.appendChild(hotfix);
+    const hotfix=doc.createElement('link');hotfix.rel='stylesheet';hotfix.dataset.jjUiHotfix='true';hotfix.href=`${prefix}ui-hotfix-20260902.css?v=${assetVersion}`;doc.head.appendChild(hotfix);
   }
 
   const fallbacks={
+    'instagram-for-tv-2026.webp':'social-media-strategie-2026.webp',
     'linkedin-authenticity-automation-2026.webp':'linkedin-performance-proof.jpg',
     'linkedin-performance-proof.jpg':'social-media-strategie-2026.webp',
     'instagram-seo-search-console-2026.webp':'social-media-strategie-2026.webp',
@@ -76,6 +77,7 @@
   };
   filters.forEach(button=>button.addEventListener('click',()=>{filters.forEach(item=>item.classList.toggle('active',item===button));active=button.dataset.blogFilter||'all';apply()}));
   search?.addEventListener('input',apply);
+  apply();
 
   const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const revealTargets=[...doc.querySelectorAll('.blog-hero-grid>* ,.blog-section-head>* ,.blog-card,.blog-principles,.blog-cta,.article-content>section,.article-cover,.article-toc')];
