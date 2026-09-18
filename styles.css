@@ -374,3 +374,14 @@ body{background:
  .travel-hero-content{padding-top:104px;padding-bottom:52px}
  .travel-cta .section-title{font-size:clamp(2.35rem,10.7vw,2.8rem);overflow-wrap:anywhere}
 }
+
+
+/* Launch polish: conversion-focused contact card */
+.contact-card-premium{overflow:hidden}
+.contact-personal-photo{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:20px;margin:0 0 24px}
+.contact-card-premium h2{font-size:clamp(2rem,3.5vw,3.7rem);line-height:1;letter-spacing:-.045em;margin:12px 0 18px}
+.contact-card-premium>p{font-size:1.05rem;line-height:1.65;color:var(--muted);margin:0 0 22px}
+.contact-direct{margin-top:22px;padding-top:20px;border-top:1px solid var(--line);display:grid;gap:8px}
+.contact-direct>span{font-size:.76rem;text-transform:uppercase;letter-spacing:.13em;font-weight:800;color:var(--muted)}
+.contact-direct>a{font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+@media(max-width:720px){.contact-personal-photo{aspect-ratio:4/3}.contact-card-premium h2{font-size:2.25rem}}
