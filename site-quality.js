@@ -23,8 +23,7 @@
       link.classList.add('jj-master-logo-link');
       link.setAttribute('aria-label','JJ-Media Startseite');
       let img=link.querySelector('.jj-master-logo');
-      if(!img){img=doc.createElement('img');img.className='jj-master-logo';img.alt='JJ-Media';img.width=160;img.height=113;img.decoding='async';link.replaceChildren(img);}
-      if(img.src!==BRAND_SRC)img.src=BRAND_SRC;
+      if(!img){img=doc.createElement('img');img.className='jj-master-logo';img.alt='JJ-Media';img.width=160;img.height=113;img.decoding='async';img.src=BRAND_SRC;link.replaceChildren(img);}
     });
   };
 
