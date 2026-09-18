@@ -385,3 +385,6 @@ body{background:
 .contact-direct>span{font-size:.76rem;text-transform:uppercase;letter-spacing:.13em;font-weight:800;color:#cfc8d0}
 .contact-direct>a{font-size:1.05rem;margin:0;font-weight:700;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
 @media(max-width:720px){.contact-personal-photo{aspect-ratio:4/3}.contact-card-premium h2{font-size:2.25rem}}
+
+/* Mobile LCP: above-the-fold hero content must never wait on reveal JavaScript. */
+.hero-premium .hero-copy>.reveal,.hero-premium .hero-visual.reveal{opacity:1;transform:none;transition:none}
