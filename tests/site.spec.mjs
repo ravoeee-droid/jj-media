@@ -80,6 +80,31 @@ test('mobile pages do not overflow horizontally',async({page})=>{
   }
 });
 
+test('marketing navigation and primary CTA stay consistent',async({page})=>{
+  for(const route of ['/index.html','/studio.html','/work.html','/services.html','/reisebranche.html','/contact.html','/virale-posts.html']){
+    await page.goto(route,{waitUntil:'networkidle'});
+    const links=page.locator('.nav-links a');
+    await expect(links).toHaveCount(7);
+    await expect(links.nth(0)).toHaveText('Start');
+    await expect(links.nth(1)).toHaveText('Über mich');
+    await expect(links.nth(2)).toHaveText('Projekte');
+    await expect(links.nth(3)).toHaveText('Leistungen');
+    await expect(links.nth(4)).toHaveText('Reisebranche');
+    await expect(links.nth(5)).toHaveText('Insights');
+    await expect(links.nth(6)).toHaveText('Kontakt');
+    const cta=page.locator('.nav-inner > .btn.desktop');
+    await expect(cta).toHaveAttribute('href',/analyse\.html/);
+  }
+});
+
+test('core marketing pages use direct Du voice',async({page})=>{
+  for(const route of ['/index.html','/studio.html','/work.html','/services.html','/reisebranche.html','/contact.html']){
+    await page.goto(route,{waitUntil:'networkidle'});
+    const body=(await page.locator('body').innerText()).replace(/„[^”]+“/g,'');
+    expect(body,route).not.toMatch(/\bIhre(?:r|m|n|s)?\b/);
+  }
+});
+
 test('keyboard users receive a visible skip link',async({page})=>{
   await page.goto('/index.html',{waitUntil:'domcontentloaded'});
   await page.keyboard.press('Tab');

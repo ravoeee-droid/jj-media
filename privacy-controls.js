@@ -14,6 +14,7 @@
       try { document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Lax`; } catch (_) {}
     });
     try { localStorage.removeItem(KEY); } catch (_) {}
+    try { sessionStorage.removeItem('jj-growth-session-v2'); } catch (_) {}
   };
 
   const button = document.createElement('button');

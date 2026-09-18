@@ -67,3 +67,8 @@
 @media (max-width:920px){
   .funnel-actions{position:sticky;bottom:0;z-index:10;padding-bottom:4px;background:linear-gradient(180deg,rgba(26,22,30,0),rgba(26,22,30,.98) 32%)}
 }
+
+/* Prevent mobile CLS: reserve the final logo geometry before quality JS runs. */
+.analysis-topbar .jj-master-logo-link{display:inline-flex;align-items:center;justify-content:flex-start;flex:0 0 55px;width:55px;height:38px;line-height:1}
+.analysis-topbar .jj-master-logo{display:block;width:auto;height:38px;max-width:55px;object-fit:contain;object-position:center}
+@media(max-width:620px){.analysis-topbar .jj-master-logo-link{flex-basis:47px;width:47px;height:33px}.analysis-topbar .jj-master-logo{height:33px;max-width:47px}}
