@@ -55,7 +55,7 @@
     panel.className='jj-privacy';
     panel.setAttribute('role','dialog');
     panel.setAttribute('aria-label','Datenschutzeinstellungen');
-    panel.innerHTML='<strong>Datenschutz-Einstellungen</strong><p>Notwendige Funktionen laufen ohne Tracking. Optionale Nutzungsstatistiken inklusive Microsoft Clarity helfen uns nur nach Ihrer Zustimmung, Inhalte und Nutzerführung zu verbessern.</p><div class="jj-privacy-actions"><button type="button" data-consent="no">Nur notwendig</button><button class="primary" type="button" data-consent="yes">Statistik erlauben</button></div><a href="datenschutz.html">Mehr zum Datenschutz</a>';
+    panel.innerHTML='<strong>Datenschutz-Einstellungen</strong><p>Notwendige Funktionen laufen ohne Tracking. Optionale Nutzungsstatistiken inklusive Microsoft Clarity helfen uns nur nach deiner Zustimmung, Inhalte und Nutzerführung zu verbessern.</p><div class="jj-privacy-actions"><button type="button" data-consent="no">Nur notwendig</button><button class="primary" type="button" data-consent="yes">Statistik erlauben</button></div><a href="datenschutz.html">Mehr zum Datenschutz</a>';
     doc.body.appendChild(panel);
     requestAnimationFrame(()=>panel.classList.add('visible'));
     panel.addEventListener('click',event=>{
