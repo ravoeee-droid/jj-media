@@ -34,8 +34,10 @@ jobs:
           exit 1
       - name: Cross-device UX tests
         run: npx playwright test
-      - name: Lighthouse budgets
+      - name: Lighthouse desktop budgets
         run: npx lhci autorun
+      - name: Lighthouse mobile budgets
+        run: npx lhci autorun --config=.lighthouserc.mobile.json
       - name: Latest analyzer network smoke
         if: github.event_name == 'push'
         run: node tests/social-audit-network-smoke.cjs
