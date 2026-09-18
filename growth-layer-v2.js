@@ -108,8 +108,19 @@
   };
 
   doc.addEventListener('click',event=>{
-    const target=event.target.closest('[data-track]');
-    if(target)track(target.dataset.track,{href:target.getAttribute('href')||'',label:(target.textContent||'').trim().slice(0,100)});
+    const target=event.target.closest('a,button');
+    if(!target)return;
+    const href=target.getAttribute('href')||'';
+    const label=(target.textContent||'').trim().replace(/\s+/g,' ').slice(0,100);
+    if(target.dataset.track){
+      track(target.dataset.track,{href,label});
+      return;
+    }
+    if(/^mailto:/i.test(href))track('email_click',{href:'mailto',label});
+    else if(/^tel:/i.test(href))track('phone_click',{href:'tel',label});
+    else if(/analyse\.html/i.test(href))track('analysis_cta_click',{href,label});
+    else if(/contact\.html/i.test(href))track('contact_click',{href,label});
+    else if(target.closest('.case-card,.travel-case,.work-card'))track('case_click',{href,label});
   });
 
   if(getConsent()==='yes')startClarity();
