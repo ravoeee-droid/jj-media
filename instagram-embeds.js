@@ -27,18 +27,18 @@
   const reelUrl=code=>`https://www.instagram.com/reel/${code}/`;
 
   rail.className='jj-reel-proof-grid';
-  rail.innerHTML=reels.map(post=>`
+  rail.innerHTML=reels.map((post,index)=>`
     <article class="jj-reel-proof-card reveal visible">
       <div class="jj-reel-proof-kpi">
         <div><span>AUFRUFE</span><strong>${formatViews(reelViews[post.code])}</strong></div>
         <small><i aria-hidden="true"></i> dokumentiert</small>
       </div>
       <a class="jj-reel-proof-media jj-instagram-preview is-fallback" href="${reelUrl(post.code)}" target="_blank" rel="noopener noreferrer" aria-label="${post.label} auf Instagram öffnen">
-        <span class="jj-instagram-preview-orb jj-instagram-preview-orb-a" aria-hidden="true"></span>
+        <img class="jj-local-reel-preview" src="assets/cases/reisen-erleben-feed.jpg" alt="Portfolio-Ausschnitt von Reisen &amp; Erleben; Original-Reel auf Instagram öffnen" loading="lazy"><span class="jj-instagram-preview-orb jj-instagram-preview-orb-a" aria-hidden="true"></span>
         <span class="jj-instagram-preview-orb jj-instagram-preview-orb-b" aria-hidden="true"></span>
         <span class="jj-instagram-preview-badge" aria-hidden="true">Instagram Reel</span>
         <span class="jj-instagram-preview-play" aria-hidden="true"><b>▶</b></span>
-        <span class="jj-instagram-preview-copy"><small>${post.label}</small><strong>${post.context}</strong><em>Original auf Instagram öffnen ↗</em></span>
+        <span class="jj-instagram-preview-copy"><small>${post.label}</small><strong>${post.context}</strong><em>Reel auf Instagram ansehen ↗</em></span>
       </a>
       <div class="jj-reel-proof-footer">
         <span>${post.label} · ${post.context}</span>

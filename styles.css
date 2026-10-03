@@ -388,3 +388,8 @@ body{background:
 
 /* Mobile LCP: above-the-fold hero content must never wait on reveal JavaScript. */
 .hero-premium .hero-copy>.reveal,.hero-premium .hero-visual.reveal{opacity:1;transform:none;transition:none}
+
+/* Readable copy and supplied brand/social assets. */
+body{overflow-wrap:normal;word-break:normal;hyphens:none}h1,h2,h3,p,.legal p,.legal h2,.travel-cta .section-title{overflow-wrap:normal;word-break:normal;hyphens:none}.social-buttons{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;padding:20px}.social-buttons .btn{gap:10px}.brand-logo-window{display:block;position:relative;width:110px;height:70px;overflow:hidden}.brand-logo-window img{position:absolute;width:180px;max-width:none;height:225px;left:-35px;top:-34px;object-fit:contain}.hero-title{font-size:clamp(2.4rem,5.5vw,5.5rem)}
+
+.jj-local-reel-preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.7}.jj-instagram-preview-copy{z-index:2;background:linear-gradient(transparent,rgba(0,0,0,.85));padding:20px!important}.legal-notice{padding:18px 22px;border:1px solid #e79649;border-radius:12px;background:#fff4e6;color:#332414;margin-bottom:28px}.legal{max-width:850px}.legal p{line-height:1.75}.brand-logo-window img{top:-34px!important;left:-35px!important}.legal a{overflow-wrap:anywhere}
