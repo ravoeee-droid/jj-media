@@ -1,1 +1,4 @@
 body,h1,h2,h3,p,.legal p,.legal h2,.travel-cta .section-title{word-break:normal!important;overflow-wrap:normal!important;hyphens:none!important}h1,h2,h3{text-wrap:balance}.hero-title{font-size:clamp(2.3rem,5.4vw,5.4rem)!important}.footer-email,.contact-card>a:not(.btn){overflow-wrap:anywhere!important}.nav .logo{min-width:110px!important}.social-buttons .btn{display:inline-flex;align-items:center;gap:10px}@media(max-width:620px){.hero-title,.display{font-size:clamp(2rem,9vw,3rem)!important}.hero-actions{flex-wrap:wrap}.brand-logo-window{width:100px}}
+
+.brand-logo-window{height:94px!important}.brand-logo-window img{height:225px!important;width:180px!important}.nav{height:auto!important}.nav-inner{min-height:100px}.nav .logo{min-width:110px!important}
+
