@@ -88,3 +88,9 @@ footer .footer-links{justify-content:center}
 .service-visual img{transform:translateX(40px);border-radius:0}
 .service-visual img.is-active{transform:translateX(0)}
 @media(max-width:760px){.services-visual .service-panel{grid-template-columns:1fr;gap:18px}.services-visual .service-visual{grid-column:1;grid-row:3;width:min(100%,280px);margin-inline:auto}.trust-proof-section .trust-proof-title h2{font-size:clamp(1.8rem,5.5vw,2.6rem)!important}}
+
+@keyframes heroOrbFloat{0%,100%{translate:0 0}50%{translate:-22px 30px}}
+.hero-orb-one{animation:heroOrbFloat 9s ease-in-out infinite}
+.hero-orb-two{animation:heroOrbFloat 12s ease-in-out infinite reverse}
+.jj-live-audit-copy,.jj-live-audit-form{opacity:1;visibility:visible}
+@media(prefers-reduced-motion:reduce){.hero-orb{animation:none!important;translate:none}}

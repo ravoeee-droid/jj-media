@@ -30,7 +30,7 @@
   const bootGrowth=()=>{
     load('portfolio-motion.js?v=20261004-2');
     if(isLegal)return;
-    load('growth-layer-v2.js?v=20261004-ugc22',()=>load('privacy-controls.js?v=20260918-1',()=>load('social-audit-bridge.js?v=20261004-ugc22')));
+    load('growth-layer-v2.js?v=20261004-ugc22',()=>load('privacy-controls.js?v=20260918-1',()=>load('social-audit-bridge.js?v=20261004-visible')));
   };
 
   const bootPage=()=>{
@@ -42,5 +42,5 @@
     }
   };
 
-  load('brand-runtime.js?v=20260905-4',()=>load('site-quality.js?v=20260905-6',()=>load('viral-nav.js?v=20261004-ugc2',()=>load('insights-bridge.js?v=20260901-1',()=>{const css=document.createElement('link');css.rel='stylesheet';css.href='content-review.css?v=20261004-layout2';document.head.appendChild(css);bootPage()}))));
+  load('brand-runtime.js?v=20260905-4',()=>load('site-quality.js?v=20260905-6',()=>load('viral-nav.js?v=20261004-ugc2',()=>load('insights-bridge.js?v=20260901-1',()=>{const css=document.createElement('link');css.rel='stylesheet';css.href='content-review.css?v=20261004-orbs';document.head.appendChild(css);bootPage()}))));
 })();

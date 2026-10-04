@@ -38,13 +38,13 @@
   heroSection.insertAdjacentHTML('afterend',`
     <section class="jj-live-audit" aria-labelledby="jj-live-audit-title">
       <div class="container jj-live-audit-inner">
-        <div class="jj-live-audit-copy reveal">
+        <div class="jj-live-audit-copy">
           <div class="eyebrow">Kostenlose Social-Media-Analyse · persönlich</div>
           <h2 id="jj-live-audit-title">Profil rein.<br><span>Jessica schaut hin.</span></h2>
           <p>Schick uns deinen Auftritt. Wir sammeln die relevanten öffentlichen Signale vor, Jessica prüft Positionierung, Content und Conversion-Potenzial persönlich – und meldet sich mit einer individuellen Einschätzung statt mit einem austauschbaren Auto-Report.</p>
           <div class="jj-live-audit-trust"><span>✓ persönlich geprüft</span><span>✓ kostenlos & unverbindlich</span><span>✓ individuelle Rückmeldung</span></div>
         </div>
-        <form class="jj-live-audit-form reveal" data-live-audit-form>
+        <form class="jj-live-audit-form" data-live-audit-form>
           <div class="jj-live-audit-input"><span class="jj-live-audit-icon">↗</span><input type="text" aria-label="Social-Media-Profil" placeholder="instagram.com/deinprofil oder @deinprofil" autocomplete="url" inputmode="url" required></div>
           <div class="jj-live-audit-badges" aria-label="Unterstützte Plattformen">
             <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>Instagram</span>
