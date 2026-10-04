@@ -27,3 +27,8 @@ body,h1,h2,h3,p,.legal p,.legal h2,.travel-cta .section-title{word-break:normal!
 .ugc-video-player iframe{display:block;width:100%;height:100%;border:0}
 .ugc-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:#fff;color:#151218;font-size:24px;box-shadow:0 8px 30px #0004}
 .ugc-video-example>.text-link{display:inline-block;margin-top:14px;font-size:.85rem}
+
+/* Exact left/right covers supplied in the user's reference screenshot. */
+.ugc-screenshot-cover{position:absolute;inset:0;display:block;overflow:hidden}
+.ugc-video-player .ugc-screenshot-cover img{position:absolute;width:339.404%!important;height:auto!important;max-width:none!important;object-fit:initial!important;top:-8.752%!important}
+.ugc-cover-1 img{left:-18.212%!important}.ugc-cover-3 img{left:-232.781%!important}
