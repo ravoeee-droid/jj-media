@@ -116,7 +116,7 @@ document.querySelectorAll('[data-youtube-id]').forEach(frame=>{
  button?.addEventListener('click',()=>{
   const iframe=document.createElement('iframe');
   iframe.src=`https://www.youtube-nocookie.com/embed/${encodeURIComponent(frame.dataset.youtubeId)}?autoplay=1&rel=0&modestbranding=1`;
-  iframe.title=frame.dataset.videoTitle||button.getAttribute('aria-label')||'JJ-Media Video';
+  iframe.title=frame.dataset.videoTitle||button.getAttribute('aria-label')||'JJ Media – Social Media Marketing Video';
   iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
   iframe.referrerPolicy='strict-origin-when-cross-origin';
   iframe.allowFullscreen=true;

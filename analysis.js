@@ -114,7 +114,7 @@
     const data = Object.fromEntries(new FormData(form).entries());
     delete data.consent;
     data.action = 'lead';
-    data.source = 'JJ-Media Social-Media-Analyse';
+    data.source = 'JJ Media – Social Media Marketing Social-Media-Analyse';
     data.page = location.href;
     data.referrer = document.referrer || '';
     data.utm_source = params.get('utm_source') || '';

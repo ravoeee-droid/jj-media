@@ -21,9 +21,9 @@
     }
     doc.querySelectorAll('a.logo:not(:has(.brand-logo-window)),a.blog-logo').forEach(link=>{
       link.classList.add('jj-master-logo-link');
-      link.setAttribute('aria-label','JJ-Media Startseite');
+      link.setAttribute('aria-label','JJ Media – Social Media Marketing Startseite');
       let img=link.querySelector('.jj-master-logo');
-      if(!img){img=doc.createElement('img');img.className='jj-master-logo';img.alt='JJ-Media';img.width=160;img.height=113;img.decoding='async';img.src=BRAND_SRC;link.replaceChildren(img);}
+      if(!img){img=doc.createElement('img');img.className='jj-master-logo';img.alt='JJ Media – Social Media Marketing';img.width=160;img.height=113;img.decoding='async';img.src=BRAND_SRC;link.replaceChildren(img);}
     });
   };
 
@@ -43,7 +43,7 @@
     doc.querySelectorAll('a[target="_blank"]').forEach(link=>{
       const rel=new Set((link.getAttribute('rel')||'').split(/\s+/).filter(Boolean));rel.add('noopener');rel.add('noreferrer');link.setAttribute('rel',[...rel].join(' '));
     });
-    doc.querySelectorAll('a.logo,.blog-logo').forEach(link=>{if(!link.getAttribute('aria-label'))link.setAttribute('aria-label','JJ-Media Startseite')});
+    doc.querySelectorAll('a.logo,.blog-logo').forEach(link=>{if(!link.getAttribute('aria-label'))link.setAttribute('aria-label','JJ Media – Social Media Marketing Startseite')});
   };
 
   const faqA11y=()=>{
@@ -80,7 +80,7 @@
 
   const patchCopy=()=>{
     if(current==='analyse'){
-      const meta=doc.querySelector('meta[name="description"]');if(meta)meta.content='Kostenlose persönliche Social-Media-Analyse von JJ-Media für Instagram, Facebook, YouTube und LinkedIn.';
+      const meta=doc.querySelector('meta[name="description"]');if(meta)meta.content='Kostenlose persönliche Social-Media-Analyse von JJ Media – Social Media Marketing für Instagram, Facebook, YouTube und LinkedIn.';
       const value=doc.querySelector('.analysis-value');if(value)value.textContent='Kostenlose persönliche Analyse';
       const profileLabel=doc.querySelector('label[for="profile"]');if(profileLabel)profileLabel.textContent='Instagram, Facebook, YouTube oder LinkedIn *';
     }

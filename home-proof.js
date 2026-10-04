@@ -41,7 +41,7 @@
               <article class="testimonial-video-card reveal">
                 <div class="testimonial-video" data-youtube-id="VWYnnGcmF6w">
                   <button class="video-poster" type="button" aria-label="Erste Kundenstimme abspielen">
-                    <img src="https://i.ytimg.com/vi/VWYnnGcmF6w/hqdefault.jpg" alt="Kundin berichtet über die Zusammenarbeit mit JJ-Media" loading="lazy">
+                    <img src="https://i.ytimg.com/vi/VWYnnGcmF6w/hqdefault.jpg" alt="Kundin berichtet über die Zusammenarbeit mit JJ Media – Social Media Marketing" loading="lazy">
                     <span class="testimonial-shade" aria-hidden="true"></span>
                     <span class="testimonial-label"><b>01</b> Kundenstimme</span>
                     <span class="testimonial-overlay-copy">
@@ -58,7 +58,7 @@
               <article class="testimonial-video-card reveal">
                 <div class="testimonial-video" data-youtube-id="2CbtOEdPQOk">
                   <button class="video-poster" type="button" aria-label="Zweite Kundenstimme abspielen">
-                    <img src="https://i.ytimg.com/vi/2CbtOEdPQOk/hqdefault.jpg" alt="Kunde berichtet über die Zusammenarbeit mit JJ-Media" loading="lazy">
+                    <img src="https://i.ytimg.com/vi/2CbtOEdPQOk/hqdefault.jpg" alt="Kunde berichtet über die Zusammenarbeit mit JJ Media – Social Media Marketing" loading="lazy">
                     <span class="testimonial-shade" aria-hidden="true"></span>
                     <span class="testimonial-label"><b>02</b> Kundenstimme</span>
                     <span class="testimonial-overlay-copy">

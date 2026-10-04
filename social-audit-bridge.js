@@ -53,7 +53,7 @@
             <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="9" width="3.5" height="11"></rect><circle cx="5.75" cy="5.5" r="1.8"></circle><path d="M10 9h3.3v1.5h.1c.5-.9 1.6-1.9 3.4-1.9 3.6 0 4.2 2.3 4.2 5.4v6h-3.5v-5.3c0-1.3 0-2.9-1.8-2.9s-2.1 1.4-2.1 2.8V20H10V9z"></path></svg>LinkedIn</span>
           </div>
           <button type="submit">Kostenlose Analyse anfragen ↗</button>
-          <small>Du bekommst keinen generischen Sofort-Score. Deine Angaben gehen intern an JJ-Media und werden für eine persönliche oder individuell vorbereitete Analyse genutzt.</small>
+          <small>Du bekommst keinen generischen Sofort-Score. Deine Angaben gehen intern an JJ Media – Social Media Marketing und werden für eine persönliche oder individuell vorbereitete Analyse genutzt.</small>
         </form>
       </div>
     </section>`);
