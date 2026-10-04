@@ -32,3 +32,8 @@ body,h1,h2,h3,p,.legal p,.legal h2,.travel-cta .section-title{word-break:normal!
 .ugc-screenshot-cover{position:absolute;inset:0;display:block;overflow:hidden}
 .ugc-video-player .ugc-screenshot-cover img{position:absolute;width:339.404%!important;height:auto!important;max-width:none!important;object-fit:initial!important;top:-8.752%!important}
 .ugc-cover-1 img{left:-18.212%!important}.ugc-cover-3 img{left:-232.781%!important}
+
+.ai-content-section .section-title{max-width:1180px!important;width:100%;font-size:clamp(2.2rem,4.3vw,4rem)!important;line-height:1.12!important;text-wrap:initial}
+.ai-title-line{display:block}.ai-content-section p{max-width:960px!important}
+@media(min-width:760px){.ai-title-line{white-space:nowrap}}
+@media(max-width:759px){.ai-content-section .section-title{font-size:clamp(1.85rem,6.5vw,3rem)!important}.ai-title-line{white-space:normal;text-wrap:balance}}

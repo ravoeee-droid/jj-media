@@ -41,5 +41,5 @@
     }
   };
 
-  load('brand-runtime.js?v=20260905-4',()=>load('site-quality.js?v=20260905-6',()=>load('viral-nav.js?v=20261004-ugc2',()=>load('insights-bridge.js?v=20260901-1',()=>{const css=document.createElement('link');css.rel='stylesheet';css.href='content-review.css?v=20261004-exact-cover';document.head.appendChild(css);bootPage()}))));
+  load('brand-runtime.js?v=20260905-4',()=>load('site-quality.js?v=20260905-6',()=>load('viral-nav.js?v=20261004-ugc2',()=>load('insights-bridge.js?v=20260901-1',()=>{const css=document.createElement('link');css.rel='stylesheet';css.href='content-review.css?v=20261004-ai-lines';document.head.appendChild(css);bootPage()}))));
 })();
