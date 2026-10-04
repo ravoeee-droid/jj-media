@@ -37,3 +37,34 @@ body,h1,h2,h3,p,.legal p,.legal h2,.travel-cta .section-title{word-break:normal!
 .ai-title-line{display:block}.ai-content-section p{max-width:960px!important}
 @media(min-width:760px){.ai-title-line{white-space:nowrap}}
 @media(max-width:759px){.ai-content-section .section-title{font-size:clamp(1.85rem,6.5vw,3rem)!important}.ai-title-line{white-space:normal;text-wrap:balance}}
+/* Portfolio motion and visible footer branding, 2026-10-04. */
+.post-flow{padding:28px 0 0;background:#f6f4f1;overflow:hidden}
+.post-flow-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;max-width:1280px;margin:0 auto;padding:0 24px 22px}
+.post-flow-heading .eyebrow{margin:0}
+.post-flow-toggle{border:1px solid currentColor;border-radius:30px;padding:10px 18px;background:transparent;font:inherit;cursor:pointer}
+.post-flow-window{overflow:hidden}
+.post-flow-track{display:flex;width:max-content;animation:postFlow 48s linear infinite;will-change:transform}
+.post-flow-group{display:flex;gap:12px;padding-right:12px}
+.post-flow-group a{display:block;flex:none;width:clamp(210px,24vw,320px);height:clamp(270px,30vw,400px);overflow:hidden}
+.post-flow-group img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.post-flow-group a:hover img{transform:scale(1.04)}
+.post-flow:hover .post-flow-track,.post-flow:focus-within .post-flow-track,.post-flow.is-paused .post-flow-track{animation-play-state:paused}
+@keyframes postFlow{to{transform:translateX(-50%)}}
+.footer-brand{display:block;width:260px;margin:0 auto 44px;border-radius:18px;background:white;overflow:hidden}
+.footer-brand-crop{display:block;position:relative;width:260px;height:255px;overflow:hidden}
+.footer-brand-crop img{position:absolute;width:480px!important;max-width:none!important;height:auto;left:-110px;top:-74px}
+.services-visual{background:#f7f5f2;color:#18151a;border-radius:0;margin-inline:0}
+.services-visual .service-tabs{display:flex;flex-direction:column;border-color:#c7c2c4;width:70%}
+.services-visual .service-tab{text-align:left;border:0;border-bottom:1px solid #c7c2c4;padding:24px 0;font-size:clamp(1.5rem,3.2vw,3.5rem);font-weight:500;opacity:.45;transition:opacity .25s,padding .25s}
+.services-visual .service-tab.active,.services-visual .service-tab:hover{opacity:1;background:transparent;padding-left:14px}
+.services-visual .container{position:relative}
+.services-visual .service-panel{display:block;padding-top:32px}
+.services-visual .service-panel h3{font-size:clamp(1.5rem,2.5vw,2rem);margin-bottom:12px}
+.services-visual .service-panel p{max-width:760px}
+.service-visual{position:absolute;right:0;top:50px;width:27%;aspect-ratio:4/5;pointer-events:none}
+.service-visual img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:12px;opacity:0;transform:translateX(40px) rotate(7deg);transition:opacity .45s,transform .55s}
+.service-visual img.is-active{opacity:1;transform:translateX(0) rotate(3deg)}
+.service-detail-preview{display:block;width:min(100%,380px);max-height:340px;object-fit:cover;border-radius:14px;margin-top:32px;transition:transform .4s}
+.service-detail:hover .service-detail-preview{transform:translateY(-6px) rotate(1deg)}
+@media(max-width:760px){.services-visual .service-tabs{width:100%}.service-visual{position:relative;top:auto;right:auto;width:220px;margin:30px auto 0}.services-visual .service-panel p{font-size:1rem}.post-flow-heading{flex-wrap:wrap}.footer-brand{width:260px}.service-detail-preview{max-height:280px}}
+@media(prefers-reduced-motion:reduce){.service-visual img,.service-detail-preview,.post-flow-group img{transition:none}.service-detail:hover .service-detail-preview{transform:none}}
