@@ -36,7 +36,7 @@
   const bootPage=()=>{
     if(document.querySelector('.viral-page'))load('instagram-embeds.js?v=20260905-13');
     if(document.querySelector('.hero-premium')){
-      load('home-proof.js?v=20261004-2',()=>load('app-core.js?v=20261004-youtube',bootGrowth));
+      load('home-proof.js?v=20261005-uniform-testimonials',()=>load('app-core.js?v=20261004-youtube',bootGrowth));
     }else{
       load('app-core.js?v=20261004-youtube',bootGrowth);
     }

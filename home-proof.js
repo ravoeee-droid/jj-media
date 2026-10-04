@@ -43,7 +43,6 @@
                   <button class="video-poster" type="button" aria-label="Erste Kundenstimme abspielen">
                     <img src="https://i.ytimg.com/vi/VWYnnGcmF6w/hqdefault.jpg" alt="Kundin berichtet über die Zusammenarbeit mit JJ Media – Social Media Marketing" loading="lazy">
                     <span class="testimonial-shade" aria-hidden="true"></span>
-                    <span class="testimonial-label"><b>01</b> Kundenstimme</span>
                     <span class="testimonial-overlay-copy">
                       <small>Ehrlich · direkt · persönlich</small>
                       <strong>So klingt Vertrauen, wenn es nicht inszeniert ist.</strong>
@@ -60,7 +59,6 @@
                   <button class="video-poster" type="button" aria-label="Zweite Kundenstimme abspielen">
                     <img src="https://i.ytimg.com/vi/2CbtOEdPQOk/hqdefault.jpg" alt="Kunde berichtet über die Zusammenarbeit mit JJ Media – Social Media Marketing" loading="lazy">
                     <span class="testimonial-shade" aria-hidden="true"></span>
-                    <span class="testimonial-label"><b>02</b> Kundenstimme</span>
                     <span class="testimonial-overlay-copy">
                       <small>Ohne Skript · aus erster Hand</small>
                       <strong>Was Kunden sagen, wenn kein Werbetext vor ihnen liegt.</strong>
@@ -76,7 +74,7 @@
                   <button class="video-poster" type="button" aria-label="Kundenstimme von Annika Fischer · Holistic Leadership &amp; Breathwork abspielen">
                     <img src="https://i.ytimg.com/vi/kC0ihDn4D1E/hqdefault.jpg" alt="Video-Testimonial von Annika Fischer · Holistic Leadership &amp; Breathwork" loading="lazy">
                     <span class="testimonial-shade" aria-hidden="true"></span>
-                    <span class="testimonial-overlay-copy"><small>Kundenstimme</small><strong>Annika Fischer · Holistic Leadership &amp; Breathwork</strong></span>
+                    <span class="testimonial-overlay-copy"><strong>Annika Fischer · Holistic Leadership &amp; Breathwork</strong></span>
                     <span class="play" aria-hidden="true"><span>▶</span></span>
                   </button>
                 </div>
@@ -87,7 +85,7 @@
                   <button class="video-poster" type="button" aria-label="Kundenstimme von Reisen &amp; Erleben Motorradreisen abspielen">
                     <img src="https://i.ytimg.com/vi/bQIx3nBDz2E/hqdefault.jpg" alt="Video-Testimonial von Reisen &amp; Erleben Motorradreisen" loading="lazy">
                     <span class="testimonial-shade" aria-hidden="true"></span>
-                    <span class="testimonial-overlay-copy"><small>Kundenstimme</small><strong>Reisen &amp; Erleben Motorradreisen</strong></span>
+                    <span class="testimonial-overlay-copy"><strong>Reisen &amp; Erleben Motorradreisen</strong></span>
                     <span class="play" aria-hidden="true"><span>▶</span></span>
                   </button>
                 </div>
