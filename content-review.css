@@ -122,3 +122,19 @@ footer .footer-brand-crop img{width:332px!important;left:-76px;top:-51px}
 .about-image img[src*="jessica-ivory-portrait"]{width:100%;height:100%;object-fit:cover;object-position:center 35%;aspect-ratio:4/5}
 
 .footer-general-contact{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+
+/* Anschauliche KI-Beispielkonzepte */
+.ai-examples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin:42px auto 18px;max-width:1180px;text-align:left}
+.ai-example{border:1px solid #e4d5d8;border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 16px 35px #3419230b;transition:transform .25s}
+.ai-example:hover{transform:translateY(-5px)}
+.ai-demo{height:310px;position:relative;overflow:hidden;padding:26px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.ai-demo-tag{position:absolute;top:18px;left:18px;border-radius:30px;background:#fffef4;padding:8px 12px;color:#30202c;font-size:12px;font-weight:700;letter-spacing:.09em;z-index:2}
+.ai-demo-voice{background:radial-gradient(ellipse at 70% 20%,#803b62,transparent 70%),#241620;color:#fff}
+.ai-wave{display:flex;gap:5px;align-items:center;height:90px;margin-top:30px}.ai-wave i{width:5px;height:var(--bar);border-radius:10px;background:linear-gradient(#f3b6cb,#d45880);animation:aiWave 2.1s ease-in-out var(--delay) infinite alternate}
+.ai-demo blockquote{margin:16px 0;font-size:22px;line-height:1.35;font-weight:600}.ai-demo-caption{font-size:14px;line-height:1.5;opacity:.85}
+.ai-demo-avatar{padding:0;background:#e9ddd4}.ai-demo-avatar img{width:100%;height:100%;object-fit:cover;object-position:center 25%}.ai-avatar-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,#241620dd);color:white;padding:55px 20px 20px;font-size:22px;font-weight:600}.ai-avatar-caption small{display:block;font-size:14px;font-weight:400;margin-top:7px}
+.ai-demo-post{background:#ead1d9;padding-top:55px;gap:12px}.ai-post-preview{padding:20px 25px;border-radius:16px;background:#fef7f1;transform:rotate(-4deg);box-shadow:10px 10px 0 #c9738b;width:90%;text-align:left}.ai-post-preview>span:first-child{font-size:11px;letter-spacing:.1em;color:#8b3250;font-weight:700}.ai-post-preview strong{display:block;font-size:25px;line-height:1.15;margin:16px 0;color:#30202c}.ai-post-pages{font-size:13px;color:#b9365c}.ai-demo-post .ai-demo-caption{font-size:13px;margin-top:8px}
+.ai-example-copy{padding:25px}.ai-example-copy h3{font-size:23px;line-height:1.25;margin:0 0 12px}.ai-content-section .ai-example-copy p{font-size:16px;margin:0;line-height:1.6}.ai-content-section .ai-examples-note{font-size:14px;color:#66505a;margin:16px auto 22px}
+@keyframes aiWave{to{transform:scaleY(.45);opacity:.65}}
+@media(max-width:850px){.ai-examples{grid-template-columns:1fr;max-width:520px}.ai-demo{height:320px}}
+@media(prefers-reduced-motion:reduce){.ai-wave i{animation:none}.ai-example{transition:none}}
