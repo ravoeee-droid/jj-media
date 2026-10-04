@@ -7,6 +7,10 @@
     brand.setAttribute('aria-label', 'JJ Media – zur Startseite');
     brand.innerHTML = '<span class="footer-brand-crop"><img src="assets/brand/jj-media-uploaded.png" alt="JJ Media Social Media Management" loading="lazy"><img class="footer-brand-type" src="assets/brand/jj-media-uploaded.png" alt="" aria-hidden="true" loading="lazy"></span>';
     footer.querySelector('.container')?.prepend(brand);
+    const contact = document.createElement('div');
+    contact.className = 'footer-general-contact';
+    contact.innerHTML = '<a class="btn" href="mailto:service@jj-media.info">E-Mail schreiben</a><a class="btn" href="contact.html">Allgemeine Anfrage</a>';
+    footer.querySelector('.footer-main')?.after(contact);
   }
   const isShowcase = document.querySelector('.hero-premium') || /\/services(?:\.html)?\/?$/.test(location.pathname);
   if (footer && isShowcase && !document.querySelector('.post-flow')) {

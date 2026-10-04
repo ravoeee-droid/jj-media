@@ -72,3 +72,14 @@
 .analysis-topbar .jj-master-logo-link{display:inline-flex;align-items:center;justify-content:flex-start;flex:0 0 55px;width:55px;height:38px;line-height:1}
 .analysis-topbar .jj-master-logo{display:block;width:auto;height:38px;max-width:55px;object-fit:contain;object-position:center}
 @media(max-width:620px){.analysis-topbar .jj-master-logo-link{flex-basis:47px;width:47px;height:33px}.analysis-topbar .jj-master-logo{height:33px;max-width:47px}}
+/* Let all analysis content remain reachable instead of clipping to viewport height. */
+html,body.analysis-body{height:auto;min-height:100%;overflow:auto}
+.analysis-shell{height:auto;min-height:100dvh;grid-template-rows:auto 1fr auto}
+.analysis-main,.analysis-main>.container,.analysis-layout{height:auto;min-height:0}
+.analysis-intro,.funnel-card{height:auto;min-height:0;overflow:visible}
+.analysis-intro h1{font-size:clamp(2.6rem,4.3vw,4.8rem);overflow-wrap:normal;word-break:normal}
+.funnel-step.active{overflow:visible}
+.analysis-footer{display:block}
+@media(max-width:1100px){.analysis-layout{grid-template-columns:1fr}.analysis-intro{padding:28px}.analysis-intro h1{max-width:850px}.analysis-person{margin-top:24px}}
+.analysis-general-contact{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.analysis-general-contact a{display:inline-flex;align-items:center;padding:12px 18px;border:1px solid rgba(255,255,255,.5);border-radius:30px;color:white;text-decoration:none;font-weight:600}
