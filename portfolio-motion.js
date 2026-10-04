@@ -22,7 +22,7 @@
     section.className = 'post-flow';
     section.id = 'beispiel-posts';
     section.setAttribute('aria-label', 'Beispiel-Posts aus dem Portfolio');
-    const cards = examples.map(([src, alt]) => `<a href="work.html"><img src="${src}" alt="${alt}" loading="lazy" width="320" height="400"></a>`).join('');
+    const cards = examples.map(([src, alt]) => `<a href="work.html"><img src="${src}" alt="${alt}" loading="eager" decoding="async" width="320" height="400"></a>`).join('');
     section.innerHTML = `<div class="post-flow-heading"><span class="eyebrow">Einblicke in die Gestaltung</span><button type="button" class="post-flow-toggle" aria-pressed="false">Bildlauf pausieren</button></div><div class="post-flow-window"><div class="post-flow-track"><div class="post-flow-group">${cards}</div><div class="post-flow-group" aria-hidden="true">${cards.replaceAll('<a href=', '<a tabindex="-1" href=').replace(/alt="[^"]*"/g, 'alt=""')}</div></div></div>`;
     footer.before(section);
     const toggle = section.querySelector('button');

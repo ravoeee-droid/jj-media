@@ -6,7 +6,7 @@ Ausgangsstand: 1285e69b21de1626bfa373e8ac737ad32c6b2f80
 2. Footer auf allen Seiten mit app.js: hochgeladenes Original-Logo auf weißem Grund, durch CSS zugeschnitten; Originaldatei unverändert.
 3. Homepage-Leistungen: vertikale Auswahl, passendes Bild mit Ein-/Ausschieben bei Hover, Fokus oder Klick. Text wechselt mit.
 4. Leistungsseite: ergänzende Bilder unter den jeweiligen Leistungsüberschriften.
-5. app.js lädt das neue Modul; content-review.css enthält die Gestaltung. Kein Produktionswechsel.
+5. app.js lädt das neue Modul; content-review.css enthält die Gestaltung. Kein Produktionswechsel. Footer-Kontakt zentriert und E-Mail in einer Zeile; Post-Bilder einschließlich Wiederholungen ohne Lazy-Loading gegen Lücken.
 
 Validierung: JavaScript-Syntaxprüfung erfolgreich; veröffentlichte Vorschau wird visuell geprüft.
 Rollback: portfolio-motion.js nicht mehr laden, neue CSS-Regeln entfernen und CSS-Version zurück auf 20261004-ai-lines setzen; alternativ den Ausgangsstand erneut als Vorschau bereitstellen.
