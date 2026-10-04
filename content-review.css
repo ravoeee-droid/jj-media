@@ -94,3 +94,22 @@ footer .footer-links{justify-content:center}
 .hero-orb-two{animation:heroOrbFloat 12s ease-in-out infinite reverse}
 .jj-live-audit-copy,.jj-live-audit-form{opacity:1;visibility:visible}
 @media(prefers-reduced-motion:reduce){.hero-orb{animation:none!important;translate:none}}
+/* Qualifikationskarten: klare Akzente, mehr Tiefe. */
+.credential-section .credential-grid{gap:18px}
+.credential-section .credential-card{position:relative;overflow:hidden;min-height:255px;padding:28px;border:1px solid #e6dce0;background:linear-gradient(145deg,#fff 45%,#fff2f5);box-shadow:0 14px 38px rgba(55,23,35,.07);transition:translate .3s,box-shadow .3s}
+.credential-section .credential-card:before{content:"";position:absolute;left:28px;right:28px;top:0;height:4px;background:#c13754;border-radius:0 0 8px 8px}
+.credential-section .credential-card:nth-child(1):before{background:#18151a}
+.credential-section .credential-card:nth-child(3):before{background:#df8da4}
+.credential-section .credential-card:nth-child(4):before{background:#b09883}
+.credential-section .credential-icon{width:64px;height:64px;border-radius:20px;font-size:1.1rem;box-shadow:0 8px 20px rgba(30,15,25,.1)}
+.credential-section .credential-card strong{font-size:1.12rem;line-height:1.3}
+.credential-section .credential-card p{font-size:.95rem;line-height:1.65}
+.credential-section .credential-card:hover{translate:0 -5px;box-shadow:0 22px 44px rgba(55,23,35,.12)}
+.jj-live-audit-inner{grid-template-columns:minmax(0,1.18fr) minmax(380px,.82fr);gap:48px}
+.jj-live-audit-copy h2{font-size:clamp(2.8rem,4.6vw,4.8rem);line-height:1.08;letter-spacing:-.045em}
+.jj-live-audit-copy h2 span{display:block}
+.jj-live-audit-form{padding:18px;background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(243,166,178,.035));border-color:rgba(243,166,178,.22)}
+.jj-live-audit-input{border-bottom:1px solid rgba(255,255,255,.12);margin-bottom:12px}
+@media(min-width:901px){.jj-live-audit-copy h2 span{white-space:nowrap}}
+@media(max-width:900px){.jj-live-audit-inner{grid-template-columns:1fr;gap:32px}.jj-live-audit-copy h2{font-size:clamp(2.7rem,6vw,4.5rem)}}
+@media(prefers-reduced-motion:reduce){.credential-section .credential-card{transition:none}.credential-section .credential-card:hover{translate:none}}
