@@ -27,7 +27,7 @@
           <div class="trust-proof-head reveal">
             <div class="trust-proof-title">
               <div class="eyebrow">Echte Stimmen · echte Einblicke</div>
-              <h2 id="trust-proof-title">Nicht wir sagen, wie gut es läuft. <span class="serif">Unsere Kunden tun es.</span></h2>
+              <h2 id="trust-proof-title"><span class="proof-title-line">Nicht wir sagen, wie gut es läuft.</span> <span class="serif proof-title-line">Unsere Kunden tun es.</span></h2>
             </div>
             <div class="trust-proof-intro">
               <span class="proof-quote-mark" aria-hidden="true">“</span>

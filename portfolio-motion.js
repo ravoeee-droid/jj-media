@@ -5,7 +5,7 @@
     brand.className = 'footer-brand';
     brand.href = 'index.html';
     brand.setAttribute('aria-label', 'JJ Media – zur Startseite');
-    brand.innerHTML = '<span class="footer-brand-crop"><img src="assets/brand/jj-media-uploaded.png" alt="JJ Media Social Media Management" loading="lazy"></span>';
+    brand.innerHTML = '<span class="footer-brand-crop"><img src="assets/brand/jj-media-uploaded.png" alt="JJ Media Social Media Management" loading="lazy"><img class="footer-brand-type" src="assets/brand/jj-media-uploaded.png" alt="" aria-hidden="true" loading="lazy"></span>';
     footer.querySelector('.container')?.prepend(brand);
   }
   const isShowcase = document.querySelector('.hero-premium') || /\/services(?:\.html)?\/?$/.test(location.pathname);
