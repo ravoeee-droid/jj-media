@@ -117,3 +117,6 @@ footer .footer-links{justify-content:center}
 footer .footer-brand{width:180px;margin-bottom:30px}
 footer .footer-brand-crop{width:180px;height:177px}
 footer .footer-brand-crop img{width:332px!important;left:-76px;top:-51px}
+
+.portrait-frame img[src*="jessica-ivory-portrait"]{object-position:center 35%}
+.about-image img[src*="jessica-ivory-portrait"]{width:100%;height:100%;object-fit:cover;object-position:center 35%;aspect-ratio:4/5}
