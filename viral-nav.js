@@ -1,9 +1,11 @@
 (() => {
   const page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   const navLinks = [
+    {target:'services.html#ugc', label:'UGC', before:'blog.html'},
     {target:'blog.html', label:'Insights', before:'contact.html'}
   ];
   const footerLinks = [
+    {target:'services.html#ugc', label:'UGC', before:'contact.html'},
     {target:'virale-posts.html', label:'Virale Posts', before:'contact.html'},
     {target:'blog.html', label:'Insights', before:'contact.html'}
   ];
