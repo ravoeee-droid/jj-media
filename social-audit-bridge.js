@@ -7,7 +7,7 @@
   doc.head.appendChild(css);
 
   const auditHref='analyse.html?entry=website-audit';
-  const hero=doc.querySelector('.hero-actions .btn');
+  const hero=doc.querySelector('.hero-premium .hero-actions .btn');
   if(hero){
     hero.href=auditHref;
     hero.dataset.track='hero_personal_audit';

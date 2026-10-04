@@ -77,7 +77,7 @@
   };
 
   const microTrust=()=>{
-    const actions=doc.querySelector('.hero-actions');
+    const actions=doc.querySelector('.hero-premium .hero-actions');
     if(!actions||doc.querySelector('.jj-hero-microtrust'))return;
     actions.insertAdjacentHTML('afterend','<div class="jj-hero-microtrust"><span>✓ persönlich geprüft</span><i aria-hidden="true"></i><span>kostenlos &amp; unverbindlich</span><i aria-hidden="true"></i><span>Instagram · Facebook · YouTube · LinkedIn</span></div>');
   };

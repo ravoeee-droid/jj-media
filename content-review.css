@@ -15,3 +15,8 @@ body,h1,h2,h3,p,.legal p,.legal h2,.travel-cta .section-title{word-break:normal!
 .credential-heading h2{margin:10px auto 0!important;line-height:1.08!important}
 .credential-heading p{max-width:660px!important;margin:0 auto!important;text-align:center}
 #ugc{scroll-margin-top:130px}#ugc>.container{text-align:center}#ugc .section-title{max-width:900px;margin-left:auto;margin-right:auto}#ugc p{max-width:760px;margin-left:auto;margin-right:auto}#ugc .hero-actions{justify-content:center;flex-wrap:wrap}
+
+.ugc-video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;max-width:950px;margin:36px auto}
+.ugc-video-example{margin:0;min-width:0}.ugc-video-example video{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:20px;background:#151218}.ugc-video-example figcaption{padding:12px;font-size:.85rem;color:var(--muted)}
+.ai-content-section{background:#f0e9e5;text-align:center}.ai-content-section .section-title{max-width:900px;margin-left:auto;margin-right:auto}.ai-content-section p{max-width:760px;margin:20px auto;line-height:1.7}.ai-content-section .btn{margin-top:12px}.ugc-focus .jj-sticky-convert{display:none!important}
+@media(max-width:620px){.ugc-video-grid{grid-template-columns:1fr;max-width:340px}}

@@ -30,4 +30,16 @@
 
   ensureNavLinks();
   ensureFooterLinks();
+  const contentSections = document.querySelectorAll('#ugc, #ki-content');
+  if (contentSections.length && 'IntersectionObserver' in window) {
+    const visible = new Set();
+    new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting ? visible.add(entry.target) : visible.delete(entry.target));
+      document.body.classList.toggle('ugc-focus', visible.size > 0);
+    }, {threshold: 0.05}).observe(contentSections[0]);
+    if (contentSections[1]) new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.isIntersecting ? visible.add(entry.target) : visible.delete(entry.target));
+      document.body.classList.toggle('ugc-focus', visible.size > 0);
+    }, {threshold: 0.05}).observe(contentSections[1]);
+  }
 })();

@@ -29,7 +29,7 @@
   const isLegal=/\/(datenschutz|impressum|agb|barrierefreiheit)(\.html)?\/?$/i.test(location.pathname);
   const bootGrowth=()=>{
     if(isLegal)return;
-    load('growth-layer-v2.js?v=20260918-1',()=>load('privacy-controls.js?v=20260918-1',()=>load('social-audit-bridge.js?v=20260901-3')));
+    load('growth-layer-v2.js?v=20261004-ugc22',()=>load('privacy-controls.js?v=20260918-1',()=>load('social-audit-bridge.js?v=20261004-ugc22')));
   };
 
   const bootPage=()=>{
@@ -41,5 +41,5 @@
     }
   };
 
-  load('brand-runtime.js?v=20260905-4',()=>load('site-quality.js?v=20260905-6',()=>load('viral-nav.js?v=20261004-ugc',()=>load('insights-bridge.js?v=20260901-1',()=>{const css=document.createElement('link');css.rel='stylesheet';css.href='content-review.css?v=20261004-ugc';document.head.appendChild(css);bootPage()}))));
+  load('brand-runtime.js?v=20260905-4',()=>load('site-quality.js?v=20260905-6',()=>load('viral-nav.js?v=20261004-ugc2',()=>load('insights-bridge.js?v=20260901-1',()=>{const css=document.createElement('link');css.rel='stylesheet';css.href='content-review.css?v=20261004-ugc2';document.head.appendChild(css);bootPage()}))));
 })();
