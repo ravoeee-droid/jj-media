@@ -4,7 +4,7 @@
 
   const css = document.createElement('link');
   css.rel = 'stylesheet';
-  css.href = 'home-proof.css?v=20260804-3';
+  css.href = 'home-proof.css?v=20261004-1';
   document.head.appendChild(css);
 
   const navCta = document.querySelector('.nav .btn.desktop');
@@ -31,8 +31,8 @@
             </div>
             <div class="trust-proof-intro">
               <span class="proof-quote-mark" aria-hidden="true">“</span>
-              <p>Keine einstudierten Sätze. Keine austauschbaren Sterne. Zwei Menschen erzählen selbst, wie sie die Zusammenarbeit mit Jessica erlebt haben.</p>
-              <div class="proof-summary"><span>2 Videostimmen</span><i></i><span>1 Originalzertifikat</span></div>
+              <p>Keine einstudierten Sätze. Keine austauschbaren Sterne. Unsere Kunden erzählen selbst, wie sie die Zusammenarbeit mit Jessica erlebt haben.</p>
+              <div class="proof-summary"><span>4 Videostimmen</span><i></i><span>1 Originalzertifikat</span></div>
             </div>
           </div>
 
@@ -52,6 +52,7 @@
                     <span class="play" aria-hidden="true"><span>▶</span></span>
                   </button>
                 </div>
+                <a class="testimonial-source" href="https://www.youtube.com/watch?v=VWYnnGcmF6w" target="_blank" rel="noopener noreferrer">Auf YouTube ansehen ↗</a>
               </article>
 
               <article class="testimonial-video-card reveal">
@@ -68,6 +69,29 @@
                     <span class="play" aria-hidden="true"><span>▶</span></span>
                   </button>
                 </div>
+                <a class="testimonial-source" href="https://www.youtube.com/watch?v=2CbtOEdPQOk" target="_blank" rel="noopener noreferrer">Auf YouTube ansehen ↗</a>
+              </article>
+              <article class="testimonial-video-card reveal">
+                <div class="testimonial-video" data-youtube-id="kC0ihDn4D1E">
+                  <button class="video-poster" type="button" aria-label="Kundenstimme von Annika Fischer · Holistic Leadership &amp; Breathwork abspielen">
+                    <img src="https://i.ytimg.com/vi/kC0ihDn4D1E/hqdefault.jpg" alt="Video-Testimonial von Annika Fischer · Holistic Leadership &amp; Breathwork" loading="lazy">
+                    <span class="testimonial-shade" aria-hidden="true"></span>
+                    <span class="testimonial-overlay-copy"><small>Kundenstimme</small><strong>Annika Fischer · Holistic Leadership &amp; Breathwork</strong></span>
+                    <span class="play" aria-hidden="true"><span>▶</span></span>
+                  </button>
+                </div>
+                <a class="testimonial-source" href="https://www.youtube.com/watch?v=kC0ihDn4D1E" target="_blank" rel="noopener noreferrer">Auf YouTube ansehen ↗</a>
+              </article>
+              <article class="testimonial-video-card reveal">
+                <div class="testimonial-video" data-youtube-id="bQIx3nBDz2E">
+                  <button class="video-poster" type="button" aria-label="Kundenstimme von Reisen &amp; Erleben Motorradreisen abspielen">
+                    <img src="https://i.ytimg.com/vi/bQIx3nBDz2E/hqdefault.jpg" alt="Video-Testimonial von Reisen &amp; Erleben Motorradreisen" loading="lazy">
+                    <span class="testimonial-shade" aria-hidden="true"></span>
+                    <span class="testimonial-overlay-copy"><small>Kundenstimme</small><strong>Reisen &amp; Erleben Motorradreisen</strong></span>
+                    <span class="play" aria-hidden="true"><span>▶</span></span>
+                  </button>
+                </div>
+                <a class="testimonial-source" href="https://www.youtube.com/watch?v=bQIx3nBDz2E" target="_blank" rel="noopener noreferrer">Auf YouTube ansehen ↗</a>
               </article>
             </div>
 

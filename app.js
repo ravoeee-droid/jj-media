@@ -35,11 +35,11 @@
   const bootPage=()=>{
     if(document.querySelector('.viral-page'))load('instagram-embeds.js?v=20260905-13');
     if(document.querySelector('.hero-premium')){
-      load('home-proof.js?v=20260804-3',()=>load('app-core.js?v=20260804-3',bootGrowth));
+      load('home-proof.js?v=20261004-1',()=>load('app-core.js?v=20260804-3',bootGrowth));
     }else{
       load('app-core.js?v=20260804-3',bootGrowth);
     }
   };
 
-  load('brand-runtime.js?v=20260905-4',()=>load('site-quality.js?v=20260905-6',()=>load('viral-nav.js?v=20260918-1',()=>load('insights-bridge.js?v=20260901-1',()=>{const css=document.createElement('link');css.rel='stylesheet';css.href='content-review.css?v=20261003';document.head.appendChild(css);bootPage()}))));
+  load('brand-runtime.js?v=20260905-4',()=>load('site-quality.js?v=20260905-6',()=>load('viral-nav.js?v=20260918-1',()=>load('insights-bridge.js?v=20260901-1',()=>{const css=document.createElement('link');css.rel='stylesheet';css.href='content-review.css?v=20261004-1';document.head.appendChild(css);bootPage()}))));
 })();

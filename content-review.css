@@ -2,3 +2,7 @@ body,h1,h2,h3,p,.legal p,.legal h2,.travel-cta .section-title{word-break:normal!
 
 .brand-logo-window{height:94px!important}.brand-logo-window img{height:225px!important;width:180px!important}.nav{height:auto!important}.nav-inner{min-height:100px}.nav .logo{min-width:110px!important}
 
+.case-section:before{display:none!important}
+.case-heading{display:flex!important;flex-direction:column!important;align-items:center!important;gap:24px!important;text-align:center;margin:0 auto 48px!important;max-width:900px}
+.case-heading h2{font-size:clamp(2.5rem,5vw,5rem)!important;line-height:1.08!important;margin:12px auto 0!important}
+.case-heading p{max-width:660px!important;margin:0 auto!important}
