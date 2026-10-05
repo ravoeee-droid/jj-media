@@ -15,18 +15,18 @@
   const isShowcase = document.querySelector('.hero-premium') || /\/services(?:\.html)?\/?$/.test(location.pathname);
   if (footer && isShowcase && !document.querySelector('.post-flow')) {
     const examples = [
-      ['assets/cases/oezhan-after.jpg', 'Content-Beispiel aus dem Immobilienbereich'],
-      ['assets/travel-gallery-final/01-schildkroeten.png', 'Beispiel-Post: Schildkröten auf Reisen'],
-      ['assets/cases/reisen-erleben-feed.jpg', 'Feed-Beispiel für Reisen & Erleben'],
-      ['assets/travel-gallery-final/04-flamingos.png', 'Beispiel-Post: Flamingos'],
-      ['assets/cases/village-after.jpg', 'Social-Media-Feed aus einem Kundenprojekt'],
-      ['assets/travel-gallery-final/06-kein-filter.png', 'Beispiel-Post aus dem Reiseportfolio']
+      ['assets/portfolio/exports/set-2-01.webp', 'Annika Fischer · Karussell: The Work'],
+      ['assets/portfolio/exports/set-1-01.webp', 'Lighthouse Cruises · Werbegrafik'],
+      ['assets/portfolio/exports/set-3-02.webp', 'Outdoor-Portfolio · Guide-Vorstellung'],
+      ['assets/portfolio/exports/set-2-04.webp', 'Annika Fischer · Persönliche Markenarbeit'],
+      ['assets/portfolio/exports/set-1-03.webp', 'Lighthouse Cruises · Kampagnenmotiv'],
+      ['assets/portfolio/werbegrafik.webp', 'Kissling · Werbegrafik aus meinem Portfolio']
     ];
     const section = document.createElement('section');
     section.className = 'post-flow';
     section.id = 'beispiel-posts';
     section.setAttribute('aria-label', 'Beispiel-Posts aus dem Portfolio');
-    const cards = examples.map(([src, alt]) => `<a href="work.html"><img src="${src}" alt="${alt}" loading="eager" decoding="async" width="320" height="400"></a>`).join('');
+    const cards = examples.map(([src, alt]) => `<a href="work.html#arbeitsproben"><img src="${src}" alt="${alt}" loading="eager" decoding="async" width="320" height="400"></a>`).join('');
     section.innerHTML = `<div class="post-flow-heading"><span class="eyebrow">Einblicke in die Gestaltung</span><button type="button" class="post-flow-toggle" aria-pressed="false">Bildlauf pausieren</button></div><div class="post-flow-window"><div class="post-flow-track"><div class="post-flow-group">${cards}</div><div class="post-flow-group" aria-hidden="true">${cards.replaceAll('<a href=', '<a tabindex="-1" href=').replace(/alt="[^"]*"/g, 'alt=""')}</div></div></div>`;
     footer.before(section);
     const toggle = section.querySelector('button');

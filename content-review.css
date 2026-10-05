@@ -163,3 +163,10 @@ footer .footer-brand-crop img{width:332px!important;left:-76px;top:-51px}
 .proof-image-dialog button{min-width:44px;min-height:44px;border:1px solid #74626d;border-radius:50%;background:#292229;color:#fff;font-size:1.5rem;cursor:pointer}
 .proof-image-dialog img{display:block;width:100%;height:auto}
 @media(max-width:700px){.case-image-feed.proof-feed-preview{height:410px}}
+
+/* Real portfolio exports and compact footer branding. */
+.post-flow-group a{background:#eee7e1;border-radius:12px}
+.post-flow-group img{object-fit:contain}
+footer .footer-brand{width:120px;margin-bottom:24px}
+footer .footer-brand-crop{width:120px;height:118px}
+footer .footer-brand-crop img{width:221px!important;left:-50px;top:-34px}
