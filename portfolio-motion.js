@@ -15,18 +15,18 @@
   const isShowcase = document.querySelector('.hero-premium') || /\/services(?:\.html)?\/?$/.test(location.pathname);
   if (footer && isShowcase && !document.querySelector('.post-flow')) {
     const examples = [
-      ['assets/portfolio/exports/set-2-01.webp', 'Annika Fischer · Karussell: The Work'],
-      ['assets/portfolio/exports/set-1-01.webp', 'Lighthouse Cruises · Werbegrafik'],
-      ['assets/portfolio/exports/set-3-02.webp', 'Outdoor-Portfolio · Guide-Vorstellung'],
-      ['assets/portfolio/exports/set-2-04.webp', 'Annika Fischer · Persönliche Markenarbeit'],
-      ['assets/portfolio/exports/set-1-03.webp', 'Lighthouse Cruises · Kampagnenmotiv'],
-      ['assets/portfolio/werbegrafik.webp', 'Kissling · Werbegrafik aus meinem Portfolio']
+      ['assets/portfolio/legacy/design-1.webp', 'Kissling · Digitale Lieferkette', 'content-design.html'],
+      ['assets/portfolio/legacy/design-2.webp', 'Kissling · Daten als Gold der Zukunft', 'content-design.html'],
+      ['assets/portfolio/legacy/design-3.webp', 'Kissling · Maschinen und Menschen', 'content-design.html'],
+      ['assets/portfolio/exports/set-2-01.webp', 'Annika Fischer · The Work', 'work.html#arbeitsproben'],
+      ['assets/portfolio/exports/set-2-04.webp', 'Annika Fischer · Persönliche Markenarbeit', 'work.html#arbeitsproben'],
+      ['assets/portfolio/exports/set-1-01.webp', 'Lighthouse Cruises · Werbegrafik', 'work.html#arbeitsproben']
     ];
     const section = document.createElement('section');
     section.className = 'post-flow';
     section.id = 'beispiel-posts';
     section.setAttribute('aria-label', 'Beispiel-Posts aus dem Portfolio');
-    const cards = examples.map(([src, alt]) => `<a href="work.html#arbeitsproben"><img src="${src}" alt="${alt}" loading="eager" decoding="async" width="320" height="400"></a>`).join('');
+    const cards = examples.map(([src, alt, href]) => `<a href="${href}"><img src="${src}" alt="${alt}" loading="eager" decoding="async" width="320" height="400"></a>`).join('');
     section.innerHTML = `<div class="post-flow-heading"><span class="eyebrow">Einblicke in die Gestaltung</span><button type="button" class="post-flow-toggle" aria-pressed="false">Bildlauf pausieren</button></div><div class="post-flow-window"><div class="post-flow-track"><div class="post-flow-group">${cards}</div><div class="post-flow-group" aria-hidden="true">${cards.replaceAll('<a href=', '<a tabindex="-1" href=').replace(/alt="[^"]*"/g, 'alt=""')}</div></div></div>`;
     footer.before(section);
     const toggle = section.querySelector('button');
@@ -77,7 +77,7 @@
       preview.querySelectorAll('img').forEach((img, i) => img.classList.toggle('is-active', i === index));
       document.querySelector('[data-service-title]').textContent = ['Strategie & Analyse', 'Content & Design', 'Social Ads'][index];
       document.querySelector('[data-service-text]').textContent = [
-        'Social-Media-Strategie für Unternehmen in Deutschland: Zielgruppen verstehen, Inhalte planen und Ergebnisse nachvollziehbar auswerten.',
+        'Zielgruppenanalyse, Markt- und Wettbewerbsanalyse, Content-Strategie und Redaktionsplanung – mit verständlichem Reporting und laufender Optimierung für Unternehmen in Deutschland.',
         'Individuelle Social-Media-Designs, authentische Reels und passende Texte – mit Ihrer Markenstimme, vom Konzept bis zum fertigen Content.',
         'Instagram- und Facebook-Werbung für Ihre Zielgruppe in Deutschland: passende Werbemotive, Kampagnenplanung und laufende Optimierung.'
       ][index];

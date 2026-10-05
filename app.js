@@ -28,7 +28,7 @@
 
   const isLegal=/\/(datenschutz|impressum|agb|barrierefreiheit)(\.html)?\/?$/i.test(location.pathname);
   const bootGrowth=()=>{
-    load('portfolio-motion.js?v=20261005-linked-services');
+    load('portfolio-motion.js?v=20261005-strategy-complete');
     if(document.querySelector('[data-proof-image]'))load('proof-image.js?v=20261005-1');
     if(isLegal)return;
     load('growth-layer-v2.js?v=20261005-cookie-copy',()=>load('privacy-controls.js?v=20260918-1',()=>load('social-audit-bridge.js?v=20261004-visible')));
