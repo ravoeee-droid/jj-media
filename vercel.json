@@ -5,7 +5,7 @@
   "redirects": [
     {
       "source": "/projekte/postings",
-      "destination": "/work",
+      "destination": "/content-design",
       "permanent": true
     },
     {
@@ -20,7 +20,7 @@
     },
     {
       "source": "/projekte/strategie-und-analyse",
-      "destination": "/work",
+      "destination": "/strategie-analyse",
       "permanent": true
     },
     {

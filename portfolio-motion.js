@@ -41,38 +41,45 @@
     toggle.addEventListener('click', () => { paused = !paused; sync(); });
   }
   document.querySelectorAll('.service-detail').forEach((section, i) => {
-    const sources = ['assets/insta-1.webp', 'assets/cases/oezhan-after.jpg', 'assets/insta-5.webp'];
+    const sources = ['assets/portfolio/exports/set-2-04.webp', 'assets/portfolio/legacy/design-1.webp', 'assets/portfolio/exports/set-1-01.webp'];
     if (!sources[i]) return;
     const img = document.createElement('img');
     img.className = 'service-detail-preview';
     img.src = sources[i];
     img.alt = ['Strategie und gemeinsame Planung', 'Einblick in einen gestalteten Kunden-Feed', 'Content für Social-Media-Kampagnen'][i];
     img.loading = 'lazy';
-    section.querySelector('.sticky')?.append(img);
+    const link = document.createElement('a');
+    link.href = ['strategie-analyse.html', 'content-design.html', 'social-ads.html'][i];
+    link.append(img);
+    section.querySelector('.sticky')?.append(link);
   });
   const tabs = [...document.querySelectorAll('.service-tab')];
   const panel = document.querySelector('.service-panel');
   if (!tabs.length || !panel) return;
   const previews = [
-    ['assets/insta-1.webp', 'Strategie und gemeinsame Planung'],
-    ['assets/cases/oezhan-after.jpg', 'Content Creation: Beispiel eines Kunden-Feeds'],
-    ['assets/insta-5.webp', 'Gestaltung für Social-Media-Kampagnen']
+    ['assets/portfolio/exports/set-2-04.webp', 'Redaktionsserie aus meiner Arbeit für Annika Fischer'],
+    ['assets/portfolio/legacy/design-1.webp', 'Social-Media-Design aus meinem eigenen Portfolio'],
+    ['assets/portfolio/exports/set-1-01.webp', 'Kampagnenmotiv aus meiner Arbeit für Lighthouse Cruises']
   ];
-  const preview = document.createElement('div');
+  const preview = document.createElement('a');
+  preview.href = tabs[0].href;
+  preview.setAttribute('aria-label', 'Mehr über Strategie und Analyse erfahren');
   preview.className = 'service-visual';
   preview.innerHTML = previews.map(([src, alt], i) => `<img src="${src}" alt="${alt}" loading="lazy" class="${i === 0 ? 'is-active' : ''}">`).join('');
   panel.append(preview);
   panel.closest('.services').classList.add('services-visual');
   tabs.forEach((tab, index) => {
-    tab.setAttribute('aria-pressed', String(index === 0));
+    tab.removeAttribute('aria-pressed');
     const select = () => {
-      tabs.forEach((item, i) => { item.classList.toggle('active', i === index); item.setAttribute('aria-pressed', String(i === index)); });
+      preview.href = tab.href;
+      preview.setAttribute('aria-label', ['Mehr über Strategie und Analyse erfahren','Content und Design ansehen','Mehr über Social Ads erfahren'][index]);
+      tabs.forEach((item, i) => { item.classList.toggle('active', i === index); item.removeAttribute('aria-pressed'); });
       preview.querySelectorAll('img').forEach((img, i) => img.classList.toggle('is-active', i === index));
-      document.querySelector('[data-service-title]').textContent = ['Strategie & Analyse', 'Content Creation', 'Social Ads'][index];
+      document.querySelector('[data-service-title]').textContent = ['Strategie & Analyse', 'Content & Design', 'Social Ads'][index];
       document.querySelector('[data-service-text]').textContent = [
-        'Eine klare Strategie für deine Marke: Zielgruppen verstehen, Inhalte planen und anhand echter Ergebnisse optimieren.',
-        'Designs, Reels und Texte mit deiner Markenstimme – von der Idee bis zum fertigen Content.',
-        'Kreative Werbeanzeigen und gezielte Kampagnen, die die passenden Menschen für dein Angebot erreichen.'
+        'Social-Media-Strategie für Unternehmen in Deutschland: Zielgruppen verstehen, Inhalte planen und Ergebnisse nachvollziehbar auswerten.',
+        'Individuelle Social-Media-Designs, authentische Reels und passende Texte – mit Ihrer Markenstimme, vom Konzept bis zum fertigen Content.',
+        'Instagram- und Facebook-Werbung für Ihre Zielgruppe in Deutschland: passende Werbemotive, Kampagnenplanung und laufende Optimierung.'
       ][index];
     };
     tab.addEventListener('mouseenter', select);
