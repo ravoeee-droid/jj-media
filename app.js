@@ -29,6 +29,7 @@
   const isLegal=/\/(datenschutz|impressum|agb|barrierefreiheit)(\.html)?\/?$/i.test(location.pathname);
   const bootGrowth=()=>{
     load('portfolio-motion.js?v=20261005-contact');
+    if(document.querySelector('[data-proof-image]'))load('proof-image.js?v=20261005-1');
     if(isLegal)return;
     load('growth-layer-v2.js?v=20261005-cookie-copy',()=>load('privacy-controls.js?v=20260918-1',()=>load('social-audit-bridge.js?v=20261004-visible')));
   };
@@ -42,5 +43,5 @@
     }
   };
 
-  load('brand-runtime.js?v=20260905-4',()=>load('site-quality.js?v=20260905-6',()=>load('viral-nav.js?v=20261004-ugc2',()=>load('insights-bridge.js?v=20260901-1',()=>{const css=document.createElement('link');css.rel='stylesheet';css.href='content-review.css?v=20261005-design-series';document.head.appendChild(css);bootPage()}))));
+  load('brand-runtime.js?v=20260905-4',()=>load('site-quality.js?v=20260905-6',()=>load('viral-nav.js?v=20261004-ugc2',()=>load('insights-bridge.js?v=20260901-1',()=>{const css=document.createElement('link');css.rel='stylesheet';css.href='content-review.css?v=20261005-feed-proof';document.head.appendChild(css);bootPage()}))));
 })();
