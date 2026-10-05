@@ -69,7 +69,7 @@
     const panel = doc.createElement('aside');
     panel.className = 'jj-privacy';
     panel.setAttribute('aria-label','Datenschutzeinstellungen');
-    panel.innerHTML = `<strong>Privatsphäre zuerst.</strong><p>Notwendige Funktionen laufen immer. Optionale, anonyme Nutzungsstatistiken helfen uns, Inhalte und Nutzerführung zu verbessern.</p><div class="jj-privacy-actions"><button type="button" data-consent="no">Nur notwendig</button><button class="primary" type="button" data-consent="yes">Statistik erlauben</button></div><a href="datenschutz.html">Datenschutzerklärung ansehen</a>`;
+    panel.innerHTML = `<strong>Privatsphäre zuerst.</strong><p>Notwendige Funktionen laufen immer. Optionale, anonyme Nutzungsstatistiken helfen uns, Inhalte und Nutzerführung zu verbessern.</p><div class="jj-privacy-actions"><button type="button" data-consent="no">Nur notwendig</button><button class="primary" type="button" data-consent="yes">Cookies erlauben</button></div><a href="datenschutz.html">Datenschutzerklärung ansehen</a>`;
     doc.body.appendChild(panel);
     requestAnimationFrame(() => panel.classList.add('visible'));
     panel.addEventListener('click',event => {

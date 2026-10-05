@@ -30,7 +30,7 @@
   const bootGrowth=()=>{
     load('portfolio-motion.js?v=20261005-contact');
     if(isLegal)return;
-    load('growth-layer-v2.js?v=20261004-ugc22',()=>load('privacy-controls.js?v=20260918-1',()=>load('social-audit-bridge.js?v=20261004-visible')));
+    load('growth-layer-v2.js?v=20261005-cookie-copy',()=>load('privacy-controls.js?v=20260918-1',()=>load('social-audit-bridge.js?v=20261004-visible')));
   };
 
   const bootPage=()=>{
